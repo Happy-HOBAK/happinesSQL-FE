@@ -16,25 +16,25 @@ const Stack = createNativeStackNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName = "홈">
       <Tab.Screen name="레포트 확인" component={ReportScreen} 
-      options={{tabBarIcon: ({ color, size }) => (
+      options={{tabBarIcon: () => (
             <Image source={reporticon} style={{ width: 24, height: 24 }}/>
           ),}}/>
       <Tab.Screen name="행복 달력" component={CalenderScreen}
-      options={{tabBarIcon: ({ color, size }) => (
+      options={{tabBarIcon: () => (
         <Image source={calendericon} style={{ width: 24, height: 24 }}/>
         ),}} />
       <Tab.Screen name="홈" component={HomeScreen} 
-      options={{tabBarIcon: ({ color, size }) => (
+      options={{tabBarIcon: () => (
         <Image source={homeicon} style={{ width: 24, height: 24 }}/>
         ),}}/>
       <Tab.Screen name="행복 트렌드" component={TrendScreen} 
-      options={{tabBarIcon: ({ color, size }) => (
+      options={{tabBarIcon: () => (
         <Image source={trendicon} style={{ width: 24, height: 24 }}/>
         ),}}/>
       <Tab.Screen name="행복 톺아보기" component={RecordsScreen} 
-      options={{tabBarIcon: ({ color, size }) => (
+      options={{tabBarIcon: () => (
         <Image source={recordicon} style={{ width: 24, height: 24 }}/>
         ),}}/>
     </Tab.Navigator>
