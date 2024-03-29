@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { SampleBtn } from "../../styles/styles";
 
 function Home() {
   const navigation = useNavigation();
@@ -8,17 +9,11 @@ function Home() {
   return (
     <View>
       <Text>Home Component</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Test')}
-        style={{
-          padding: 10,
-          backgroundColor: 'blue',
-          borderRadius: 5,
-          marginTop: 50
-        }}
-      >
-        <Text style={{ color: 'white' }}>Go to Test</Text>
-      </TouchableOpacity>
+      <SampleBtn onPress={() => navigation.navigate('Test')}>
+        <Text>
+        Go to Test
+        </Text>
+      </SampleBtn>
     </View>
   );
 }
