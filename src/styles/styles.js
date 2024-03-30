@@ -49,3 +49,10 @@ export const HomeTextView = styled.View`
     margin-top:50px;
     align-items: center;
 `;
+
+export const EmotionText = styled.Text`
+    position: absolute;
+    font-size: 150px;
+    text-align: center;
+    top: 55px;
+`;

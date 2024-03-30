@@ -10,20 +10,20 @@ module.exports = function(api) {
     //     },
     //   ],
     // ],
-    plugins: [
-      [
-        'module-resolver',
-        {
-          root: ['./src'],
-          extentions: ['.js', '.json'],
-          alias: {
-            '@': './src',
-            '@const': './src/const',
-          },
-        },
+    // plugins: [
+    //   [
+    //     'module-resolver',
+    //     {
+    //       root: ['./src'],
+    //       extentions: ['.js', '.json'],
+    //       alias: {
+    //         '@': './src',
+    //         '@const': './src/const',
+    //       },
+    //     },
 
-        'module'
-      ],
-    ],
+    //     'module'
+    //   ],
+    // ],
   };
 };
