@@ -1,6 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import Home from '../../screens/home/home';
+import Records from '../../screens/records/records';
+import Calender from '../../screens/calender/calender';
+import Report from '../../screens/report/report';
+import Trends from '../../screens/trends/trends';
 
 export function HomeScreen() {
   return (
@@ -10,30 +14,22 @@ export function HomeScreen() {
 
 export function CalenderScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Calender!</Text>
-    </View>
+    <Calender/>
   );
 }
 export function RecordsScreen() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Records!</Text>
-      </View>
+      <Records/>
     );
   }
   export function ReportScreen() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Report!</Text>
-      </View>
+      <Report/>
     );
   }
 
 export function TrendScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Trend!</Text>
-    </View>
+    <Trends/>
   );
 }
