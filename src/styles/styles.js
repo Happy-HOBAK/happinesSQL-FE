@@ -13,6 +13,16 @@ export const SampleBtn = styled.TouchableOpacity`
     border-radius: 10px;
 `;
 
+export const StoreBtn = styled.TouchableOpacity`
+    align-items: center;
+    justify-content: center;
+    margin-top:40px;
+    width: 300px;
+    height: 60px;
+    background-color:${props => theme.main};
+    border-radius: 10px;
+`;
+
 export const InfoBtn = styled.TouchableOpacity`
     margin-top:50px;
     margin-right:20px;
@@ -26,7 +36,13 @@ export const InfoImage = styled.Image`
 `;
 
 export const HomeText = styled.Text`
-    font-size: 36px;
+    font-size: 30px;
+    font-weight: 500;
+`;
+
+export const StoreText = styled.Text`
+    font-size: 24px;
+    font-weight: 600;
 `;
 
 export const HomeTextView = styled.View`
