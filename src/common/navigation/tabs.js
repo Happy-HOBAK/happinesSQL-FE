@@ -15,9 +15,9 @@ export default function MyTabs() {
   return (
     <Tab.Navigator 
       initialRouteName="홈"
-      screenOptions={{ headerShown: false }}
-      tabBarOptions={{
-        activeTintColor: theme.main,
+      screenOptions={{ 
+        headerShown: false,
+        tabBarActiveTintColor: theme.main, 
       }}
     >
       <Tab.Screen 
