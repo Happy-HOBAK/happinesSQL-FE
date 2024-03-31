@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { StoreBtn, StoreText, UserInput, UserText, UserImageBtn } from "../../styles/styles";
 
 function UserInfo() {
   const navigation = useNavigation();
@@ -20,38 +21,48 @@ function UserInfo() {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Image source={require('./assets/Vector.png')} style={{ width: 50, height: 50, marginBottom: 20 }} />
-      <TouchableOpacity>
-        <Text style={{ marginBottom: 20 }}>이미지 저장</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
+      <Image source={require('./assets/Vector.png')} style={{ width: 100, height: 100, marginBottom: 20 }} />
+
+      <UserImageBtn>
+        <Text style={{ fontWeight:500, marginTop:10}}>이미지 선택</Text>
+      </UserImageBtn>
+
+      <TouchableOpacity style={{marginTop:20}}>
         <Text style={{ marginBottom: 20 }}>이미지 삭제</Text>
       </TouchableOpacity>
-      <TextInput
+
+      <UserText>이름</UserText>
+      <UserInput
+        returnKeyType="done"
         placeholder="이름"
         value={name}
         onChangeText={text => setName(text)}
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20, width: 200 }}
       />
-      <TextInput
+
+    <UserText>성별</UserText>
+      <UserInput
+        returnKeyType="done"
         placeholder="성별"
         value={gender}
         onChangeText={text => setGender(text)}
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20, width: 200 }}
       />
-      <TextInput
+
+    <UserText>나이</UserText>
+      <UserInput
+        returnKeyType="done"
+        keyboardType="number-pad"
         placeholder="나이"
         value={age}
         onChangeText={text => setAge(text)}
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20, width: 200 }}
       />
-      <TouchableOpacity onPress={saveUserInfo}>
-        <Text style={{ marginBottom: 20 }}>저장하기</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={{ marginBottom: 20 }}>뒤로가기</Text>
-      </TouchableOpacity>
+      <StoreBtn onPress={saveUserInfo}>
+        <StoreText>저장하기</StoreText>
+      </StoreBtn>
+
+      <StoreBtn onPress={() => navigation.goBack()}>
+        <StoreText>뒤로가기</StoreText>
+      </StoreBtn>
 
     </View>
     

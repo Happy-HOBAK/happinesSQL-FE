@@ -13,6 +13,14 @@ export const SampleBtn = styled.TouchableOpacity`
     border-radius: 10px;
 `;
 
+export const UserImageBtn = styled.TouchableOpacity`
+    background-color:${props => theme.main};
+    border-radius: 10px;
+    height: 35px;
+    width: 135px;
+    align-items: center;
+`;
+
 export const StoreBtn = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
@@ -55,4 +63,34 @@ export const EmotionText = styled.Text`
     font-size: 150px;
     text-align: center;
     top: 55px;
+`;
+
+export const RecordTextView = styled.View`
+    margin-top:100px;
+    margin-bottom: 30px;
+    align-items: center;
+`;
+
+
+export const ReportText = styled.Text`
+    margin-top: 8px;
+    font-size: 14px;
+    text-align: center;
+`;
+
+export const UserInput = styled.TextInput`
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 60px;
+    border-radius: 10px;
+    border-color: ${props => theme.grey_3};
+    border-width: 1px;
+`;
+
+export const UserText = styled.Text`
+    font-size: 19px;   
+    margin-bottom: 8px;
+    margin-right: 240px;
+    font-weight: 500;
 `;
