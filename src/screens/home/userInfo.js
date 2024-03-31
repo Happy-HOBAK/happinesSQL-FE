@@ -17,6 +17,7 @@ function UserInfo() {
 
   const saveUserInfo = () => {
     // 유저 정보 저장
+    // 이것두 recoil~~~
   };
 
   return (

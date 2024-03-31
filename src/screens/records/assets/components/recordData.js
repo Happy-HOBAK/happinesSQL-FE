@@ -9,6 +9,11 @@ function RecordData() {
   const [page, setPage] = useState(1);
   const [records, setRecords] = useState([]);
 
+//   const test = records.map((record, index) => {
+//     record.image
+//   })
+//   console.log(test)
+
   useEffect(() => {
     fetchData();
   }, [page]);

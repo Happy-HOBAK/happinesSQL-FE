@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeText, InfoBtn, InfoImage, HomeTextView, StoreBtn, StoreText } from "../../../../styles/styles";
@@ -6,7 +6,13 @@ import UserIcon from '../Vector.png'
 import FirstEmotions from "./firstEmotions";
 
 function FirstHome() {
-  const navigation = useNavigation();
+
+  const [emotion, setEmotion] = useState("");
+  const navigation = useNavigation(); 
+
+  const onEmotionChange = (() => {
+    
+  })
 
   return (
     <View>

@@ -6,11 +6,13 @@ import Home from './src/screens/home/home.js';
 import Test from './src/screens/home/test.js';
 import UserInfo from './src/screens/home/userInfo.js';
 import MyTabs from './src/common/navigation/tabs.js';
+import { RecoilRoot } from 'recoil';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <RecoilRoot>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Tabs" component={MyTabs} />
@@ -20,5 +22,6 @@ export default function App() {
       </Stack.Navigator>
       <StatusBar style="dark" />
     </NavigationContainer>
+    </RecoilRoot>
   );
 }
