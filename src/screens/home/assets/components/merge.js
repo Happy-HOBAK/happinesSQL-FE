@@ -10,7 +10,7 @@ import { emotion } from "../../../../common/data/emotion";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { EmotionState } from "../../../../common/recoil/atoms";
 
-const Merge = () => {
+const Merge = ({ onActivitySave }) => {
   const [selectedEmotionIndex, setSelectedEmotionIndex] = useState(0);
   const navigation = useNavigation(); 
   const [activity, setActivity] = useRecoilState(EmotionState)
@@ -25,6 +25,7 @@ const Merge = () => {
 
   const saveActivity = () => {
     setActivity(selectedEmotion);
+    onActivitySave();
     // 활동 저장 로직
   };
 
