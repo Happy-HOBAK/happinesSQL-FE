@@ -10,7 +10,9 @@ import SecondHome from "./assets/components/secondHome";
 function Home() {
 
   const [showSecondHome, setShowSecondHome] = useState(false);
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
+  
+  console.log(showSecondHome);
 
   const navigateToSecondHome = () => {
     setShowSecondHome(true);

@@ -69,11 +69,9 @@ const Merge = ({ onActivitySave }) => {
         </EmotionText>
       </View>
       <View style={{ alignItems: "center" }}>
-        <TouchableOpacity onPress={saveActivity}>
-          <StoreBtn>
+          <StoreBtn onPress={saveActivity}>
             <StoreText>활동 입력하기</StoreText>
           </StoreBtn>
-        </TouchableOpacity>
       </View>
     </View>
   );
