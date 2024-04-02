@@ -146,3 +146,28 @@ export const ActivityBtn = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
 `;
+
+export const PlusBtn = styled.TouchableOpacity`
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 40px;
+    background-color:${props => theme.main};
+    border-radius: 10px;
+    margin-top: 30px;
+`;
+
+export const PlusText = styled.Text`
+    font-size: 16px;
+    font-weight: 600;
+`;
+
+export const PlusInput = styled.TextInput`
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 200px;
+    height: 45px;
+    border-radius: 10px;
+    border-color: ${props => theme.grey_3};
+    border-width: 1px;
+`;

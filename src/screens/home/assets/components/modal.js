@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, Modal, Pressable, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, Modal, Pressable, StyleSheet, TextInput } from "react-native";
+import { theme } from "../../../../styles/theme";
+import { PlusBtn, PlusInput, PlusText } from "../../../../styles/styles";
+import DropdownComponent from "./dropdown";
 
 const ModalScreen = ({ onClose }) => {
-    const [isModalVisible, setIsModalVisible] = useState(true);
+    //const [isModalVisible, setIsModalVisible] = useState(true);
 
     const onPressModalClose = () => {
         console.log("팝업을 닫는 중 입니다");
@@ -12,10 +15,22 @@ const ModalScreen = ({ onClose }) => {
     return(
         <View style={styles.container}>
             <View style={styles.modalView}>
-                <Text style={styles.modalTextStyle}>Modal이 출력되는 영역입니다.</Text>
-                <Pressable onPress={onPressModalClose}>
-                    <Text>Modal Close!</Text>
-                </Pressable>
+                <View style={{alignSelf:'flex-end'}} >
+                    <TouchableOpacity onPress={onPressModalClose}>
+                        <Text style={styles.modalTextStyle}>X</Text>
+                    </TouchableOpacity>
+               </View>
+                <View style={{alignSelf:'flex-start'}}>
+                <Text style={styles.modalTextStyle}>카테고리 설정</Text>
+                <DropdownComponent/>
+                </View>
+                <View style={{alignSelf:'flex-start'}}>
+                <Text style={styles.modalTextStyle}>활동 입력하기</Text>
+                </View>
+                <PlusInput/>
+                <PlusBtn onPress={onPressModalClose}>
+                    <PlusText>활동 추가하기</PlusText>
+                </PlusBtn>
             </View>
         </View>
     )
@@ -29,8 +44,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalView: {
+        height:400,
+        width:300,
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 35,
         alignItems: 'center',
         shadowColor: '#000',
@@ -45,8 +62,8 @@ const styles = StyleSheet.create({
     modalTextStyle: {
         color: '#17191c',
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 50
+        fontSize:16,
+        marginBottom: 16
     },
 });
 
