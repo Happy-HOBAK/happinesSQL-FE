@@ -127,4 +127,22 @@ export const SearchBtn = styled.TouchableOpacity`
     width: 110px;
     height: 38px;
     background-color: ${props => theme.grey_3};
+    align-items: center;
+    justify-content: center;
+`;
+
+export const SearchText = styled.Text`
+    font-size: 14px;
+    font-weight: 600;
+`;
+
+export const ActivityBtn = styled.TouchableOpacity`
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+    background-color: ${props => theme.grey_3};
+    align-items: center;
+    justify-content: center;
 `;
