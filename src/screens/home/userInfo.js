@@ -22,7 +22,7 @@ function UserInfo() {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Image source={require('./assets/Vector.png')} style={{ width: 100, height: 100, marginBottom: 20 }} />
+      <Image source={require('../home/assets/images/Vector.png')} style={{ width: 100, height: 100, marginBottom: 20 }} />
 
       <UserImageBtn>
         <Text style={{ fontWeight:500, marginTop:10}}>이미지 선택</Text>

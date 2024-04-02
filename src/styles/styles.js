@@ -38,6 +38,17 @@ export const InfoBtn = styled.TouchableOpacity`
     padding: 10px;
 `;
 
+export const BackBtn = styled.TouchableOpacity`
+    margin-top:70px;
+    margin-left: 15px;
+`;
+
+export const BackImage = styled.Image`
+
+    height: 40px;
+    width: 40px;
+`;
+
 export const InfoImage = styled.Image`
     height: 35px;
     width: 35px;
@@ -56,6 +67,21 @@ export const StoreText = styled.Text`
 export const HomeTextView = styled.View`
     margin-top:50px;
     align-items: center;
+`;
+
+export const SecondHomeTextView = styled.View`
+    margin-top:10px;
+    align-items: center;
+`;
+
+export const SecondInput = styled.TextInput`
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 35px;
+    border-radius: 10px;
+    border-color: ${props => theme.grey_3};
+    border-width: 1px;
 `;
 
 export const EmotionText = styled.Text`
@@ -93,4 +119,12 @@ export const UserText = styled.Text`
     margin-bottom: 8px;
     margin-right: 240px;
     font-weight: 500;
+`;
+
+export const SearchBtn = styled.TouchableOpacity`
+    border-radius: 20px;
+    margin-left: 54%;
+    width: 110px;
+    height: 38px;
+    background-color: ${props => theme.grey_3};
 `;
