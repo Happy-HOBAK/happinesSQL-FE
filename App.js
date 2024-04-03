@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screens/home/home.js';
 import Test from './src/screens/home/test.js';
@@ -13,7 +13,14 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <RecoilRoot>
-    <NavigationContainer>
+    <NavigationContainer theme={{
+        ...DefaultTheme,
+        colors: {
+          ...DefaultTheme.colors,
+          background: 'white',
+        },
+      }}
+      independent={true}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Tabs" component={MyTabs} />
         <Stack.Screen name="Home" component={Home} />

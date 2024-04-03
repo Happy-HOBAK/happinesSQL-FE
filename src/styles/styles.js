@@ -126,7 +126,7 @@ export const SearchBtn = styled.TouchableOpacity`
     margin-left: 54%;
     width: 110px;
     height: 38px;
-    background-color: ${props => theme.grey_3};
+    background-color: ${props => theme.grey_2};
     align-items: center;
     justify-content: center;
 `;
@@ -142,7 +142,7 @@ export const ActivityBtn = styled.TouchableOpacity`
     border-radius: 20px;
     width: 100px;
     height: 100px;
-    background-color: ${props => theme.grey_3};
+    background-color: ${props => theme.grey_2};
     align-items: center;
     justify-content: center;
 `;
