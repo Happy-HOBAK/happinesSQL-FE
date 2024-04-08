@@ -64,6 +64,12 @@ export const StoreText = styled.Text`
     font-weight: 600;
 `;
 
+export const ThirdHomeText = styled.Text`
+    margin-top: 6px;
+    font-size: 20px;
+    font-weight: 600;
+`;
+
 export const HomeTextView = styled.View`
     margin-top:50px;
     align-items: center;
@@ -82,6 +88,37 @@ export const SecondInput = styled.TextInput`
     border-radius: 10px;
     border-color: ${props => theme.grey_3};
     border-width: 1px;
+`;
+
+export const ThirdPlaceInput = styled.TextInput`
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: ${props => theme.grey_1};
+    
+`;
+
+export const ThirdMemoInput = styled.TextInput`
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: ${props => theme.grey_1};
+    /* &::placeholder{
+        color: ${props => theme.text};
+    } */
+`;
+
+export const ThirdPicInput = styled.TextInput`
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: ${props => theme.grey_1};
 `;
 
 export const EmotionText = styled.Text`

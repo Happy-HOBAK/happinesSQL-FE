@@ -7,4 +7,5 @@ export const theme = {
     bg: "white",
     grey:"#3A3D40",
     toDoBg: "#5C5C60",
+    text: "#878787",
 }

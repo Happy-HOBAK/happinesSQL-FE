@@ -5,6 +5,7 @@ import { HomeText, InfoBtn, InfoImage, HomeTextView } from "../../styles/styles"
 import FirstHome from "./assets/components/firstHome";
 import Merge from "./assets/components/merge";
 import SecondHome from "./assets/components/secondHome";
+import ThirdHome from "./assets/components/thirdHome";
 
 function Home() {
 
@@ -31,7 +32,8 @@ function Home() {
       ) : (
         <Merge onActivitySave={navigateToSecondHome} />
       )} */}
-      <SecondHome/>
+      {/* <SecondHome/> */}
+      <ThirdHome/>
     </View>
   );
 }
