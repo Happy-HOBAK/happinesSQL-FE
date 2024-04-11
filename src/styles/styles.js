@@ -208,3 +208,28 @@ export const PlusInput = styled.TextInput`
     border-color: ${props => theme.grey_3};
     border-width: 1px;
 `;
+
+export const RecordBox = styled.View`
+    background-color: ${theme.grey_2};
+    border-radius: 10px;
+    width: 300px;
+    height: 260px;
+    margin-top: 25px;
+`;
+
+export const RecordContent = styled.Text`
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    margin-left: 5px; 
+    padding: 15px;
+`;
+
+export const RecordDate = styled.Text`
+    margin-top : 8px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: left; 
+    margin-left: 5px;
+    padding: 15px;
+`;

@@ -2,20 +2,19 @@ import React from "react";
 import { View, Text, Image, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import RecordData from "./assets/components/recordData";
-import { HomeText, RecordTextView } from "../../styles/styles";
+import { HomeText, RecordTextView, RecordBox } from "../../styles/styles";
 
 function Records() {
 
   return (
-    <View>
     <RecordTextView>
         <HomeText>
-            행복 톺아보기
+            내 행복 톺아보기
         </HomeText>
+         <View style={{marginTop: 10}}/>
+        <RecordData/>
     </RecordTextView>
-    <RecordData/>
-    </View>
-  );
+      );
 }
 
 

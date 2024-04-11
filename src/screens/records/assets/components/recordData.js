@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { data } from "../../../../common/data/data";
+import { RecordBox, RecordContent, RecordDate } from "../../../../styles/styles";
 
 function RecordData() {
   const navigation = useNavigation();
@@ -38,12 +39,14 @@ function RecordData() {
   return (
     <ScrollView onScroll={handleScroll} scrollEventThrottle={400}>
       {records.map((record, index) => (
-        <View key={index}>
+        <RecordBox key={index}>
+        <View>
+          <RecordDate>{record.date}</RecordDate>
+          <RecordContent>{record.memo}</RecordContent>
           <Image source={{ uri: record.image }} style={{ width: 100, height: 100 }} />
-          <Text>{record.memo}</Text>
-          <Text>{record.date}</Text>
-          <Text>Happiness: {record.happiness}</Text>
+          <RecordContent>Happiness: {record.happiness}</RecordContent>
         </View>
+        </RecordBox>
       ))}
       {loading && <ActivityIndicator size="large" color="#0000ff" />}
     </ScrollView>

@@ -9,7 +9,7 @@ export const data = {
             {
                 "record_id": 1,
                 "date": "2022-12-01",
-                "memo": "Enjoyed a walk in the park",
+                "memo": "Enjoyed a walk in the park,parkpark Enjoyed a walk in the park,parkparkEnjoyed a walk in the park,parkparkEnjoyed a walk in the park,parkparkEnjoyed a walk in the park,parkpark",
                 "image": "https://picsum.photos/200/300​",
                 "happiness": 8
             },
