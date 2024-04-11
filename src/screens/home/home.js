@@ -38,21 +38,21 @@ function Home() {
   );
 
   return (
-    <View>
-      {showSecondHome && (
-        <SecondHome SecondonActivitySave={navigateToThirdHome} />
-      )}
-      {showThirdHome && (
-        <ThirdHome onActivitySave={() => {
-          setShowSecondHome(false);
-          setShowThirdHome(false);
-      }} />
-      )}
-      {!showSecondHome && !showThirdHome && (
-        <Merge onActivitySave={navigateToSecondHome} />
-      )}
-    </View>
-    // <ThirdHome/>
+    // <View>
+    //   {showSecondHome && (
+    //     <SecondHome SecondonActivitySave={navigateToThirdHome} />
+    //   )}
+    //   {showThirdHome && (
+    //     <ThirdHome onActivitySave={() => {
+    //       setShowSecondHome(false);
+    //       setShowThirdHome(false);
+    //   }} />
+    //   )}
+    //   {!showSecondHome && !showThirdHome && (
+    //     <Merge onActivitySave={navigateToSecondHome} />
+    //   )}
+    // </View>
+    <ThirdHome/>
   );
 }
 

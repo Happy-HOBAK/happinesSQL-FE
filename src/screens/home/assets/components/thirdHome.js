@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { HomeText, BackImage, SecondHomeTextView, UserText, SearchText, BackBtn, ThirdPlaceInput, StoreText, StoreBtn, ThirdHomeText, ThirdMemoInput, ThirdPicInput } from "../../../../styles/styles";
+import { HomeText, BackImage, SecondHomeTextView, UserText, ThirdText, BackBtn, ThirdPlaceInput, StoreText, StoreBtn, ThirdHomeText, ThirdMemoInput, ThirdPicInput } from "../../../../styles/styles";
 import { useRecoilValue } from "recoil";
 import { EmotionState } from "../../../../common/recoil/atoms";
 import backicon from '../images/back.png'
 import searchicon from '../images/search.png'
 import * as Location from "expo-location";
+import * as ImagePicker from 'expo-image-picker';
 
 
 const ThirdHome = ({ onActivitySave }) => {
     const navigation = useNavigation(); 
-    const [city, setCity] = useState("위치 가져오는중 ...");
+    const [city, setCity] = useState("📌 위치 가져오는중 ...");
     const [errorMsg, setErrorMsg] = useState(null);
     const [userCity, setUserCity] = useState("");
     const [locationEnabled, setLocationEnabled] = useState(true);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         getLocation();
@@ -32,7 +34,7 @@ const ThirdHome = ({ onActivitySave }) => {
             const location = await Location.getCurrentPositionAsync({});
             const { latitude, longitude } = location.coords;
             const reverseGeocode = await Location.reverseGeocodeAsync({ latitude, longitude });
-            const currentCity = `${reverseGeocode[0].city} ${reverseGeocode[0].district}`;
+            const currentCity = ` 📌 ${reverseGeocode[0].city} ${reverseGeocode[0].district}`;
             setCity(currentCity);
         } catch (error) {
             console.error("위치 정보를 가져오는 중 오류 발생:", error);
@@ -40,6 +42,21 @@ const ThirdHome = ({ onActivitySave }) => {
         }
     };
     
+    const handleImagePick = async () => {
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+            if (!result.canceled) {
+                setSelectedImage(result.uri);
+            }
+        } catch (error) {
+            console.error("이미지를 선택하는 중 오류 발생:", error);
+        }
+    };
 
     const saveAll = () => {
         onActivitySave()
@@ -90,10 +107,12 @@ const ThirdHome = ({ onActivitySave }) => {
 
                 <UserText>사진</UserText>
                 <ThirdPicInput
-                placeholder="  📸 사진 추가하기" 
+                onPress={handleImagePick}
                 style={{marginTop: 10}}
-                />
-
+                >
+                <ThirdText>📸 사진 추가하기</ThirdText>
+                </ThirdPicInput>
+                {selectedImage && <Image source={{ uri: selectedImage }} style={{ width: 200, height: 200 }} />}
                 <StoreBtn onPress={saveAll}>
                     <StoreText>저장하기</StoreText>
                 </StoreBtn>

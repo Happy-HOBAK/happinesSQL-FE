@@ -112,13 +112,21 @@ export const ThirdMemoInput = styled.TextInput`
     } */
 `;
 
-export const ThirdPicInput = styled.TextInput`
+export const ThirdPicInput = styled.TouchableOpacity`
     padding: 10px;
     margin-bottom: 20px;
     width: 300px;
     height: 100px;
     border-radius: 10px;
     background-color: ${props => theme.grey_1};
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const ThirdText = styled.Text`
+    text-align: center;
+    margin-left: 3%;
+    color: #CCCCCD;
 `;
 
 export const EmotionText = styled.Text`
