@@ -8,7 +8,7 @@ import backicon from '../images/back.png'
 import searchicon from '../images/search.png'
 import ModalScreen from "./modal";
 
-function SecondHome() {
+const SecondHome = ({ SecondonActivitySave }) => {
     const navigation = useNavigation(); 
     // const test = useRecoilValue(EmotionState)
     // console.log(test);
@@ -18,6 +18,11 @@ function SecondHome() {
     const toggleModal = () => {
         setIsModalVisible(!isModalVisible);
     }
+
+    const SecondsaveActivity = () => {
+        SecondonActivitySave();
+        // 활동 저장 로직
+      };
     
     return (
         <View>
@@ -39,7 +44,9 @@ function SecondHome() {
                 </SearchBtn>
                 <UserText>카테고리 이름</UserText>
                 <View style={{flexDirection:"row", padding: 10}}>
-                <ActivityBtn></ActivityBtn>
+                <ActivityBtn
+                onPress={SecondsaveActivity}
+                ></ActivityBtn>
                 <ActivityBtn></ActivityBtn>
                 <ActivityBtn></ActivityBtn>
                 </View>

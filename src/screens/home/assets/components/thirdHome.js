@@ -8,10 +8,12 @@ import backicon from '../images/back.png'
 import searchicon from '../images/search.png'
 import ModalScreen from "./modal";
 
-function ThirdHome() {
+const ThirdHome = ({ onActivitySave }) => {
     const navigation = useNavigation(); 
     
     const saveAll = () => {
+        onActivitySave()
+        console.log("onActivitySave called");
         // 활동 저장 로직
       };
     

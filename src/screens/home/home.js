@@ -8,32 +8,49 @@ import SecondHome from "./assets/components/secondHome";
 import ThirdHome from "./assets/components/thirdHome";
 
 function Home() {
-
   const [showSecondHome, setShowSecondHome] = useState(false);
-  //const navigation = useNavigation();
+  const [showThirdHome, setShowThirdHome] = useState(false);
+  const navigation = useNavigation();
   
-  console.log(showSecondHome);
+  console.log("showSecondHome : " + showSecondHome);
+  console.log("showThirdHome : " + showThirdHome);
 
   const navigateToSecondHome = () => {
     setShowSecondHome(true);
-    
+    setShowThirdHome(false);
+  };
+
+  const navigateToThirdHome = () => {
+    setShowSecondHome(false);
+    setShowThirdHome(true);
+  };
+
+  const navigateToFirstome = () => {
+    setShowSecondHome(false);
+    setShowThirdHome(true);
   };
 
   useFocusEffect(
     React.useCallback(()=>{
       setShowSecondHome(false);
+      setShowThirdHome(false);
     }, [])
   );
 
   return (
     <View>
-      {/* {showSecondHome ? (
-        <SecondHome />
-      ) : (
+      {showSecondHome && (
+        <SecondHome SecondonActivitySave={navigateToThirdHome} />
+      )}
+      {showThirdHome && (
+        <ThirdHome onActivitySave={() => {
+          setShowSecondHome(false);
+          setShowThirdHome(false);
+      }} />
+      )}
+      {!showSecondHome && !showThirdHome && (
         <Merge onActivitySave={navigateToSecondHome} />
-      )} */}
-      {/* <SecondHome/> */}
-      <ThirdHome/>
+      )}
     </View>
   );
 }
