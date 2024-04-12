@@ -31,6 +31,16 @@ export const StoreBtn = styled.TouchableOpacity`
     border-radius: 10px;
 `;
 
+export const DataeBtn = styled.TouchableOpacity`
+    align-items: center;
+    justify-content: center;
+    margin-top:80%;
+    width: 250px;
+    height: 50px;
+    background-color:${props => theme.main};
+    border-radius: 10px;
+`;
+
 export const InfoBtn = styled.TouchableOpacity`
     margin-top:50px;
     margin-right:20px;
@@ -61,6 +71,16 @@ export const HomeText = styled.Text`
 
 export const StoreText = styled.Text`
     font-size: 24px;
+    font-weight: 600;
+`;
+
+export const DataText = styled.Text`
+    font-size: 20px;
+    font-weight: 600;
+`;
+
+export const HappyText = styled.Text`
+    font-size: 22px;
     font-weight: 600;
 `;
 
@@ -218,7 +238,7 @@ export const PlusInput = styled.TextInput`
 `;
 
 export const RecordBox = styled.View`
-    background-color: ${theme.grey_2};
+    background-color: ${theme.grey_1};
     border-radius: 10px;
     width: 300px;
     height: 260px;
@@ -240,4 +260,22 @@ export const RecordDate = styled.Text`
     text-align: left; 
     margin-left: 5px;
     padding: 15px;
+`;
+
+export const ReportBox = styled.View`
+    background-color: ${theme.grey_1};
+    border-radius: 10px;
+    width: 300px;
+    height: 320px;
+    margin-top: 25px;
+    align-items: center;
+`;
+
+export const SecondReportBox = styled.View`
+    background-color: ${theme.grey_1};
+    border-radius: 10px;
+    width: 300px;
+    height: 190px;
+    margin-top: 25px;
+    align-items: center;
 `;

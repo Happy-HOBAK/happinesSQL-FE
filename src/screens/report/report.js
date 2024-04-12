@@ -1,10 +1,14 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { HomeText, InfoBtn, InfoImage, RecordTextView, ReportText } from "../../styles/styles";
+import { HomeText, ReportBox, HappyText, RecordTextView, ReportText, DataeBtn, DataText, SecondReportBox } from "../../styles/styles";
 
 function Report() {
   const navigation = useNavigation();
+
+  const handleDataBtnPress = () => {
+    navigation.navigate('Data');
+  };
 
   return (
     <View>
@@ -15,6 +19,44 @@ function Report() {
         <ReportText>
           내 행복점수를 World Database와 비교 분석한 내용이에요.
         </ReportText>
+
+        <ScrollView>
+        <ReportBox>
+          <DataeBtn onPress={handleDataBtnPress}>
+            <DataText>
+              전체 데이터 보기
+            </DataText>
+          </DataeBtn>
+        </ReportBox>
+
+        <SecondReportBox>
+          <HappyText style={{ marginTop: 24 }}>
+            행복 Best 3
+          </HappyText>
+          <HappyText style={{ marginTop: 10 }}>
+            1. 보드타기🛹
+          </HappyText>
+          <HappyText style={{marginTop : 6 }}>
+            2. 요리하기🍳
+          </HappyText>
+          <HappyText style={{marginTop : 6 }}>
+            3. 코딩하기🧑‍💻
+          </HappyText>
+        </SecondReportBox>
+
+        <ReportBox style={{height : 430}}>
+          <HappyText style={{ marginTop: 24 }}>
+             1년 행복 지수 그래프
+          </HappyText>
+        </ReportBox>
+
+        <ReportBox style={{height : 380}}>
+          <HappyText style={{ marginTop: 24 }}>
+             1년 행복 지수 위치
+          </HappyText>
+        </ReportBox>
+        </ScrollView>
+
     </RecordTextView>
     </View>
   );

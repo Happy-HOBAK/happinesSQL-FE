@@ -5,6 +5,7 @@ import Records from '../../screens/records/records';
 import Calender from '../../screens/calender/calender';
 import Report from '../../screens/report/report';
 import Trends from '../../screens/trends/trends';
+import Data from '../../screens/report/assets/components/DataScreen';
 
 export function HomeScreen() {
   return (
@@ -32,4 +33,10 @@ export function TrendScreen() {
   return (
     <Trends/>
   );
+}
+
+export function DataScreen() {
+  return(
+    <Data/>
+  )
 }
