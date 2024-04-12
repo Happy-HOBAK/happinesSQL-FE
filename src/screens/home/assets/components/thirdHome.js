@@ -21,6 +21,10 @@ const ThirdHome = ({ onActivitySave }) => {
     const [userCity, setUserCity] = useState("");
     const [locationEnabled, setLocationEnabled] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [country, setCountry] = useState(null);
+
 
     useEffect(() => {
         getLocation();
@@ -36,10 +40,18 @@ const ThirdHome = ({ onActivitySave }) => {
             }
 
             const location = await Location.getCurrentPositionAsync({});
+            //const sendLocation = location.coords;
             const { latitude, longitude } = location.coords;
             const reverseGeocode = await Location.reverseGeocodeAsync({ latitude, longitude });
+            //console.log(reverseGeocode);
+            const currentCountry = `${reverseGeocode[0].country}`
             const currentCity = ` 📌 ${reverseGeocode[0].city} ${reverseGeocode[0].district}`;
             setCity(currentCity);
+            setLocation(currentCity);
+            setUserCity(currentCity);
+            setLatitude(latitude);
+            setLongitude(longitude);
+            setCountry(currentCountry)
         } catch (error) {
             console.error("위치 정보를 가져오는 중 오류 발생:", error);
             setErrorMsg("위치 정보를 가져오는 중 오류가 발생했습니다.");
@@ -66,7 +78,7 @@ const ThirdHome = ({ onActivitySave }) => {
     const saveAll = async () => {
         try {
             console.log("emotion:", emotion, "memo:", memo, "location:", location, "image:", image);
-            await sendToServer(emotion, memo, location, image);
+            await sendToServer(emotion, memo, location, image, latitude, longitude, country);
             onActivitySave();
             console.log("데이터가 서버에 저장되었습니다.");
         } catch (error) {
@@ -93,7 +105,8 @@ const ThirdHome = ({ onActivitySave }) => {
                  placeholder="  📌 장소 추가하기" 
                  style={{marginTop: 30}}
                  value={userCity || city}
-                 onChangeText={text => setUserCity(text)}
+                 
+                 //onChangeText={text => setUserCity(text)}
                  />) : (
                  <View>
                  <ThirdPlaceInput 
