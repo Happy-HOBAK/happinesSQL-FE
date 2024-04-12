@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeText, BackImage, SecondHomeTextView, UserText, ThirdText, BackBtn, ThirdPlaceInput, StoreText, StoreBtn, ThirdHomeText, ThirdMemoInput, ThirdPicInput } from "../../../../styles/styles";
-import { useRecoilValue } from "recoil";
-import { EmotionState } from "../../../../common/recoil/atoms";
+import { useRecoilState } from "recoil";
+import { EmotionState, MemoState, LocationState, ImageState} from "../../../../common/recoil/atoms";
 import backicon from '../images/back.png'
 import searchicon from '../images/search.png'
 import * as Location from "expo-location";
 import * as ImagePicker from 'expo-image-picker';
-
+import { sendToServer } from "../apis/sendToServer";
 
 const ThirdHome = ({ onActivitySave }) => {
     const navigation = useNavigation(); 
+    const [emotion, setEmotion] = useRecoilState(EmotionState); 
+    const [memo, setMemo] = useRecoilState(MemoState); 
+    const [location, setLocation] = useRecoilState(LocationState);
+    const [image, setImage] = useRecoilState(ImageState); 
     const [city, setCity] = useState("📌 위치 가져오는중 ...");
     const [errorMsg, setErrorMsg] = useState(null);
     const [userCity, setUserCity] = useState("");
@@ -52,17 +56,24 @@ const ThirdHome = ({ onActivitySave }) => {
             });
             if (!result.canceled) {
                 setSelectedImage(result.uri);
+                setImage(result.uri);
             }
         } catch (error) {
             console.error("이미지를 선택하는 중 오류 발생:", error);
         }
     };
 
-    const saveAll = () => {
-        onActivitySave()
-        console.log("onActivitySave called");
-        // 활동 저장 로직
-      };
+    const saveAll = async () => {
+        try {
+            console.log("emotion:", emotion, "memo:", memo, "location:", location, "image:", image);
+            await sendToServer(emotion, memo, location, image);
+            onActivitySave();
+            console.log("데이터가 서버에 저장되었습니다.");
+        } catch (error) {
+            console.log("emotion:", emotion, "memo:", memo, "location:", location, "image:", image);
+            console.error("데이터를 서버에 저장하는 중 오류 발생:", error);
+        }
+    };
     
     return (
         <View>
@@ -103,6 +114,8 @@ const ThirdHome = ({ onActivitySave }) => {
                 <ThirdMemoInput
                 placeholder="  📝 메모 추가하기" 
                 style={{marginTop: 10}}
+                value={memo}
+                onChangeText={text => setMemo(text)}
                 />
 
                 <UserText>사진</UserText>

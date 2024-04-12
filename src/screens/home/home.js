@@ -52,7 +52,7 @@ function Home() {
     //     <Merge onActivitySave={navigateToSecondHome} />
     //   )}
     // </View>
-    <SecondHome/>
+    <ThirdHome/>
   );
 }
 
