@@ -15,6 +15,7 @@ const Merge = ({ onActivitySave }) => {
   const navigation = useNavigation(); 
   const [activity, setActivity] = useRecoilState(EmotionState)
   const selectedEmotion = emotion[selectedEmotionIndex].emotion;
+  const happiness = emotion[selectedEmotionIndex].id;
 
   const handleSliderChange = (value) => {
     requestAnimationFrame(() => {
@@ -24,7 +25,7 @@ const Merge = ({ onActivitySave }) => {
   };
 
   const saveActivity = () => {
-    setActivity(selectedEmotion);
+    setActivity(happiness);
     onActivitySave();
     // 활동 저장 로직
   };
