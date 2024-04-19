@@ -1,28 +1,82 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, Modal } from "react-native";
+import { View, Text, Image, TouchableOpacity, Modal, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeText, BackImage, SecondHomeTextView, UserText, SearchText, BackBtn, SecondInput, SearchBtn, ActivityBtn } from "../../../../styles/styles";
 import { useRecoilValue } from "recoil";
-import { EmotionState } from "../../../../common/recoil/atoms";
+import { ActivityState } from "../../../../common/recoil/atoms";
 import backicon from '../images/back.png'
 import searchicon from '../images/search.png'
 import ModalScreen from "./modal";
+import { categorykData } from "../../../../common/data/category";
+import { useRecoilState } from "recoil";
 
 const SecondHome = ({ SecondonActivitySave }) => {
     const navigation = useNavigation(); 
-    // const test = useRecoilValue(EmotionState)
-    // console.log(test);
+    const [activitystate, setActivityState] = useRecoilState(ActivityState);
+
+    // function chunkArray(array, size) {
+    //     const chunkedArr = [];
+    //     let index = 0;
+        
+    //     while (index < array.length) {
+    //         chunkedArr.push(array.slice(index, index + size));
+    //         index += size;
+    //     }
+        
+    //     return chunkedArr;
+    // }
+    //const categories = categorykData.categories.map(cg=>cg.name)
+    //const category = categorykData.categories[0].name
+    //const id = categorykData.categories[0].activities.map(id=>id.id)
+    //const emoji = categorykData.categories[0].activities[0].emoji
     
+    // const categories = categorykData.categories.map(cat => ({
+    //     name: cat.name,
+    //     activities: cat.activities.map(act => ({
+    //         name: act.name,
+    //         emoji: act.emoji
+    //     }))
+    // }));
+    const categories = categorykData.categories.map(cat => ({
+        name: cat.name,
+        activities: Array.from({ length: Math.ceil(cat.activities.length / 3) }, (_, index) =>
+            cat.activities.slice(index * 3, index * 3 + 3).map(act => ({
+                id: act.id,
+                name: act.name,
+                emoji: act.emoji
+            }))
+        )
+    }));
+    
+    // 각 카테고리의 이름과 3개의 활동의 이름과 이모지 출력
+    // categories.forEach(cat => {
+    //     console.log(cat.name);
+    //     cat.activities.forEach(activityGroup => {
+    //         activityGroup.forEach(activity => {
+    //             console.log(`${activity.name}: ${activity.emoji}`);
+    //         });
+    //     });
+    // });
+    
+    // console.log(id)
+    // console.log(activity)
+    // console.log(emoji)
+
+
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const toggleModal = () => {
         setIsModalVisible(!isModalVisible);
     }
 
+    const press = (activityId) => {
+        setActivityState(activityId)
+        SecondsaveActivity();
+    }
     const SecondsaveActivity = () => {
         SecondonActivitySave();
-        // 활동 저장 로직
       };
+
     
     return (
         <View>
@@ -42,24 +96,28 @@ const SecondHome = ({ SecondonActivitySave }) => {
                         + 활동 추가하기
                     </SearchText>
                 </SearchBtn>
-                <UserText>카테고리 이름</UserText>
-                <View style={{flexDirection:"row", padding: 10}}>
-                <ActivityBtn
-                onPress={SecondsaveActivity}
-                ></ActivityBtn>
-                <ActivityBtn></ActivityBtn>
-                <ActivityBtn></ActivityBtn>
-                </View>
-                <View style={{flexDirection:"row", padding: 10}}>
-                <ActivityBtn></ActivityBtn>
-                <ActivityBtn></ActivityBtn>
-                <ActivityBtn></ActivityBtn>
-                </View>
-                <View style={{flexDirection:"row", padding: 10}}s>
-                <ActivityBtn></ActivityBtn>
-                <ActivityBtn></ActivityBtn>
-                <ActivityBtn></ActivityBtn>
-                </View>
+                <View style={{ marginStart: 30}}>
+    <ScrollView horizontal showsVerticalScrollIndicator={false} pagingEnabled>
+        {categories.map((category, index) => (
+            <View style={{ paddingRight: 20}}key={index}>
+                <UserText>{category.name}</UserText>
+                <ScrollView 
+                contentContainerStyle={{ flexGrow: 1 }}
+                style={{ flex: 1, flexDirection:"row", flexWrap: "wrap", padding: 10 }}>
+                    {category.activities.map((activityGroup, groupIndex) => (
+                        <View key={groupIndex} style={{ flexDirection: 'row' }}>
+                            {activityGroup.map((activity, activityIndex) => (
+                                <ActivityBtn key={activityIndex} onPress={() => press(activity.id)}>
+                                    <Text>{activity.emoji}</Text>
+                                </ActivityBtn>
+                            ))}
+                        </View>
+                    ))}
+                </ScrollView>
+            </View>
+        ))}
+    </ScrollView>
+</View>
             </SecondHomeTextView>
             <Modal 
             visible={isModalVisible} 

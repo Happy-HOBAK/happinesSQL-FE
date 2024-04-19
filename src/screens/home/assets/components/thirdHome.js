@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeText, BackImage, SecondHomeTextView, UserText, ThirdText, BackBtn, ThirdPlaceInput, StoreText, StoreBtn, ThirdHomeText, ThirdMemoInput, ThirdPicInput } from "../../../../styles/styles";
 import { useRecoilState } from "recoil";
-import { EmotionState, MemoState, LocationState, ImageState} from "../../../../common/recoil/atoms";
+import { EmotionState, MemoState, LocationState, ImageState, ActivityState} from "../../../../common/recoil/atoms";
 import backicon from '../images/back.png'
 import searchicon from '../images/search.png'
 import * as Location from "expo-location";
@@ -13,6 +13,7 @@ import { sendToServer } from "../apis/sendToServer";
 const ThirdHome = ({ onActivitySave }) => {
     const navigation = useNavigation(); 
     const [emotion, setEmotion] = useRecoilState(EmotionState); 
+    const [activityId, setActivityId] = useRecoilState(ActivityState)
     const [memo, setMemo] = useRecoilState(MemoState); 
     const [location, setLocation] = useRecoilState(LocationState);
     const [image, setImage] = useRecoilState(ImageState); 
@@ -78,11 +79,11 @@ const ThirdHome = ({ onActivitySave }) => {
     const saveAll = async () => {
         try {
             console.log("emotion:", emotion, "memo:", memo, "location:", location, "image:", image);
-            await sendToServer(emotion, memo, location, image, latitude, longitude, country);
+            await sendToServer(emotion, activityId, memo, location, image, latitude, longitude, country);
             onActivitySave();
             console.log("데이터가 서버에 저장되었습니다.");
         } catch (error) {
-            console.log("emotion:", emotion, "memo:", memo, "location:", location, "image:", image);
+            console.log("emotion:", emotion,"activityId:", activityId, "memo:", memo, "location:", location, "image:", image);
             console.error("데이터를 서버에 저장하는 중 오류 발생:", error);
         }
     };

@@ -67,27 +67,32 @@ export const InfoImage = styled.Image`
 export const HomeText = styled.Text`
     font-size: 30px;
     font-weight: 500;
+    color: #0B1623;
 `;
 
 export const StoreText = styled.Text`
     font-size: 24px;
     font-weight: 600;
+    color: #0B1623;
 `;
 
 export const DataText = styled.Text`
     font-size: 20px;
     font-weight: 600;
+    color: #0B1623;
 `;
 
 export const HappyText = styled.Text`
     font-size: 22px;
     font-weight: 600;
+    color: #0B1623;
 `;
 
 export const ThirdHomeText = styled.Text`
     margin-top: 6px;
     font-size: 20px;
     font-weight: 600;
+    color: #0B1623;
 `;
 
 export const HomeTextView = styled.View`
@@ -154,6 +159,7 @@ export const EmotionText = styled.Text`
     font-size: 150px;
     text-align: center;
     top: 55px;
+    color: #0B1623;
 `;
 
 export const RecordTextView = styled.View`
@@ -167,6 +173,7 @@ export const ReportText = styled.Text`
     margin-top: 8px;
     font-size: 14px;
     text-align: center;
+    color: #0B1623;
 `;
 
 export const UserInput = styled.TextInput`
@@ -184,6 +191,7 @@ export const UserText = styled.Text`
     margin-bottom: 8px;
     margin-right: 240px;
     font-weight: 500;
+    color: #0B1623;
 `;
 
 export const SearchBtn = styled.TouchableOpacity`
@@ -199,6 +207,7 @@ export const SearchBtn = styled.TouchableOpacity`
 export const SearchText = styled.Text`
     font-size: 14px;
     font-weight: 600;
+    color: #0B1623;
 `;
 
 export const ActivityBtn = styled.TouchableOpacity`
@@ -210,6 +219,7 @@ export const ActivityBtn = styled.TouchableOpacity`
     background-color: ${props => theme.grey_2};
     align-items: center;
     justify-content: center;
+    margin-bottom: 30px;
 `;
 
 export const PlusBtn = styled.TouchableOpacity`
@@ -225,6 +235,7 @@ export const PlusBtn = styled.TouchableOpacity`
 export const PlusText = styled.Text`
     font-size: 16px;
     font-weight: 600;
+    color: #0B1623;
 `;
 
 export const PlusInput = styled.TextInput`
@@ -251,6 +262,7 @@ export const RecordContent = styled.Text`
     text-align: left;
     margin-left: 5px; 
     padding: 15px;
+    color: #0B1623;
 `;
 
 export const RecordDate = styled.Text`
@@ -260,6 +272,7 @@ export const RecordDate = styled.Text`
     text-align: left; 
     margin-left: 5px;
     padding: 15px;
+    color: #0B1623;
 `;
 
 export const ReportBox = styled.View`

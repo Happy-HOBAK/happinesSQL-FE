@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { GlobalStyle } from './src/styles/Globalstyle.js';
 import Home from './src/screens/home/home.js';
 import Test from './src/screens/home/test.js';
 import UserInfo from './src/screens/home/userInfo.js';
@@ -19,6 +20,7 @@ export default function App() {
         colors: {
           ...DefaultTheme.colors,
           background: 'white',
+          text: '#878787'
         },
       }}
       independent={true}>

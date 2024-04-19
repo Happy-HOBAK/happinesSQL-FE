@@ -1,4 +1,4 @@
-export const sendToServer = async (emotion, memo, location, image, latitude, longitude, country) => {
+export const sendToServer = async (emotion, activityId, memo, location, image, latitude, longitude, country) => {
     try {
       const response = await fetch('http://example.com/saveData', {
         method: 'POST',
@@ -6,7 +6,8 @@ export const sendToServer = async (emotion, memo, location, image, latitude, lon
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            emotion: emotion,
+            happiness: emotion,
+            activityId: activityId,
             full_name: location,
             country: country,
             city: location.split(' ')[0],

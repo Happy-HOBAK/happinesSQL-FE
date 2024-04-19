@@ -5,6 +5,11 @@ export const EmotionState = atom({
     default:'',
 })
 
+export const ActivityState = atom({
+  key:'ActivityState',
+  default:'',
+})
+
 export const MemoState = atom({
     key: 'MemoState',
     default: '',
