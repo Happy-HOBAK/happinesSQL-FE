@@ -138,8 +138,8 @@ const ThirdHome = ({ onActivitySave }) => {
                 style={{marginTop: 10}}
                 >
                 <ThirdText>📸 사진 추가하기</ThirdText>
+                {selectedImage && <Image uri= {image} style={{ width: 200, height: 200 }} />}
                 </ThirdPicInput>
-                {selectedImage && <Image source={{ uri: selectedImage }} style={{ width: 200, height: 200 }} />}
                 <StoreBtn onPress={saveAll}>
                     <StoreText>저장하기</StoreText>
                 </StoreBtn>
