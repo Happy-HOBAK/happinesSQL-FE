@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, Modal, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, Modal, ScrollView, FlatList } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { HomeText, BackImage, SecondHomeTextView, UserText, SearchText, BackBtn, SecondInput, SearchBtn, ActivityBtn } from "../../../../styles/styles";
+import { HomeText, BackImage, SecondHomeTextView, CategoryText, SearchText, BackBtn, SecondInput, SearchBtn, ActivityBtn } from "../../../../styles/styles";
 import { useRecoilValue } from "recoil";
 import { ActivityState } from "../../../../common/recoil/atoms";
 import backicon from '../images/back.png'
@@ -9,6 +9,11 @@ import searchicon from '../images/search.png'
 import ModalScreen from "./modal";
 import { categorykData } from "../../../../common/data/category";
 import { useRecoilState } from "recoil";
+import { Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 const SecondHome = ({ SecondonActivitySave }) => {
     const navigation = useNavigation(); 
@@ -96,28 +101,32 @@ const SecondHome = ({ SecondonActivitySave }) => {
                         + 활동 추가하기
                     </SearchText>
                 </SearchBtn>
-                <View style={{ marginStart: 30}}>
-    <ScrollView horizontal showsVerticalScrollIndicator={false} pagingEnabled>
-        {categories.map((category, index) => (
-            <View style={{ paddingRight: 20}}key={index}>
-                <UserText>{category.name}</UserText>
-                <ScrollView 
-                contentContainerStyle={{ flexGrow: 1 }}
-                style={{ flex: 1, flexDirection:"row", flexWrap: "wrap", padding: 10 }}>
-                    {category.activities.map((activityGroup, groupIndex) => (
-                        <View key={groupIndex} style={{ flexDirection: 'row' }}>
-                            {activityGroup.map((activity, activityIndex) => (
-                                <ActivityBtn key={activityIndex} onPress={() => press(activity.id)}>
-                                    <Text>{activity.emoji}</Text>
-                                </ActivityBtn>
-                            ))}
+                <View style={{ marginStart: 30, marginBottom: 10}}>
+                <ScrollView horizontal showsVerticalScrollIndicator={false} pagingEnabled>
+                    {categories.map((category, index) => (
+                        <View style={{ paddingRight: 20}}key={index}>
+                            <CategoryText>{category.name}</CategoryText>
+                            <View style={{flex:1}}>
+                            <ScrollView 
+                            contentContainerStyle={{ marginVertical: 10}}
+                            style={{ maxHeight: windowHeight * 0.6, flex: 1, flexDirection:"row", flexWrap: "wrap", padding: 10 }}
+                            >
+                                {category.activities.map((activityGroup, groupIndex) => (
+                                    <View key={groupIndex} style={{ flexDirection: 'row' }}>
+                                        {activityGroup.map((activity, activityIndex) => (
+                                            <ActivityBtn key={activityIndex} onPress={() => press(activity.id)}>
+                                                <Text>{activity.emoji}</Text>
+                                                <Text>{activity.name}</Text>
+                                            </ActivityBtn>
+                                        ))}
+                                    </View>
+                                ))}
+                            </ScrollView>
+                            </View>
                         </View>
                     ))}
                 </ScrollView>
             </View>
-        ))}
-    </ScrollView>
-</View>
             </SecondHomeTextView>
             <Modal 
             visible={isModalVisible} 

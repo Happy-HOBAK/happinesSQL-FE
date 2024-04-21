@@ -194,6 +194,14 @@ export const UserText = styled.Text`
     color: #0B1623;
 `;
 
+export const CategoryText = styled.Text`
+    font-size: 19px;   
+    font-weight: 800;
+    margin-left: 20px;
+    color: #0B1623;
+    margin-top: 10px;
+`;
+
 export const SearchBtn = styled.TouchableOpacity`
     border-radius: 20px;
     margin-left: 54%;

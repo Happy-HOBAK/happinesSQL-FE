@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { HomeText, InfoBtn, InfoImage, HomeTextView } from "../../styles/styles";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {
+  HomeText,
+  InfoBtn,
+  InfoImage,
+  HomeTextView,
+} from "../../styles/styles";
 import FirstHome from "./assets/components/firstHome";
 import Merge from "./assets/components/merge";
 import SecondHome from "./assets/components/secondHome";
@@ -11,7 +16,7 @@ function Home() {
   const [showSecondHome, setShowSecondHome] = useState(false);
   const [showThirdHome, setShowThirdHome] = useState(false);
   const navigation = useNavigation();
-  
+
   console.log("showSecondHome : " + showSecondHome);
   console.log("showThirdHome : " + showThirdHome);
 
@@ -31,7 +36,7 @@ function Home() {
   };
 
   useFocusEffect(
-    React.useCallback(()=>{
+    React.useCallback(() => {
       setShowSecondHome(false);
       setShowThirdHome(false);
     }, [])
@@ -52,7 +57,7 @@ function Home() {
         <Merge onActivitySave={navigateToSecondHome} />
       )}
     </View>
-    // <SecondHome/>
+    // <SecondHome />
   );
 }
 
