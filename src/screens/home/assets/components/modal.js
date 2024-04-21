@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, Modal, Pressable, StyleSheet, Text
 import { theme } from "../../../../styles/theme";
 import { PlusBtn, PlusInput, PlusText } from "../../../../styles/styles";
 import DropdownComponent from "./dropdown";
+import { ActivitySend } from "../apis/activitySend";
 
 const ModalScreen = ({ onClose }) => {
     //const [isModalVisible, setIsModalVisible] = useState(true);
@@ -18,10 +19,11 @@ const ModalScreen = ({ onClose }) => {
         setActivityName(text);
     }
 
-    const onPressModalClose = () => {
+    const onPressModalClose = async () => {
         console.log("팝업을 닫는 중 입니다");
         console.log(selectedValue);
         console.log(activityName);
+        await ActivitySend(selectedValue, activityName);
         onClose();
     }
 
