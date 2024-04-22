@@ -197,9 +197,10 @@ export const UserText = styled.Text`
 export const CategoryText = styled.Text`
     font-size: 19px;   
     font-weight: 800;
-    margin-left: 20px;
+    margin-left: 35px;
     color: #0B1623;
     margin-top: 10px;
+    margin-bottom: 10px;
 `;
 
 export const SearchBtn = styled.TouchableOpacity`
@@ -299,4 +300,9 @@ export const SecondReportBox = styled.View`
     height: 190px;
     margin-top: 25px;
     align-items: center;
+`;
+
+export const SearchView = styled.View`
+    margin-top: 15px;
+    width: ${windowWidth}px;
 `;
