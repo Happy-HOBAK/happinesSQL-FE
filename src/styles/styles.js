@@ -65,21 +65,21 @@ export const InfoImage = styled.Image`
 `;
 
 export const HomeText = styled.Text`
-    font-size: 30px;
-    font-weight: 500;
+    font-size: 31px;
+    font-weight: 600;
     color: #0B1623;
 `;
 
 export const StoreText = styled.Text`
     font-size: 24px;
     font-weight: 600;
-    color: #0B1623;
+    color: white;
 `;
 
 export const DataText = styled.Text`
     font-size: 20px;
-    font-weight: 600;
-    color: #0B1623;
+    font-weight: 700;
+    color: white;
 `;
 
 export const HappyText = styled.Text`
@@ -244,7 +244,7 @@ export const PlusBtn = styled.TouchableOpacity`
 export const PlusText = styled.Text`
     font-size: 16px;
     font-weight: 600;
-    color: #0B1623;
+    color: white;
 `;
 
 export const PlusInput = styled.TextInput`
