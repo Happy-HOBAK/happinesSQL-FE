@@ -306,3 +306,8 @@ export const SearchView = styled.View`
     margin-top: 15px;
     width: ${windowWidth}px;
 `;
+
+export const CalenderView = styled.View`
+    flex: 1;
+    justify-content: center;
+`;

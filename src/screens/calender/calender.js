@@ -1,100 +1,101 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import { HomeText, InfoBtn, InfoImage, HomeTextView } from "../../styles/styles";
+import { useNavigation } from "@react-navigation/native";
+import {
+  CalenderView
+} from "../../styles/styles";
 import { Calendar, CalendarList } from "react-native-calendars";
 import { theme } from "../../styles/theme";
+
+function getCommonCustomStyles(opacity) {
+  return {
+    container: {
+      backgroundColor: `rgba(0, 0, 255, ${opacity})`,
+      borderRadius: 6,
+      width: 35,
+      height:35
+    },
+    text: {
+      color: 'white'
+    }
+  };
+}
+
+const markedDates = {
+  '2024-05-05': { customStyles: getCommonCustomStyles(0.2) },
+  '2024-05-16': { customStyles: getCommonCustomStyles(0.5) },
+  '2024-05-17': { customStyles: getCommonCustomStyles(0.7) },
+};
+
+const styles = {
+  margin:10
+};
+
+const Calendertheme = {
+todayTextColor: theme.main,
+  textDayFontSize: 20,
+  textDayFontWeight: '400',
+  textMonthFontSize: 20,
+  textMonthFontWeight: 'bold',
+  textSectionTitleColor: 'rgba(138, 138, 138, 1)',
+};
 
 function Calender() {
   const navigation = useNavigation();
 
   return (
-    <View style={{flex: 1 }}>
-      <View style={{marginTop: 80}}/>
-      <CalendarList
-        theme={{
-          textDayFontWeight: "bold",
-        }}
-      />
-    </View>
+    <CalenderView>
+      <Calendar
+        style={styles}
+        theme={Calendertheme}
+        monthFormat={'yyyy년 M월'}
+        markedDates={markedDates}
+        markingType={'custom'}
+        />
+    </CalenderView>
   );
 }
 
 export default Calender;
-
-// const theme = {
-//   calendarBackground: variables.main, // 캘린더 배경
-//   monthTextColor: 'white',
-//   textDayFontWeight: 'bold', // 날짜 서체
-//   dayTextColor: 'white', // 캘린더 날짜 색상
-//   textDayFontSize: 14, // 캘린더 날짜 글씨 크기
-//   textSectionTitleColor: 'white', // 요일 날짜 글씨 크기
-//   todayTextColor: 'yellow',
-//   agendaDayTextColor: variables.text_3, // 날짜 글씨 색상
-//   agendaDayNumColor: variables.text_4, // 요일 글씨 색상
-//   agendaTodayColor: variables.main, // 당일 글씨 색상
-//   agendaKnobColor: '#ffffff60', // Knob => 문고리 / 캘린더 접었다폈다 하는 아이콘 색상
-//   indicatorColor: 'red',
-//   selectedDayBackgroundColor: 'white',
-//   selectedDayTextColor: variables.main,
-//   'stylesheet.calendar.header': {
-//     week: {marginTop: 0, flexDirection: 'row', justifyContent: 'space-between'},
-//   },
-// };
+// 스크롤 없는 버전
 
 // import React from "react";
-// import { View } from "react-native";
+// import { useNavigation } from "@react-navigation/native";
 // import { CalendarList } from "react-native-calendars";
-// import { useNavigation } from '@react-navigation/native';
+// import { CalenderView } from "../../styles/styles";
+// import { theme } from "../../styles/theme";
 
-// function Calendar() {
+// const styles = {
+//   paddingBottom: 30,
+//   borderColor: '#E9E9E9',
+// };
+
+// const Calendertheme = {
+//   todayTextColor: theme.main,
+//   textDayFontSize: 20,
+//   textDayFontWeight: '400',
+//   textMonthFontSize: 20,
+//   textMonthFontWeight: '600',
+//   textSectionTitleColor: 'rgba(138, 138, 138, 1)',
+// };
+
+// function Calender() {
 //   const navigation = useNavigation();
 
-//   const theme1 = {
-//     backgroundColor: "#f0f4f7",
-//     calendarBackground: "#ffffff",
-//     textSectionTitleColor: "#b6c1cd",
-//     selectedDayBackgroundColor: "#00adf5",
-//     selectedDayTextColor: "#ffffff",
-//     todayTextColor: "#00adf5",
-//     dayTextColor: "#2d4150",
-//     textDisabledColor: "#d9e1e8",
-//     dotColor: "#00adf5",
-//     selectedDotColor: "#ffffff",
-//     arrowColor: "orange",
-//     monthTextColor: "blue",
-//     textDayFontWeight: "bold",
-//   };
-
-//   const theme2 = {
-//     backgroundColor: "#ffffff",
-//     calendarBackground: "#f0f4f7",
-//     textSectionTitleColor: "#000000",
-//     selectedDayBackgroundColor: "#ff69b4",
-//     selectedDayTextColor: "#ffffff",
-//     todayTextColor: "#00adf5",
-//     dayTextColor: "#2d4150",
-//     textDisabledColor: "#d9e1e8",
-//     dotColor: "#ff69b4",
-//     selectedDotColor: "#ffffff",
-//     arrowColor: "red",
-//     monthTextColor: "green",
-//     textDayFontWeight: "bold",
-//   };
-
 //   return (
-//     <View style={{ flex: 1 }}>
-//       <View style={{ marginTop: 80 }} />
-//       {/* Use theme1 */}
+//     <CalenderView>
 //       <CalendarList
-//         theme={theme1}
+//         style={styles}
+//         theme={Calendertheme}
+//         monthFormat={'yyyy년 M월'}
+//         horizontal={true}
+//         pagingEnabled={true}
+//         pastScrollRange={12}
+//         futureScrollRange={12}
+//         scrollEnabled={true}
 //       />
-//       {/* Use theme2 */}
-//       <CalendarList
-//         theme={theme2}
-//       />
-//     </View>
+//     </CalenderView>
 //   );
 // }
 
-// export default Calendar;
+// export default Calender;
