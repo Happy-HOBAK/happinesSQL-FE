@@ -285,12 +285,14 @@ export const RecordDate = styled.Text`
 `;
 
 export const ReportBox = styled.View`
-    background-color: ${theme.grey_1};
+    background-color: white;
     border-radius: 10px;
     width: 300px;
     height: 320px;
     margin-top: 25px;
     align-items: center;
+    border-color: ${theme.grey};
+    border-width:0.2px
 `;
 
 export const SecondReportBox = styled.View`

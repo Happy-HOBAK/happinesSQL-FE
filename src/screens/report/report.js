@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { HomeText, ReportBox, HappyText, RecordTextView, ReportText, DataeBtn, DataText, SecondReportBox } from "../../styles/styles";
+import { ReportChart } from "./assets/components/reportGraph";
 
 function Report() {
   const navigation = useNavigation();
@@ -45,14 +46,17 @@ function Report() {
         </SecondReportBox>
 
         <ReportBox style={{height : 430}}>
-          <HappyText style={{ marginTop: 24 }}>
-             1년 행복 지수 그래프
+          <HappyText style={{ marginTop: 24, marginBottom: 20 }}>
+             행복 지수 그래프
           </HappyText>
+          <View style={{marginRight:10}}>
+          <ReportChart/>
+          </View>
         </ReportBox>
 
         <ReportBox style={{height : 380}}>
           <HappyText style={{ marginTop: 24 }}>
-             1년 행복 지수 위치
+             행복 지수 위치
           </HappyText>
         </ReportBox>
         </ScrollView>
