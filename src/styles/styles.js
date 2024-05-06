@@ -311,3 +311,37 @@ export const CalenderView = styled.View`
     flex: 1;
     justify-content: center;
 `;
+
+export const ColorView = styled.View`
+    flex-direction: row;
+    margin-bottom: 8px;
+    /* background-color: ${theme.grey_1};
+    border-radius: 10px;
+    width: 300px;
+    height: 320px;
+    margin-top: 25px;
+    align-items: center; */
+`;
+
+export const ColorTitleText = styled.Text`
+    margin-top: 20%;
+    margin-left: 25%;
+    font-size: 16px;
+    color: ${theme.grey};
+`;
+
+export const ColorContentText = styled.Text`
+    /* margin-top: 10%; */
+    margin-left: 10%;
+    font-size: 14px;
+    color: ${theme.grey};
+`;
+
+export const ColorImage = styled.Image`
+    width: 20px;
+    height: 20px;
+`
+export const CText = styled.Text`
+    /* font-size: 14px; */
+    color: ${theme.grey};
+`;

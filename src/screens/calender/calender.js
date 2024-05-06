@@ -70,6 +70,7 @@ function Calender() {
 
   return (
     <CalenderView>
+      <View style={{margin:20}}/>
       <Calendar
         style={styles}
         theme={Calendertheme}
@@ -78,7 +79,7 @@ function Calender() {
         markingType={"custom"}
         onMonthChange={handleMonthChange}
       />
-      <ColorContents />
+      <ColorContents/>
     </CalenderView>
   );
 }
