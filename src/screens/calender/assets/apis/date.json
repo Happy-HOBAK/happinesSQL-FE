@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "total_count": 11,
+    "pageable_count": 9
+  },
+  "documents": [
+    {
+      "happinesses": [
+        {
+          "date": "2024-03-03",
+          "happiness": 9
+        },
+        {
+          "date": "2024-03-04",
+          "happiness": 6
+        },
+        {
+          "date": "2024-03-31",
+          "happiness": 7
+        }
+      ]
+    }
+  ]
+}

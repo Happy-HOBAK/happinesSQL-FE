@@ -20,7 +20,7 @@ export async function scheduleNotifications() {
     trigger: null, // 테스트
   });
 
-  const hours = [0, 9, 12, 15, 18, 23];
+  const hours = [0, 9, 12, 14, 15, 18, 23];
   for (let hour of hours) {
     const trigger = {
       hour: hour,

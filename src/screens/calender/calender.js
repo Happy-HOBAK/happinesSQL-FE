@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import {
-  CalenderView
-} from "../../styles/styles";
+import { CalenderView } from "../../styles/styles";
 import { Calendar, CalendarList } from "react-native-calendars";
 import { theme } from "../../styles/theme";
+import axios from "axios";
+import dateData from "../calender/assets/apis/date.json";
+import { ColorContents } from "./assets/components/colorContents";
 
 function getCommonCustomStyles(opacity) {
   return {
@@ -13,45 +14,71 @@ function getCommonCustomStyles(opacity) {
       backgroundColor: `rgba(0, 0, 255, ${opacity})`,
       borderRadius: 6,
       width: 35,
-      height:35
+      height: 35,
     },
     text: {
-      color: 'white'
-    }
+      color: "white",
+    },
   };
 }
 
 const markedDates = {
-  '2024-05-05': { customStyles: getCommonCustomStyles(0.2) },
-  '2024-05-16': { customStyles: getCommonCustomStyles(0.5) },
-  '2024-05-17': { customStyles: getCommonCustomStyles(0.7) },
+  "2024-05-05": { customStyles: getCommonCustomStyles(0.2) },
+  "2024-05-16": { customStyles: getCommonCustomStyles(0.5) },
+  "2024-05-17": { customStyles: getCommonCustomStyles(0.7) },
 };
 
 const styles = {
-  margin:10
+  margin: 10,
 };
 
 const Calendertheme = {
-todayTextColor: theme.main,
+  todayTextColor: theme.main,
   textDayFontSize: 20,
-  textDayFontWeight: '400',
+  textDayFontWeight: "400",
   textMonthFontSize: 20,
-  textMonthFontWeight: 'bold',
-  textSectionTitleColor: 'rgba(138, 138, 138, 1)',
+  textMonthFontWeight: "bold",
+  textSectionTitleColor: "rgba(138, 138, 138, 1)",
 };
 
 function Calender() {
   const navigation = useNavigation();
+
+  const fetchMonthData = async (dateString) => {
+    const year = dateString.split("-")[0];
+    const month = dateString.split("-")[1];
+    const url = `/api/calendar?year=${year}&month=${month}`;
+    console.log(url);
+    try {
+      const response = await axios.get(url);
+      console.log("Success:", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    const today = new Date();
+    const dateString = today.toISOString().split("T")[0];
+    //fetchMonthData(dateString);
+    console.log(dateString);
+  }, []);
+
+  const handleMonthChange = ({ dateString }) => {
+    fetchMonthData(dateString);
+  };
 
   return (
     <CalenderView>
       <Calendar
         style={styles}
         theme={Calendertheme}
-        monthFormat={'yyyy년 M월'}
+        monthFormat={"yyyy년 M월"}
         markedDates={markedDates}
-        markingType={'custom'}
-        />
+        markingType={"custom"}
+        onMonthChange={handleMonthChange}
+      />
+      <ColorContents />
     </CalenderView>
   );
 }
