@@ -46,7 +46,7 @@ const ThirdHome = ({ onActivitySave }) => {
             const reverseGeocode = await Location.reverseGeocodeAsync({ latitude, longitude });
             //console.log(reverseGeocode);
             const currentCountry = `${reverseGeocode[0].country}`
-            const currentCity = ` 📌 ${reverseGeocode[0].city} ${reverseGeocode[0].district}`;
+            const currentCity = `${reverseGeocode[0].city} ${reverseGeocode[0].district}`;
             setCity(currentCity);
             setLocation(currentCity);
             setUserCity(currentCity);
@@ -105,7 +105,7 @@ const ThirdHome = ({ onActivitySave }) => {
                 <ThirdPlaceInput 
                  placeholder="  📌 장소 추가하기" 
                  style={{marginTop: 30}}
-                 value={userCity || city}
+                 value={userCity ? `📌 ${userCity}` : `📌 ${city}`}
                  
                  //onChangeText={text => setUserCity(text)}
                  />) : (

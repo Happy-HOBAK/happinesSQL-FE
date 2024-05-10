@@ -1,21 +1,27 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { HomeText, InfoBtn, InfoImage, RecordTextView } from "../../styles/styles";
+import { HomeText, RecordTextView } from "../../styles/styles";
+import { getActivities } from "../home/assets/apis/getActivity";
+
 
 function Trends() {
-  const navigation = useNavigation();
+  useEffect(() => {
+    getActivities()
+      .then(data => {
+        console.log("Activities data:", data); 
+      })
+      .catch(error => {
+        console.error("Error fetching activities:", error);
+        Alert.alert("Error", `Failed to load data: ${error.message}`);
+      });
+  }, []);
 
   return (
     <View>
       <RecordTextView>
-        <HomeText>
-            행복 트렌드
-        </HomeText>
-        <Text style={{fontSize: 30, marginTop:300}}>
-          준비중입니다!
-        </Text>
-    </RecordTextView>
+        <HomeText>행복 트렌드</HomeText>
+      </RecordTextView>
     </View>
   );
 }

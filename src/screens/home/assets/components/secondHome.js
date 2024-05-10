@@ -29,6 +29,7 @@ import ModalScreen from "./modal";
 import { categorykData } from "../../../../common/data/category";
 import { useRecoilState } from "recoil";
 import { Dimensions } from "react-native";
+import { getActivities } from "../apis/getActivity";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;

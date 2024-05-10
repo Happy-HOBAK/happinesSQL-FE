@@ -1,66 +1,39 @@
-// export const sendToServer = async (emotion, activityId, memo, location, image, latitude, longitude, country) => {
-//     try {
-//       const response = await fetch('http://example.com/saveData', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             happiness: emotion,
-//             activityId: activityId,
-//             full_name: location,
-//             country: country,
-//             city: location.split(' ')[0],
-//             district: location.split(' ')[1],
-//             x_pos: latitude,
-//             y_pos: longitude,
-//             memo: memo,
-//             img: image,
-//         }),
-//       });
-  
-//       if (!response.ok) {
-//         throw new Error('서버 응답이 실패했습니다.');
-//       }
-  
-//       const data = await response.json();
-//       return data; 
-//     } catch (error) {
-//       console.error('서버로 데이터 전송 중 오류 발생:', error);
-//       throw error;
-//     }
-//   };
-
 import axios from 'axios';
+import { PUBLIC_DNS } from '@env'; 
 
 export const sendToServer = async (emotion, activityId, memo, location, image, latitude, longitude, country) => {
     try {
-        const response = await axios.post('http://example.com/api/records', {
+        const formData = new FormData();
+
+        const content = {
             happiness: emotion,
-            activityId: activityId,
-            full_name: location,
+            memo: memo,
             country: country,
             city: location.split(' ')[0],
             district: location.split(' ')[1],
+            activity_id: activityId,
+            full_name: location,
             x_pos: latitude,
-            y_pos: longitude,
-            memo: memo,
-            img: image,
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+            y_pos: longitude
+        };
 
-        if (!response.data) {
-            throw new Error('서버 응답이 실패했습니다.');
+        formData.append('content', JSON.stringify(content));
+
+        if (image) {
+            formData.append('img', image, 'upload.jpg');
         }
+
+        const apiUrl = `${PUBLIC_DNS}/api/records`;
+
+        const response = await axios.post(apiUrl, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
 
         return response.data;
     } catch (error) {
-        console.error('서버로 데이터 전송 중 오류 발생:', error);
+        console.error('Error sending data to server:', error);
         throw error;
     }
 };
-
-  
