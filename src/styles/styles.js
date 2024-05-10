@@ -34,7 +34,7 @@ export const StoreBtn = styled.TouchableOpacity`
 export const DataeBtn = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
-    margin-top:70%;
+    margin-top:20%;
     width: 250px;
     height: 50px;
     background-color:${props => theme.main};
@@ -287,7 +287,7 @@ export const RecordDate = styled.Text`
 export const ReportBox = styled.View`
     background-color: white;
     border-radius: 10px;
-    width: 300px;
+    width: 320px;
     height: 320px;
     margin-top: 25px;
     align-items: center;
@@ -299,7 +299,7 @@ export const ReportBox = styled.View`
 export const SecondReportBox = styled.View`
     background-color: ${theme.grey_1};
     border-radius: 10px;
-    width: 300px;
+    width: 310px;
     height: 60px;
     margin-top: 25px;
     align-items: center;
