@@ -48,16 +48,18 @@ function Home() {
     //     <SecondHome SecondonActivitySave={navigateToThirdHome} />
     //   )}
     //   {showThirdHome && (
-    //     <ThirdHome onActivitySave={() => {
-    //       setShowSecondHome(false);
-    //       setShowThirdHome(false);
-    //   }} />
+    //     <ThirdHome
+    //       onActivitySave={() => {
+    //         setShowSecondHome(false);
+    //         setShowThirdHome(false);
+    //       }}
+    //     />
     //   )}
     //   {!showSecondHome && !showThirdHome && (
     //     <Merge onActivitySave={navigateToSecondHome} />
     //   )}
     // </View>
-    <SecondHome/>
+    <SecondHome />
   );
 }
 
