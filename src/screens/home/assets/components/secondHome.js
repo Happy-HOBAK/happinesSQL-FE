@@ -42,30 +42,30 @@ const SecondHome = ({ SecondonActivitySave }) => {
     return chunked_arr;
   };
 
-  useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const response = await getActivities();
-        if (response.success && response.data && response.data.categories) {
-          const formattedCategories = response.data.categories.map((cat) => ({
-            name: cat.name,
-            activities: Array.from(
-              { length: Math.ceil(cat.activities.length / 3) },
-              (_, index) =>
-                cat.activities.slice(index * 3, index * 3 + 3).map((act) => ({
-                  id: act.id,
-                  name: act.name,
-                  emoji: act.emoji,
-                }))
-            ),
-          }));
-          setCategories(formattedCategories);
-        }
-      } catch (error) {
-        console.error("Failed to fetch activities:", error);
+  const fetchActivities = async () => {
+    try {
+      const response = await getActivities();
+      if (response.success && response.data && response.data.categories) {
+        const formattedCategories = response.data.categories.map((cat) => ({
+          name: cat.name,
+          activities: Array.from(
+            { length: Math.ceil(cat.activities.length / 3) },
+            (_, index) =>
+              cat.activities.slice(index * 3, index * 3 + 3).map((act) => ({
+                id: act.id,
+                name: act.name,
+                emoji: act.emoji,
+              }))
+          ),
+        }));
+        setCategories(formattedCategories);
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch activities:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchActivities();
   }, []);
 
@@ -96,6 +96,11 @@ const SecondHome = ({ SecondonActivitySave }) => {
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
+  };
+
+  const handleModalClose = () => {
+    fetchActivities();
+    setIsModalVisible(false);
   };
 
   const press = (activityId) => {
@@ -237,7 +242,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
         {searchQuery ? <SearchRender /> : <BasicRender />}
       </SecondHomeTextView>
       <Modal visible={isModalVisible} animationType="fade" transparent={true}>
-        <ModalScreen onClose={toggleModal} />
+        <ModalScreen onClose={handleModalClose} />
       </Modal>
     </View>
   );

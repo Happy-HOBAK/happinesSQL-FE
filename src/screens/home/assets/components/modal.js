@@ -11,17 +11,10 @@ import {
 } from "react-native";
 import { theme } from "../../../../styles/theme";
 import { PlusBtn, PlusInput, PlusText } from "../../../../styles/styles";
-import DropdownComponent from "./dropdown";
 import { sendActivity } from "../apis/activitySend";
 
 const ModalScreen = ({ onClose }) => {
-  //const [isModalVisible, setIsModalVisible] = useState(true);
-
   const [activityName, setActivityName] = useState("");
-
-  const handleSelectedCategory = (value) => {
-    setSelectedValue(value + 1);
-  };
 
   const handleActivityNameChange = (text) => {
     setActivityName(text);
