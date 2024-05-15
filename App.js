@@ -13,6 +13,11 @@ import { RecoilRoot } from "recoil";
 import * as Notifications from "expo-notifications";
 import React, { useEffect } from "react";
 import { scheduleNotifications } from "./src/common/notification/notificationUtils.js";
+import { Login } from "./src/screens/Login/Login.js";
+import { SignUp } from "./src/screens/SignUp/SignUp.js";
+import { Landing } from "./src/screens/Landing/Landing.js";
+import { FirstSignUp } from "./src/screens/SignUp/FirstSignUp..js";
+import { SecondSignUp } from "./src/screens/SignUp/SecondSignUp.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,11 +55,21 @@ export default function App() {
         independent={true}
       >
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Landing" component={Landing} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen
+            name="FirstSignUp"
+            component={FirstSignUp}
+            options={{ title: "회원가입 - 1단계" }}
+          />
+          <Stack.Screen
+            name="SecondSignUp"
+            component={SecondSignUp}
+            options={{ title: "회원가입 - 2단계" }}
+          />
           <Stack.Screen name="Tabs" component={MyTabs} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="UserInfo" component={UserInfo} />
-          <Stack.Screen name="Data" component={DataScreen} />
         </Stack.Navigator>
         <StatusBar style="dark" />
       </NavigationContainer>
