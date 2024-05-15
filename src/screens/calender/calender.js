@@ -1,17 +1,26 @@
-import React, { useEffect } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CalenderView } from "../../styles/styles";
-import { Calendar, CalendarList } from "react-native-calendars";
+import { Calendar } from "react-native-calendars";
 import { theme } from "../../styles/theme";
-import axios from "axios";
-import dateData from "../calender/assets/apis/date.json";
+import { getCalender } from "./assets/apis/getCalender";
 import { ColorContents } from "./assets/components/colorContents";
 
-function getCommonCustomStyles(opacity) {
+const happinessColors = {
+  0: "#98c9fb",
+  1: "#98c9fb",
+  2: "#76b6fa",
+  3: "#54a4f8",
+  4: "#0d7ef6",
+  5: "#086bd3",
+};
+
+function getCommonCustomStyles(happiness) {
+  const color = happinessColors[happiness];
   return {
     container: {
-      backgroundColor: `rgba(0, 0, 255, ${opacity})`,
+      backgroundColor: color,
       borderRadius: 6,
       width: 35,
       height: 35,
@@ -21,12 +30,6 @@ function getCommonCustomStyles(opacity) {
     },
   };
 }
-
-const markedDates = {
-  "2024-05-05": { customStyles: getCommonCustomStyles(0.2) },
-  "2024-05-16": { customStyles: getCommonCustomStyles(0.5) },
-  "2024-05-17": { customStyles: getCommonCustomStyles(0.7) },
-};
 
 const styles = {
   margin: 10,
@@ -42,16 +45,26 @@ const Calendertheme = {
 };
 
 function Calender() {
+  const [markedDates, setMarkedDates] = useState({});
   const navigation = useNavigation();
 
+  const updateMarkedDates = (data) => {
+    const newMarkedDates = { ...markedDates };
+    data.forEach((item) => {
+      newMarkedDates[item.date] = {
+        customStyles: getCommonCustomStyles(item.happiness),
+      };
+    });
+    setMarkedDates(newMarkedDates);
+  };
+
   const fetchMonthData = async (dateString) => {
-    const year = dateString.split("-")[0];
-    const month = dateString.split("-")[1];
-    const url = `/api/calendar?year=${year}&month=${month}`;
-    console.log(url);
+    const [year, month] = dateString.split("-");
     try {
-      const response = await axios.get(url);
-      console.log("Success:", response.data);
+      const response = await getCalender(year, month);
+      if (response.success) {
+        updateMarkedDates(response.data);
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -60,17 +73,17 @@ function Calender() {
   useEffect(() => {
     const today = new Date();
     const dateString = today.toISOString().split("T")[0];
-    //fetchMonthData(dateString);
-    console.log(dateString);
+    fetchMonthData(dateString);
   }, []);
 
-  const handleMonthChange = ({ dateString }) => {
-    fetchMonthData(dateString);
+  const handleMonthChange = (date) => {
+    const { year, month } = date;
+    fetchMonthData(`${year}-${month.toString().padStart(2, "0")}`);
   };
 
   return (
     <CalenderView>
-      <View style={{margin:20}}/>
+      <View style={{ margin: 20 }} />
       <Calendar
         style={styles}
         theme={Calendertheme}
@@ -79,51 +92,9 @@ function Calender() {
         markingType={"custom"}
         onMonthChange={handleMonthChange}
       />
-      <ColorContents/>
+      <ColorContents />
     </CalenderView>
   );
 }
 
 export default Calender;
-// 스크롤 없는 버전
-
-// import React from "react";
-// import { useNavigation } from "@react-navigation/native";
-// import { CalendarList } from "react-native-calendars";
-// import { CalenderView } from "../../styles/styles";
-// import { theme } from "../../styles/theme";
-
-// const styles = {
-//   paddingBottom: 30,
-//   borderColor: '#E9E9E9',
-// };
-
-// const Calendertheme = {
-//   todayTextColor: theme.main,
-//   textDayFontSize: 20,
-//   textDayFontWeight: '400',
-//   textMonthFontSize: 20,
-//   textMonthFontWeight: '600',
-//   textSectionTitleColor: 'rgba(138, 138, 138, 1)',
-// };
-
-// function Calender() {
-//   const navigation = useNavigation();
-
-//   return (
-//     <CalenderView>
-//       <CalendarList
-//         style={styles}
-//         theme={Calendertheme}
-//         monthFormat={'yyyy년 M월'}
-//         horizontal={true}
-//         pagingEnabled={true}
-//         pastScrollRange={12}
-//         futureScrollRange={12}
-//         scrollEnabled={true}
-//       />
-//     </CalenderView>
-//   );
-// }
-
-// export default Calender;
