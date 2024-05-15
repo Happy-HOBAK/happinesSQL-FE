@@ -1,4 +1,5 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PUBLIC_DNS } from "@env";
 
 export const sendToServer = async (
@@ -35,8 +36,14 @@ export const sendToServer = async (
 
     const apiUrl = `${PUBLIC_DNS}/api/records?userId=1`;
 
+    const token = await AsyncStorage.getItem("accessToken");
+    if (!token) {
+      throw new Error("노토큰노페인");
+    }
+
     const response = await axios.post(apiUrl, formData, {
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     });
