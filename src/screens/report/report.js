@@ -1,28 +1,50 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import { HomeText, ReportBox, HappyText, RecordTextView, ReportText, DataeBtn, DataText, SecondReportBox } from "../../styles/styles";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import {
+  HomeText,
+  ReportBox,
+  HappyText,
+  RecordTextView,
+  ReportText,
+  DataeBtn,
+  DataText,
+  SecondReportBox,
+} from "../../styles/styles";
 import { ReportChart } from "./assets/components/reportGraph";
 import SwitchSelector from "react-native-switch-selector";
-import { ImojiText, NotiText, NumText, NumnumText, NumtitleText, SubTitleText, TitleText } from "./report.style";
+import {
+  ImojiText,
+  NotiText,
+  NumText,
+  NumnumText,
+  NumtitleText,
+  SubTitleText,
+  TitleText,
+} from "./report.style";
 
 function Report() {
   const navigation = useNavigation();
 
   const handleDataBtnPress = () => {
-    navigation.navigate('Data');
+    navigation.navigate("Data");
   };
 
   return (
     <View>
       <RecordTextView>
-        <HomeText>
-            내 행복점수 리포트
-        </HomeText>
+        <HomeText>내 행복점수 리포트</HomeText>
         <ReportText>
           내 행복점수를 World Database와 비교 분석한 내용이에요.
         </ReportText>
-  
+
         <ScrollView>
           <ReportBox>
             <Text>호박 님은</Text>
@@ -31,14 +53,12 @@ function Report() {
             <Text>피크닉을 할 때</Text>
             <Text>가장 행복했어요</Text>
             <DataeBtn onPress={handleDataBtnPress}>
-            <DataText>
-              전체 데이터 보기
-            </DataText>
-          </DataeBtn>
+              <DataText>전체 데이터 보기</DataText>
+            </DataeBtn>
           </ReportBox>
 
           <NotiText>
-          데이터가 축적될수록 호박 님의 실제 데이터와 가까워져요!
+            데이터가 축적될수록 호박 님의 실제 데이터와 가까워져요!
           </NotiText>
 
           <TitleText>행복지수 위치</TitleText>
@@ -70,7 +90,7 @@ function Report() {
 
           <ReportBox>
             <SwitchSelector
-              style={{width:200, marginTop:10, marginBottom:10}}
+              style={{ width: 200, marginTop: 10, marginBottom: 10 }}
               initial={0}
               //onPress={value => this.setState({ gender: value })}
               textColor={"#4E515A"}
@@ -85,12 +105,12 @@ function Report() {
               valuePadding={4}
               options={[
                 { label: "주간", value: "f" },
-                { label: "월간", value: "m" }
+                { label: "월간", value: "m" },
               ]}
             />
-              <View style={{marginRight:10}}>
-              <ReportChart/>
-              </View>
+            <View style={{ marginRight: 10 }}>
+              <ReportChart />
+            </View>
           </ReportBox>
 
           <TitleText>행복지수 위치</TitleText>
@@ -113,10 +133,9 @@ function Report() {
             <NumtitleText>잠실나루역</NumtitleText>
             <NumnumText>n번</NumnumText>
           </SecondReportBox>
-          <View style={{height:100}}/>
+          <View style={{ height: 100 }} />
         </ScrollView>
-
-    </RecordTextView>
+      </RecordTextView>
     </View>
   );
 }
@@ -124,7 +143,7 @@ function Report() {
 export default Report;
 
 const styles = StyleSheet.create({
-  shadow:{
+  shadow: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -134,5 +153,5 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
-    }
-})
+  },
+});

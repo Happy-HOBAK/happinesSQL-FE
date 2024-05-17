@@ -23,8 +23,10 @@ const FirstEmotions = () => {
   };
 
   return (
-    <View style={{ justifyContent: 'center', alignItems: 'center', marginTop:40 }}>
-      <CircleSlider 
+    <View
+      style={{ justifyContent: "center", alignItems: "center", marginTop: 40 }}
+    >
+      <CircleSlider
         textSize={2}
         btnRadius={20}
         dialWidth={20}
@@ -35,9 +37,7 @@ const FirstEmotions = () => {
         value={selectedEmotionIndex * (360 / (emotion.length - 1))}
         onValueChange={handleSliderChange}
       />
-      <EmotionText>
-        {emotion[selectedEmotionIndex].emotion}
-      </EmotionText>
+      <EmotionText>{emotion[selectedEmotionIndex].emotion}</EmotionText>
     </View>
   );
 };
