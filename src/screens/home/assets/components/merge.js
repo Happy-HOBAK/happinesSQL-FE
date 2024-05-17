@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import { HomeText, InfoBtn, InfoImage, HomeTextView, StoreBtn, StoreText } from "../../../../styles/styles";
-import UserIcon from '../images/Vector.png'
+import { useNavigation } from "@react-navigation/native";
+import {
+  HomeText,
+  InfoBtn,
+  InfoImage,
+  HomeTextView,
+  StoreBtn,
+  StoreText,
+} from "../../../../styles/styles";
+import UserIcon from "../images/Vector.png";
 import CircleSlider from "react-native-circle-slider";
 import { theme } from "../../../../styles/theme";
 import { EmotionText } from "../../../../styles/styles";
@@ -12,10 +19,11 @@ import { EmotionState } from "../../../../common/recoil/atoms";
 
 const Merge = ({ onActivitySave }) => {
   const [selectedEmotionIndex, setSelectedEmotionIndex] = useState(0);
-  const navigation = useNavigation(); 
-  const [activity, setActivity] = useRecoilState(EmotionState)
+  const navigation = useNavigation();
+  const [activity, setActivity] = useRecoilState(EmotionState);
   const selectedEmotion = emotion[selectedEmotionIndex].emotion;
   const happiness = emotion[selectedEmotionIndex].id;
+  const selectedEmoji = emotion[selectedEmotionIndex].emoji;
 
   const handleSliderChange = (value) => {
     requestAnimationFrame(() => {
@@ -31,48 +39,63 @@ const Merge = ({ onActivitySave }) => {
   };
 
   // recoil 작동 확인 로그
-  
-//   const myAtomValue = useRecoilValue(EmotionState);
 
-//   useEffect(() => {
-//     console.log("MyAtom value:", myAtomValue);
-//   }, [myAtomValue]);
+  //   const myAtomValue = useRecoilValue(EmotionState);
 
-//   useEffect(()=>{
-//     console.log(selectedEmotion);
-//   })
+  //   useEffect(() => {
+  //     console.log("MyAtom value:", myAtomValue);
+  //   }, [myAtomValue]);
+
+  //   useEffect(()=>{
+  //     console.log(selectedEmotion);
+  //   })
 
   return (
     <View>
-      <InfoBtn onPress={() => navigation.navigate('UserInfo')}>
+      <InfoBtn onPress={() => navigation.navigate("UserInfo")}>
         <InfoImage source={UserIcon} />
       </InfoBtn>
 
       <HomeTextView>
-        <HomeText>
-          지금의 기분은 어때요?
-        </HomeText>
+        <HomeText>지금의 기분은 어때요?</HomeText>
       </HomeTextView>
-      <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-        <CircleSlider 
-          textSize={2}
-          btnRadius={20}
-          dialWidth={20}
-          meterColor={theme.main}
-          strokeColor={theme.grey_2}
-          textColor={theme.main}
-          strokeWidth={20}
-          value={selectedEmotionIndex * (360 / (emotion.length - 1))}
-          onValueChange={handleSliderChange}
-        />
-        <EmotionText>
-          {selectedEmotion}
-        </EmotionText>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 40,
+        }}
+      >
+        <View style={{ position: "relative", width: 300, height: 300 }}>
+          <CircleSlider
+            textSize={0.1}
+            btnRadius={20}
+            dialWidth={20}
+            meterColor={theme.grey_2}
+            strokeColor={theme.main}
+            textColor={theme.main}
+            strokeWidth={20}
+            value={selectedEmotionIndex * (360 / (emotion.length - 1))}
+            onValueChange={handleSliderChange}
+          />
+          <Image
+            source={selectedEmoji}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: [{ translateX: -50 }, { translateY: -50 }],
+              width: 100,
+              height: 100,
+            }}
+            resizeMode="contain"
+          />
+        </View>
       </View>
       <View style={{ alignItems: "center" }}>
-          <StoreBtn onPress={saveActivity}>
-            <StoreText>활동 입력하기</StoreText>
-          </StoreBtn>
+        <StoreBtn onPress={saveActivity}>
+          <StoreText>활동 입력하기</StoreText>
+        </StoreBtn>
       </View>
     </View>
   );

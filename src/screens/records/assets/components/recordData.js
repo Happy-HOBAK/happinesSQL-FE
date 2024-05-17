@@ -109,13 +109,13 @@ function RecordData() {
           <View>
             <RecordDate>{record.date}</RecordDate>
             <RecordContent>{record.memo}</RecordContent>
-            <Image
+            {/* <Image
               // source={{ uri: record.img_url }}
               source={{
                 uri: "https://i-want-to-be-happy.s3.ap-northeast-2.amazonaws.com/d4d6c55b-47d9-47a2-b084-3d5b2f8ba752.jpeg",
               }}
               style={{ width: 100, height: 100 }}
-            />
+            /> */}
             <RecordContent>Happiness: {record.happiness}</RecordContent>
           </View>
         </RecordBox>
