@@ -104,7 +104,7 @@ const ThirdHome = ({ onActivitySave }) => {
       });
       console.log(result);
 
-      if (!result.cancelled) {
+      if (!result.canceled && result.assets && result.assets.length > 0) {
         setSelectedImage(result.assets[0].uri);
         setImage(result.assets[0].uri);
       }
@@ -143,21 +143,7 @@ const ThirdHome = ({ onActivitySave }) => {
       onActivitySave();
       console.log("데이터가 서버에 저장되었습니다.");
     } catch (error) {
-      if (error.response) {
-        // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답한 경우
-        console.error("Server Response:", error.response.data);
-        console.error("Status code:", error.response.status);
-        console.error("Headers:", error.response.headers);
-      } else if (error.request) {
-        // 요청이 이루어 졌으나 응답을 받지 못한 경우
-        console.error("No response received:", error.request);
-      } else {
-        // 요청 설정 중 발생한 기타 에러
-        console.error("Error Message:", error.message);
-      }
-      // 에러의 config를 로그로 출력
-      console.error("Error Config:", error.config);
-      throw error;
+      if (error.response) throw error;
     }
   };
 
