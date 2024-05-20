@@ -75,10 +75,10 @@ const SecondHome = ({ SecondonActivitySave }) => {
       if (searchQuery.length > 0) {
         try {
           const response = await getSearch(searchQuery);
-          if (response && response.data && response.data.success) {
+          if (response && response.data) {
             setSearchResults({
-              success: response.data.success,
-              categories: response.data.data.categories || [],
+              success: response.success,
+              categories: response.data.categories || [],
             });
           } else {
             setSearchResults({ success: false, categories: [] });
@@ -160,10 +160,9 @@ const SecondHome = ({ SecondonActivitySave }) => {
   };
 
   const SearchRender = () => {
-    console.log(searchResults);
     if (!searchResults.success || searchResults.categories.length === 0) {
       return (
-        <View style={{ marginStart: 30, marginBottom: 10 }}>
+        <View style={{ marginTop: 100 }}>
           <Text>검색 결과가 없습니다.</Text>
         </View>
       );
@@ -171,11 +170,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
 
     return (
       <View style={{ marginBottom: 10 }}>
-        <ScrollView
-          horizontal
-          showsVerticalScrollIndicator={false}
-          pagingEnabled
-        >
+        <ScrollView showsVerticalScrollIndicator={false} pagingEnabled>
           {searchResults.categories.map((category, index) => (
             <View key={index} style={{ width: windowWidth }}>
               <CategoryText>{category.name}</CategoryText>
