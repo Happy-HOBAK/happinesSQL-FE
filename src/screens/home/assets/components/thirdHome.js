@@ -24,10 +24,19 @@ import {
   ActivityState,
 } from "../../../../common/recoil/atoms";
 import backicon from "../images/back.png";
-import searchicon from "../images/search.png";
 import * as Location from "expo-location";
 import * as ImagePicker from "expo-image-picker";
 import { sendToServer } from "../apis/sendToServer";
+import {
+  AddButton,
+  AddButtonText,
+  ImageWrapper,
+  RemoveButton,
+  RemoveButtonText,
+  StyledImage,
+  StyledThirdPicInput,
+  TextContainer,
+} from "./third.style";
 
 const ThirdHome = ({ onActivitySave }) => {
   const navigation = useNavigation();
@@ -59,13 +68,11 @@ const ThirdHome = ({ onActivitySave }) => {
       }
 
       const location = await Location.getCurrentPositionAsync({});
-      //const sendLocation = location.coords;
       const { latitude, longitude } = location.coords;
       const reverseGeocode = await Location.reverseGeocodeAsync({
         latitude,
         longitude,
       });
-      //console.log(reverseGeocode);
       const currentCountry = `${reverseGeocode[0].country}`;
       const currentCity = `${reverseGeocode[0].city} ${reverseGeocode[0].district}`;
       setCity(currentCity);
@@ -82,19 +89,33 @@ const ThirdHome = ({ onActivitySave }) => {
 
   const handleImagePick = async () => {
     try {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("사진 접근 권한을 허용해야 합니다.");
+        return;
+      }
+
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
-        quality: 1,
+        quality: 0.5,
       });
-      if (!result.canceled) {
-        setSelectedImage(result.uri);
-        setImage(result.uri);
+      console.log(result);
+
+      if (!result.cancelled) {
+        setSelectedImage(result.assets[0].uri);
+        setImage(result.assets[0].uri);
       }
     } catch (error) {
       console.error("이미지를 선택하는 중 오류 발생:", error);
     }
+  };
+
+  const handleImageRemove = () => {
+    setSelectedImage(null);
+    setImage(null);
   };
 
   const saveAll = async () => {
@@ -122,25 +143,27 @@ const ThirdHome = ({ onActivitySave }) => {
       onActivitySave();
       console.log("데이터가 서버에 저장되었습니다.");
     } catch (error) {
-      console.log(
-        "emotion:",
-        emotion,
-        "activityId:",
-        activityId,
-        "memo:",
-        memo,
-        "location:",
-        location,
-        "image:",
-        image
-      );
-      console.error("데이터를 서버에 저장하는 중 오류 발생:", error);
+      if (error.response) {
+        // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답한 경우
+        console.error("Server Response:", error.response.data);
+        console.error("Status code:", error.response.status);
+        console.error("Headers:", error.response.headers);
+      } else if (error.request) {
+        // 요청이 이루어 졌으나 응답을 받지 못한 경우
+        console.error("No response received:", error.request);
+      } else {
+        // 요청 설정 중 발생한 기타 에러
+        console.error("Error Message:", error.message);
+      }
+      // 에러의 config를 로그로 출력
+      console.error("Error Config:", error.config);
+      throw error;
     }
   };
 
   return (
     <View>
-      <BackBtn>
+      <BackBtn onPress={() => navigation.goBack()}>
         <BackImage source={backicon} />
       </BackBtn>
 
@@ -152,8 +175,6 @@ const ThirdHome = ({ onActivitySave }) => {
             placeholder="  📌 장소 추가하기"
             style={{ marginTop: 30 }}
             value={userCity ? `📌 ${userCity}` : `📌 ${city}`}
-
-            //onChangeText={text => setUserCity(text)}
           />
         ) : (
           <View>
@@ -183,10 +204,20 @@ const ThirdHome = ({ onActivitySave }) => {
 
         <UserText>사진</UserText>
         <ThirdPicInput onPress={handleImagePick} style={{ marginTop: 10 }}>
-          <ThirdText>📸 사진 추가하기</ThirdText>
-          {selectedImage && (
-            <Image uri={image} style={{ width: 200, height: 200 }} />
-          )}
+          <StyledThirdPicInput>
+            <TextContainer>
+              <ThirdText>📸 사진 추가하기</ThirdText>
+              {/* <ThirdText>이미지는 최대 1개까지 첨부 가능합니다</ThirdText> */}
+            </TextContainer>
+            {selectedImage && (
+              <ImageWrapper>
+                <StyledImage source={{ uri: selectedImage }} />
+                <RemoveButton onPress={handleImageRemove}>
+                  <RemoveButtonText>X</RemoveButtonText>
+                </RemoveButton>
+              </ImageWrapper>
+            )}
+          </StyledThirdPicInput>
         </ThirdPicInput>
         <StoreBtn onPress={saveAll}>
           <StoreText>저장하기</StoreText>

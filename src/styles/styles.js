@@ -147,7 +147,6 @@ export const ThirdPicInput = styled.TouchableOpacity`
 `;
 
 export const ThirdText = styled.Text`
-  text-align: center;
   margin-left: 3%;
   color: #cccccd;
 `;

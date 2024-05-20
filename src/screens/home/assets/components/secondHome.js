@@ -162,7 +162,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
     if (!searchResults.success || searchResults.categories.length === 0) {
       return (
         <View style={{ marginStart: 30, marginBottom: 10 }}>
-          <Text>검색 결과가 없습니다.</Text>
+          <Text>검색 결과가 없습니다.</Text> 
         </View>
       );
     }

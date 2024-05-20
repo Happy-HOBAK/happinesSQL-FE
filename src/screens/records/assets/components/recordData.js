@@ -1,56 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native";
-// import { useNavigation } from '@react-navigation/native';
-// import { data } from "../../../../common/data/data";
-// import { RecordBox, RecordContent, RecordDate } from "../../../../styles/styles";
-
-// function RecordData() {
-//   const navigation = useNavigation();
-//   const [loading, setLoading] = useState(false);
-//   const [page, setPage] = useState(1);
-//   const [records, setRecords] = useState([]);
-
-//   useEffect(() => {
-//     fetchData();
-//   }, [page]);
-
-//   const fetchData = () => {
-//     setLoading(true);
-//     const startIndex = (page - 1) * 9;
-//     const endIndex = startIndex + 9;
-//     const newRecords = data.documents.records.slice(startIndex, endIndex);
-//     setRecords(prevRecords => [...prevRecords, ...newRecords]);
-//     setLoading(false);
-//   };
-
-//   const handleScroll = ({ nativeEvent }) => {
-//     const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-//     const isEndOfList = layoutMeasurement.height + contentOffset.y >= contentSize.height;
-//     if (isEndOfList && !loading) {
-//       setPage(prevPage => prevPage + 1);
-//     }
-//   };
-
-//   return (
-//     <ScrollView onScroll={handleScroll} scrollEventThrottle={400}>
-//       {records.map((record, index) => (
-//         <RecordBox key={index}>
-//         <View>
-//           <RecordDate>{record.date}</RecordDate>
-//           <RecordContent>{record.memo}</RecordContent>
-//           <Image source={{ uri: record.image }} style={{ width: 100, height: 100 }} />
-//           <RecordContent>Happiness: {record.happiness}</RecordContent>
-//         </View>
-//         </RecordBox>
-//       ))}
-//       {loading && <ActivityIndicator size="large" color="#0000ff" />}
-//     </ScrollView>
-//   );
-// }
-
-// export default RecordData;
-
-// api 오면 사용
 import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, Image, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -102,6 +49,10 @@ function RecordData() {
     }
   };
 
+  const handleImageError = (error) => {
+    console.error("이미지 로드 실패:", error.nativeEvent.error);
+  };
+
   return (
     <ScrollView onScroll={handleScroll} scrollEventThrottle={400}>
       {records.map((record, index) => (
@@ -109,13 +60,11 @@ function RecordData() {
           <View>
             <RecordDate>{record.date}</RecordDate>
             <RecordContent>{record.memo}</RecordContent>
-            {/* <Image
-              // source={{ uri: record.img_url }}
-              source={{
-                uri: "https://i-want-to-be-happy.s3.ap-northeast-2.amazonaws.com/d4d6c55b-47d9-47a2-b084-3d5b2f8ba752.jpeg",
-              }}
+            <Image
+              source={{ uri: record.img_url }}
               style={{ width: 100, height: 100 }}
-            /> */}
+              onError={handleImageError}
+            />
             <RecordContent>Happiness: {record.happiness}</RecordContent>
           </View>
         </RecordBox>
