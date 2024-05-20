@@ -55,6 +55,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
                 id: act.id,
                 name: act.name,
                 emoji: act.emoji,
+                description: act.description || [],
               }))
           ),
         }));
@@ -144,6 +145,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
                         >
                           <Text>{activity.emoji}</Text>
                           <Text>{activity.name}</Text>
+                          <Text>{activity.description.join(", ")}</Text>
                         </ActivityBtn>
                       ))}
                     </View>
@@ -162,7 +164,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
     if (!searchResults.success || searchResults.categories.length === 0) {
       return (
         <View style={{ marginStart: 30, marginBottom: 10 }}>
-          <Text>검색 결과가 없습니다.</Text> 
+          <Text>검색 결과가 없습니다.</Text>
         </View>
       );
     }
@@ -208,6 +210,11 @@ const SecondHome = ({ SecondonActivitySave }) => {
                             </Text>
                             <Text style={{ textAlign: "center", fontSize: 14 }}>
                               {activity.name}
+                            </Text>
+                            <Text style={{ textAlign: "center", fontSize: 12 }}>
+                              {Array.isArray(activity.description)
+                                ? activity.description.join(", ")
+                                : activity.description || ""}
                             </Text>
                           </ActivityBtn>
                         ))}
