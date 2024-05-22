@@ -42,10 +42,10 @@ export const DataeBtn = styled.TouchableOpacity`
 `;
 
 export const InfoBtn = styled.TouchableOpacity`
-  margin-top: 50px;
+  margin-top: 43px;
   margin-right: 20px;
   align-self: flex-end;
-  padding: 10px;
+  padding: 7px;
 `;
 
 export const BackBtn = styled.TouchableOpacity`
@@ -221,9 +221,8 @@ export const ActivityBtn = styled.TouchableOpacity`
   border-radius: 20px;
   width: 100px;
   height: 100px;
-  background-color: ${(props) => theme.grey_2};
-  align-items: center;
-  justify-content: center;
+  /* background-color: ${(props) => theme.grey_2}; */
+  background-color: #fff;
   margin-bottom: 30px;
 `;
 

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Modal, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Modal,
+  Dimensions,
+  StyleSheet,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   HomeText,
@@ -19,9 +26,20 @@ import backicon from "../images/back.png";
 import ModalScreen from "./modal";
 import { getActivities } from "../apis/getActivity";
 import { getSearch } from "../apis/getSearch";
+import { ActivityText, DescriptionText, EmojiText } from "./secondHome.style";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
+});
 
 const SecondHome = ({ SecondonActivitySave }) => {
   const navigation = useNavigation();
@@ -140,12 +158,16 @@ const SecondHome = ({ SecondonActivitySave }) => {
                     <View key={groupIndex} style={{ flexDirection: "row" }}>
                       {activityGroup.map((activity, activityIndex) => (
                         <ActivityBtn
+                          style={styles.shadow}
                           key={activityIndex}
                           onPress={() => press(activity.id)}
                         >
-                          <Text>{activity.emoji}</Text>
-                          <Text>{activity.name}</Text>
-                          <Text>{activity.description.join(", ")}</Text>
+                          <EmojiText>{activity.emoji}</EmojiText>
+
+                          <ActivityText>{activity.name}</ActivityText>
+                          <DescriptionText>
+                            {activity.description.join(", ")}
+                          </DescriptionText>
                         </ActivityBtn>
                       ))}
                     </View>
@@ -227,9 +249,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
 
   return (
     <View>
-      <BackBtn>
-        <BackImage source={backicon} />
-      </BackBtn>
+      <BackBtn>{/* <BackImage source={backicon} /> */}</BackBtn>
 
       <SecondHomeTextView>
         <HomeText>무엇을 하고 있었나요?</HomeText>
