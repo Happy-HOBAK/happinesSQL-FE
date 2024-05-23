@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, TouchableOpacity } from "react-native";
-import { StyledSignupView } from "../SignUp/SignUp.style";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styled from "styled-components";
 import {
   StyledButton,
   StyledSubTitleText,
   StyledText,
-  StyledTextInput,
   StyledTitleText,
   ErrorMessage,
+  StyledSignupView,
+  StyledTextInput,
+  InputContainer,
 } from "./Login.style";
 import { postLogin } from "./apis/postLogin";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,29 +53,35 @@ export const Login = () => {
   };
 
   return (
-    <StyledSignupView>
-      <StyledTitleText>로그인</StyledTitleText>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      enableOnAndroid={true}
+      extraHeight={150}
+      extraScrollHeight={150}
+    >
+      <StyledSignupView>
+        <StyledTitleText>로그인</StyledTitleText>
 
-      <StyledSubTitleText>아이디</StyledSubTitleText>
-      <StyledTextInput
-        placeholder="아이디를 입력하세요"
-        value={username}
-        onChangeText={setUsername}
-      />
+        <StyledSubTitleText>아이디</StyledSubTitleText>
+        <StyledTextInput
+          placeholder="아이디를 입력하세요"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <StyledSubTitleText>비밀번호</StyledSubTitleText>
+        <StyledTextInput
+          placeholder="비밀번호를 입력하세요"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-      <StyledSubTitleText>비밀번호</StyledSubTitleText>
-      <StyledTextInput
-        placeholder="비밀번호를 입력하세요"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
 
-      <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
-
-      <StyledButton onPress={handleLogin}>
-        <StyledText>로그인 하기</StyledText>
-      </StyledButton>
-    </StyledSignupView>
+        <StyledButton onPress={handleLogin}>
+          <StyledText>로그인 하기</StyledText>
+        </StyledButton>
+      </StyledSignupView>
+    </KeyboardAwareScrollView>
   );
 };

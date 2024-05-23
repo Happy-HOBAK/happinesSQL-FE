@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   StyledSignupView,
   StyledTextInput,
@@ -50,51 +51,59 @@ export const SecondSignUp = ({ route, navigation }) => {
   };
 
   return (
-    <StyledSignupView>
-      <StyledTitleText>회원가입</StyledTitleText>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      enableOnAndroid={true}
+      extraHeight={150}
+      extraScrollHeight={150}
+    >
+      <StyledSignupView>
+        <StyledTitleText>회원가입</StyledTitleText>
 
-      <StyledSubTitleText>이름</StyledSubTitleText>
-      <StyledTextInput
-        placeholder="이름을 입력하세요"
-        value={name}
-        onChangeText={setName}
-      />
+        <StyledSubTitleText>이름</StyledSubTitleText>
+        <StyledTextInput
+          placeholder="이름을 입력하세요"
+          value={name}
+          onChangeText={setName}
+        />
 
-      <StyledSubTitleText>성별</StyledSubTitleText>
-      <DropDownPicker
-        open={open}
-        value={gender}
-        items={items}
-        setOpen={setOpen}
-        setValue={(callback) => setGender(callback)}
-        setItems={setItems}
-        onSelectItem={(item) => setGender(item.label)}
-        containerStyle={{ width: "70%", marginBottom: 40, marginTop: 5 }}
-        style={{
-          borderColor: "#ccc",
-        }}
-        dropDownContainerStyle={{
-          backgroundColor: "#fafafa",
-          borderColor: "#ccc",
-        }}
-        placeholderStyle={{
-          color: "#ccc",
-        }}
-      />
+        <StyledSubTitleText>성별</StyledSubTitleText>
+        <DropDownPicker
+          listMode="SCROLLVIEW"
+          open={open}
+          value={gender}
+          items={items}
+          setOpen={setOpen}
+          setValue={(callback) => setGender(callback)}
+          setItems={setItems}
+          onSelectItem={(item) => setGender(item.label)}
+          containerStyle={{ width: "70%", marginBottom: 40, marginTop: 5 }}
+          style={{
+            borderColor: "#ccc",
+          }}
+          dropDownContainerStyle={{
+            backgroundColor: "#fafafa",
+            borderColor: "#ccc",
+          }}
+          placeholderStyle={{
+            color: "#ccc",
+          }}
+        />
 
-      <StyledSubTitleText>나이</StyledSubTitleText>
-      <StyledTextInput
-        placeholder="나이를 입력하세요"
-        value={age}
-        onChangeText={setAge}
-        keyboardType="numeric"
-      />
+        <StyledSubTitleText>나이</StyledSubTitleText>
+        <StyledTextInput
+          placeholder="나이를 입력하세요"
+          value={age}
+          onChangeText={setAge}
+          keyboardType="numeric"
+        />
 
-      <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
+        <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
 
-      <StyledButton onPress={handleSignUp}>
-        <StyledText>회원가입</StyledText>
-      </StyledButton>
-    </StyledSignupView>
+        <StyledButton onPress={handleSignUp}>
+          <StyledText>회원가입</StyledText>
+        </StyledButton>
+      </StyledSignupView>
+    </KeyboardAwareScrollView>
   );
 };

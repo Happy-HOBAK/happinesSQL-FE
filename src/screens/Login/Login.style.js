@@ -19,7 +19,8 @@ export const StyledButton = styled.TouchableOpacity`
   justify-content: center;
   margin-top: 5%;
   width: 70%;
-  height: 8%;
+  height: 55px;
+  /* min-height: 10%; */
   background-color: ${(props) => theme.main};
 `;
 
@@ -45,13 +46,14 @@ export const StyledSubTitleText = styled.Text`
 
 export const StyledTextInput = styled.TextInput`
   width: 70%;
-  height: 7%;
   padding: 10px;
   margin: 10%;
   border-width: 1px;
   border-color: #ccc;
   margin-top: 5px;
   border-radius: 10px;
+  height: 50px;
+  /* min-height: 6%; */
 `;
 
 export const ErrorMessage = styled.Text`

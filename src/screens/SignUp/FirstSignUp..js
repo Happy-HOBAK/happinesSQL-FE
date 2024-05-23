@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Button } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   StyledSignupView,
   StyledTextInput,
@@ -25,29 +26,36 @@ export const FirstSignUp = ({ navigation }) => {
   };
 
   return (
-    <StyledSignupView>
-      <StyledTitleText>회원가입</StyledTitleText>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      enableOnAndroid={true}
+      extraHeight={150}
+      extraScrollHeight={150}
+    >
+      <StyledSignupView>
+        <StyledTitleText>회원가입</StyledTitleText>
 
-      <StyledSubTitleText>아이디</StyledSubTitleText>
-      <StyledTextInput
-        placeholder="아이디를 입력하세요"
-        value={username}
-        onChangeText={setUsername}
-      />
+        <StyledSubTitleText>아이디</StyledSubTitleText>
+        <StyledTextInput
+          placeholder="아이디를 입력하세요"
+          value={username}
+          onChangeText={setUsername}
+        />
 
-      <StyledSubTitleText>비밀번호</StyledSubTitleText>
-      <StyledTextInput
-        placeholder="비밀번호를 입력하세요"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <StyledSubTitleText>비밀번호</StyledSubTitleText>
+        <StyledTextInput
+          placeholder="비밀번호를 입력하세요"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-      <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
+        <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
 
-      <StyledButton onPress={handleNext}>
-        <StyledText>다음</StyledText>
-      </StyledButton>
-    </StyledSignupView>
+        <StyledButton onPress={handleNext}>
+          <StyledText>다음</StyledText>
+        </StyledButton>
+      </StyledSignupView>
+    </KeyboardAwareScrollView>
   );
 };

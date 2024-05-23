@@ -19,7 +19,7 @@ export const StyledButton = styled.TouchableOpacity`
   justify-content: center;
   margin-top: 5%;
   width: 70%;
-  height: 8%;
+  height: 55px;
   background-color: ${(props) => theme.main};
 `;
 
@@ -45,7 +45,7 @@ export const StyledSubTitleText = styled.Text`
 
 export const StyledTextInput = styled.TextInput`
   width: 70%;
-  height: 7%;
+  height: 50px;
   padding: 10px;
   margin: 10%;
   border-width: 1px;
