@@ -25,30 +25,40 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({ message: "", visible: false });
 
   const navigation = useNavigation();
 
   const handleLogin = async () => {
     if (!username || !password) {
-      setError(true);
+      setError({ message: "모든 정보를 입력해주세요!", visible: true });
       return;
     }
-    setError(false);
+    setError({ message: "", visible: false });
     try {
       const response = await postLogin(username, password);
+      console.log(response);
       if (response.success) {
-        await AsyncStorage.setItem("accessToken", response.data.accessToken);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Tabs" }],
-        });
-      } else {
-        setError(true);
+        if (response.message === "비밀번호가 틀렸습니다.") {
+          setError({ message: "비밀번호가 틀렸습니다.", visible: true });
+        } else {
+          await AsyncStorage.setItem("accessToken", response.data.accessToken);
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Tabs" }],
+          });
+        }
       }
     } catch (error) {
-      console.error("로그인 오류:", error);
-      setError(true);
+      if (error.response && error.response.data) {
+        const response = error.response.data;
+        if (response.code === 10005) {
+          setError({ message: "해당하는 회원이 없습니다.", visible: true });
+        }
+      } else {
+        console.error("로그인 오류:", error);
+        setError({ message: "로그인 오류. 다시 시도해주세요.", visible: true });
+      }
     }
   };
 
@@ -76,7 +86,7 @@ export const Login = () => {
           secureTextEntry
         />
 
-        <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
+        <ErrorMessage visible={error.visible}>{error.message}</ErrorMessage>
 
         <StyledButton onPress={handleLogin}>
           <StyledText>로그인 하기</StyledText>

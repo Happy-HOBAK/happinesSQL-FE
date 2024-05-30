@@ -18,7 +18,7 @@ export const SecondSignUp = ({ route, navigation }) => {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({ message: "", visible: false });
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
     { label: "여성", value: "여성" },
@@ -28,24 +28,40 @@ export const SecondSignUp = ({ route, navigation }) => {
 
   const handleSignUp = async () => {
     if (!name || !gender || !age) {
-      setError(true);
-    } else {
-      setError(false);
-      try {
-        await postUserInfo(username, password, name, gender, age);
-        console.log("회원가입 성공:", {
-          username,
-          password,
-          name,
-          gender,
-          age,
-        });
+      setError({ message: "모든 정보를 입력해주세요!", visible: true });
+      return;
+    }
+
+    setError({ message: "", visible: false });
+
+    try {
+      const response = await postUserInfo(
+        username,
+        password,
+        name,
+        gender,
+        age
+      );
+      if (response.success) {
         navigation.navigate("Landing", {
           message: "회원가입이 완료되었습니다!",
         });
-      } catch (error) {
-        console.error("회원가입 중 오류 발생:", error);
-        setError(true);
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        if (error.response.data.code === 10005) {
+          setError({ message: "이미 사용 중인 닉네임입니다.", visible: true });
+        } else {
+          setError({
+            message: "회원가입 중 오류 발생. 다시 시도해주세요.",
+            visible: true,
+          });
+        }
+      } else {
+        setError({
+          message: "회원가입 중 오류 발생. 다시 시도해주세요.",
+          visible: true,
+        });
       }
     }
   };
@@ -98,7 +114,7 @@ export const SecondSignUp = ({ route, navigation }) => {
           keyboardType="numeric"
         />
 
-        <ErrorMessage visible={error}>모든 정보를 입력해주세요!</ErrorMessage>
+        <ErrorMessage visible={error.visible}>{error.message}</ErrorMessage>
 
         <StyledButton onPress={handleSignUp}>
           <StyledText>회원가입</StyledText>

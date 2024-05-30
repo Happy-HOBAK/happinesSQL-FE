@@ -20,8 +20,10 @@ export const postUserInfo = async (username, password, name, gender, age) => {
       }
     );
 
-    console.log("서버 응답:", response.data);
+    //console.log("서버 응답:", response.data);
+    return response.data;
   } catch (error) {
-    console.error("요청 실패:", error.response ? error.response.data : error);
+    //console.error("요청 실패:", error.response ? error.response.data : error);
+    throw error;
   }
 };
