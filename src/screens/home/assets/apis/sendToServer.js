@@ -49,7 +49,7 @@ export const sendToServer = async (
       });
     }
 
-    const apiUrl = `${PUBLIC_DNS}/api/records?userId=1`;
+    const apiUrl = `${PUBLIC_DNS}/api/records`;
 
     const token = await AsyncStorage.getItem("accessToken");
     if (!token) {

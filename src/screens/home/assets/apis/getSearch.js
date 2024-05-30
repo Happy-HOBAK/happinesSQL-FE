@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PUBLIC_DNS } from "@env";
 
 export const getSearch = async (searchQuery) => {
-  const url = `${PUBLIC_DNS}/api/activities/search?userId=1`;
+  const url = `${PUBLIC_DNS}/api/activities/search`;
   try {
     const token = await AsyncStorage.getItem("accessToken");
     if (!token) {

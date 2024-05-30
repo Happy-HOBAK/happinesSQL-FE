@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PUBLIC_DNS } from "@env";
 
 export const sendActivity = async (activityName) => {
-  const apiUrl = `${PUBLIC_DNS}/api/activities?userId=1`;
+  const apiUrl = `${PUBLIC_DNS}/api/activities`;
 
   try {
     const token = await AsyncStorage.getItem("accessToken");

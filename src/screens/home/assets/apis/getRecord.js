@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PUBLIC_DNS } from "@env";
 
 export const getRecord = async (lastRecordId) => {
-  let url = `${PUBLIC_DNS}/api/records?size=8&userId=1`;
+  let url = `${PUBLIC_DNS}/api/records?size=8`;
   if (lastRecordId) {
     url += `&lastRecordId=${lastRecordId}`;
   }

@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PUBLIC_DNS } from "@env";
 
 export const getCalender = async (year, month) => {
-  const url = `${PUBLIC_DNS}/api/records/calendar?userId=1&year=${year}&month=${month}`;
+  const url = `${PUBLIC_DNS}/api/records/calendar?year=${year}&month=${month}`;
 
   try {
     const token = await AsyncStorage.getItem("accessToken");
