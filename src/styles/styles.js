@@ -34,7 +34,8 @@ export const StoreBtn = styled.TouchableOpacity`
 export const DataeBtn = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
-  margin-top: 20%;
+  align-self: center;
+  margin-top: 10%;
   width: 250px;
   height: 50px;
   background-color: ${(props) => theme.main};
@@ -64,7 +65,7 @@ export const InfoImage = styled.Image`
 `;
 
 export const HomeText = styled.Text`
-  font-size: 31px;
+  font-size: 30px;
   font-weight: 600;
   color: #0b1623;
 `;
@@ -160,7 +161,7 @@ export const EmotionText = styled.Text`
 `;
 
 export const RecordTextView = styled.View`
-  margin-top: 100px;
+  margin-top: 70px;
   margin-bottom: 30px;
   align-items: center;
 `;
@@ -282,23 +283,69 @@ export const RecordDate = styled.Text`
 export const ReportBox = styled.View`
   background-color: white;
   border-radius: 10px;
-  width: 320px;
-  height: 320px;
+  width: 330px;
+  height: 200px;
+  padding: 25px;
   margin-top: 25px;
-  align-items: center;
-  border-color: ${theme.grey};
-  border-width: 0.2px;
-  background-color: "#ffffff";
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+export const FirstReportBox = styled.View`
+  background-color: white;
+  border-radius: 10px;
+  width: 330px;
+  height: 320px;
+  padding: 25px;
+  margin-top: 25px;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+export const ActivityReportBox = styled.View`
+  background-color: white;
+  border-radius: 10px;
+  width: 330px;
+  height: 320px;
+  padding: 25px;
+  margin-top: 25px;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
 export const SecondReportBox = styled.View`
   background-color: ${theme.grey_1};
   border-radius: 10px;
-  width: 310px;
-  height: 60px;
-  margin-top: 25px;
+  width: 270px;
+  height: 50px;
+  margin-top: 15px;
   align-items: center;
   flex-direction: row;
+  /* align-self: center; */
+  justify-content: space-between;
+  padding: 10px;
+`;
+
+export const GraphReportBox = styled.View`
+  background-color: white;
+  border-radius: 10px;
+  width: 330px;
+  height: 340px;
+  padding: 25px;
+  margin-top: 25px;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+export const MapReportBox = styled.View`
+  background-color: white;
+  border-radius: 10px;
+  width: 330px;
+  height: 315px;
+  padding: 25px;
+  margin-top: 25px;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
 export const SearchView = styled.View`

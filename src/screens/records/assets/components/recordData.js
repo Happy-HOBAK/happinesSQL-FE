@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Text, Image, ActivityIndicator } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getRecord } from "../../../home/assets/apis/getRecord";
 import {
@@ -7,6 +14,23 @@ import {
   RecordContent,
   RecordDate,
 } from "../../../../styles/styles";
+import {
+  StyledImage,
+  StyledRecordBox,
+  StyledRecordContent,
+  StyledRecordDate,
+} from "./record.style";
+import { emotion } from "../../../../common/data/emotion";
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+});
 
 function RecordData() {
   const navigation = useNavigation();
@@ -53,21 +77,41 @@ function RecordData() {
     console.error("이미지 로드 실패:", error.nativeEvent.error);
   };
 
+  const getEmoji = (happiness) => {
+    const emotionObject = emotion.find((e) => e.id === happiness);
+    return emotionObject ? emotionObject.emoji : null;
+  };
+
   return (
-    <ScrollView onScroll={handleScroll} scrollEventThrottle={400}>
+    <ScrollView
+      onScroll={handleScroll}
+      scrollEventThrottle={400}
+      style={{ marginLeft: 10, marginRight: 50 }}
+    >
       {records.map((record, index) => (
-        <RecordBox key={index}>
-          <View>
-            <RecordDate>{record.date}</RecordDate>
-            <RecordContent>{record.memo}</RecordContent>
-            <Image
+        <StyledRecordBox style={styles.shadow} key={index}>
+          <View style={{ flexDirection: "row" }}>
+            <View>
+              <View style={{ flexDirection: "row" }}>
+                <StyledRecordDate>{record.date}</StyledRecordDate>
+                <Image
+                  source={getEmoji(record.happiness)}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    marginTop: 23,
+                    marginLeft: -7,
+                  }}
+                />
+              </View>
+              <StyledRecordContent>{record.memo}</StyledRecordContent>
+            </View>
+            <StyledImage
               source={{ uri: record.img_url }}
-              style={{ width: 100, height: 100 }}
               onError={handleImageError}
             />
-            <RecordContent>Happiness: {record.happiness}</RecordContent>
           </View>
-        </RecordBox>
+        </StyledRecordBox>
       ))}
       {loading && <ActivityIndicator size="large" color="#0000ff" />}
     </ScrollView>

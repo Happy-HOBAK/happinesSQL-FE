@@ -70,6 +70,7 @@ export default function App() {
           />
           <Stack.Screen name="Tabs" component={MyTabs} />
           <Stack.Screen name="UserInfo" component={UserInfo} />
+          <Stack.Screen name="Data" component={DataScreen} />
         </Stack.Navigator>
         <StatusBar style="dark" />
       </NavigationContainer>
