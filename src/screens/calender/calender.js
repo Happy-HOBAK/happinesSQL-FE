@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import styled from "styled-components/native";
 import { CalenderView } from "../../styles/styles";
 import { Calendar } from "react-native-calendars";
 import { theme } from "../../styles/theme";
-import { getCalender } from "./assets/apis/getCalender";
+import { getCalender, getDayDetails } from "./assets/apis/getCalender";
 import { ColorContents } from "./assets/components/colorContents";
+import ModalComponent from "./assets/components/calenderModal";
 
 const happinessColors = {
   0: "#98c9fb",
@@ -46,6 +48,8 @@ const Calendertheme = {
 
 function Calender() {
   const [markedDates, setMarkedDates] = useState({});
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState({ date: "", happiness: 0 });
   const navigation = useNavigation();
 
   const updateMarkedDates = (data) => {
@@ -53,6 +57,7 @@ function Calender() {
     data.forEach((item) => {
       newMarkedDates[item.date] = {
         customStyles: getCommonCustomStyles(item.happiness),
+        happiness: item.happiness,
       };
     });
     setMarkedDates(newMarkedDates);
@@ -70,6 +75,23 @@ function Calender() {
     }
   };
 
+  const fetchDayData = async (date) => {
+    try {
+      const response = await getDayDetails(date);
+      if (response.success) {
+        const dayData = response.data[0];
+        setModalContent({
+          date: dayData.date,
+          happiness: dayData.happiness,
+          memo: dayData.memo,
+        });
+        setModalVisible(true);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
     const today = new Date();
     const dateString = today.toISOString().split("T")[0];
@@ -81,6 +103,12 @@ function Calender() {
     fetchMonthData(`${year}-${month.toString().padStart(2, "0")}`);
   };
 
+  const handleDayPress = (day) => {
+    if (markedDates[day.dateString]) {
+      fetchDayData(day.dateString);
+    }
+  };
+
   return (
     <CalenderView>
       <View style={{ margin: 20 }} />
@@ -90,9 +118,17 @@ function Calender() {
         monthFormat={"yyyy년 M월"}
         markedDates={markedDates}
         markingType={"custom"}
+        onDayPress={handleDayPress}
         onMonthChange={handleMonthChange}
       />
       <ColorContents />
+      <ModalComponent
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        date={modalContent.date}
+        happiness={modalContent.happiness}
+        memo={modalContent.memo}
+      />
     </CalenderView>
   );
 }

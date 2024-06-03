@@ -24,3 +24,26 @@ export const getCalender = async (year, month) => {
     throw error;
   }
 };
+
+export const getDayDetails = async (date) => {
+  const url = `${PUBLIC_DNS}/api/records/calendar/${date}`;
+
+  try {
+    const token = await AsyncStorage.getItem("accessToken");
+    if (!token) {
+      throw new Error("토큰없음");
+    }
+
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching day details:", error);
+    throw error;
+  }
+};
