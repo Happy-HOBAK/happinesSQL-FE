@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -46,18 +46,36 @@ import CircleItem from "./assets/components/CircleComponent/Circle";
 import RectangleItem from "./assets/components/Rectangle";
 import CustomDropdown from "./assets/components/Dropdown";
 import MapView, { Marker } from "react-native-maps";
+import {
+  getHappiness,
+  getLocation,
+  getPopular,
+  getRecommend,
+  getSummary,
+} from "./assets/apis/getTrends";
 
 function Trends() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedAge, setSelectedAge] = useState("20대");
-  const [selectedGender, setSelectedGender] = useState("여성");
-
+  const [selectedAge, setSelectedAge] = useState("전체");
+  const [selectedGender, setSelectedGender] = useState("전체");
+  const [recommendLoading, setRecommendLoading] = useState(false);
+  const [summaryLoading, setSummaryLoading] = useState(false);
+  //const [happinessData, setHappinessData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({
+    happiness: null,
+    popular: null,
+    recommend: null,
+    locations: null,
+    summary: null,
+  });
   const ageItems = [
     { label: "10대", value: "10대" },
     { label: "20대", value: "20대" },
     { label: "30대", value: "30대" },
     { label: "40대", value: "40대" },
     { label: "50대", value: "50대" },
+    { label: "전체", value: "전체" },
   ];
 
   const genderItems = [
@@ -65,6 +83,83 @@ function Trends() {
     { label: "남성", value: "남성" },
     { label: "전체", value: "전체" },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [happinessData, popularData, recommendData, locationsData] =
+          await Promise.all([
+            getHappiness(),
+            getPopular(),
+            getRecommend(),
+            getLocation(),
+          ]);
+
+        setData({
+          happiness: happinessData,
+          popular: popularData,
+          recommend: recommendData,
+          locations: locationsData,
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const reloadRecommendations = async () => {
+    setRecommendLoading(true);
+    try {
+      const recommendData = await getRecommend();
+      setData((prevState) => ({
+        ...prevState,
+        recommend: recommendData,
+      }));
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    } finally {
+      setRecommendLoading(false);
+    }
+  };
+
+  // const fetchSummary = async () => {
+  //   setSummaryLoading(true);
+  //   try {
+  //     const summaryData = await getSummary(selectedAge, selectedGender);
+  //     setData((prevState) => ({
+  //       ...prevState,
+  //       summary: summaryData,
+  //     }));
+  //   } catch (error) {
+  //     console.error("Error fetching summary:", error);
+  //   } finally {
+  //     setSummaryLoading(false);
+  //   }
+  // };
+
+  const fetchSummary = async () => {
+    setSummaryLoading(true);
+    try {
+      const summaryData = await getSummary(
+        selectedAge === "전체" ? undefined : selectedAge,
+        selectedGender === "전체" ? undefined : selectedGender
+      );
+      setData((prevState) => ({
+        ...prevState,
+        summary: summaryData,
+      }));
+    } catch (error) {
+      console.error("Error fetching summary:", error);
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
+
+  console.log(data.recommend);
 
   return (
     <SafeAreaView style={{ backgroundColor: "#F3F4F6" }}>
@@ -75,9 +170,17 @@ function Trends() {
             <UserText>대한민국 사람들의</UserText>
             <LeftText>평균 행복지수는</LeftText>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <FocusText>보통</FocusText>
+              {data.happiness ? (
+                <FocusText>{data.happiness.data.level}</FocusText>
+              ) : (
+                <></>
+              )}
               <LeftText>이에요</LeftText>
-              <FocusText> 🙂</FocusText>
+              {data.happiness ? (
+                <FocusText>{data.happiness.data.emoji}</FocusText>
+              ) : (
+                <></>
+              )}
             </View>
             <CriteriaButton onPress={() => setModalVisible(true)}>
               <CriteriaButtonText>기준이 궁금해요!</CriteriaButtonText>
@@ -88,7 +191,7 @@ function Trends() {
             <SubText>행복도가 높았던 활동을</SubText>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <SubText>추천해드릴게요</SubText>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={reloadRecommendations}>
                 <Image
                   source={reload}
                   style={{ marginLeft: 5, height: 28, width: 28 }}
@@ -97,26 +200,48 @@ function Trends() {
             </View>
 
             <CircleContainer>
-              <CircleItem emoji="🛹" text="보드 타기" />
-              <CircleItem emoji="🎨" text="그림 그리기" />
-              <CircleItem emoji="🚬" text="사이버 담배" />
+              {data.recommend && data.recommend.data ? (
+                data.recommend.data.map((activity, index) => (
+                  <CircleItem
+                    key={index}
+                    emoji={activity.emoji}
+                    text={activity.name}
+                  />
+                ))
+              ) : (
+                <></>
+              )}
             </CircleContainer>
           </FirstReportBox>
 
           <ActivityReportBox>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <SubText>오늘은 </SubText>
-              <SubFocusText>보드 타기</SubFocusText>
+              {data.popular ? (
+                <SubFocusText>{data.popular.data[0].name}</SubFocusText>
+              ) : (
+                <></>
+              )}
               <SubText>를</SubText>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <SubText>한 사람이 많았어요! </SubText>
-              <SubText>🛹</SubText>
+              {data.popular ? (
+                <SubText>{data.popular.data[0].emoji}</SubText>
+              ) : (
+                <></>
+              )}
             </View>
             <CircleContainer>
-              <RectangleItem emoji="🛹" text="보드 타기" record="100회 기록" />
-              <RectangleItem emoji="🎨" text="그림 그리기" record="20회 기록" />
-              <RectangleItem emoji="🛍️" text="쇼핑하기" record="30회 기록" />
+              {data.popular &&
+                data.popular.data.map((activity) => (
+                  <RectangleItem
+                    key={activity.ranking}
+                    emoji={activity.emoji}
+                    text={activity.name}
+                    record={`${activity.times}회 기록`}
+                  />
+                ))}
             </CircleContainer>
           </ActivityReportBox>
 
@@ -141,14 +266,24 @@ function Trends() {
                 items={genderItems}
                 placeholder="성별"
               />
-              <Button>
+              <Button onPress={fetchSummary}>
                 <ButtonText>조회</ButtonText>
               </Button>
             </View>
             <BlueBox>
-              <BlueBoxText>
-                서울특별시 동작구에서{"\n"}아침에{"\n"}데이트하기할 때
-              </BlueBoxText>
+              {data.summary && data.summary.data ? (
+                typeof data.summary.data === "string" ? (
+                  <BlueBoxText>{data.summary.data}</BlueBoxText>
+                ) : (
+                  <BlueBoxText>
+                    {data.summary.data.location}에서{"\n"}
+                    {data.summary.data.time_of_day}에{"\n"}
+                    {data.summary.data.activity}할 때
+                  </BlueBoxText>
+                )
+              ) : (
+                <BlueBoxText>연령대, 성별을 선택해주세요!</BlueBoxText>
+              )}
             </BlueBox>
           </ThirdReportBox>
 
@@ -156,39 +291,46 @@ function Trends() {
             <SubText>오늘 많은 사람들이</SubText>
             <SubText>이곳에서 행복감을 느꼈어요</SubText>
 
-            <SecondReportBox>
-              <NumText>1</NumText>
-              <NumtitleText>서울 동작구 상도동</NumtitleText>
-            </SecondReportBox>
-
-            <SecondReportBox>
-              <NumText>2</NumText>
-              <NumtitleText>서울 동작구 상도동</NumtitleText>
-            </SecondReportBox>
-
-            <SecondReportBox>
-              <NumText>3</NumText>
-              <NumtitleText>잠실나루역</NumtitleText>
-            </SecondReportBox>
+            {data.locations && data.locations.data ? (
+              data.locations.data.map((location, index) => (
+                <SecondReportBox key={index}>
+                  <NumText>{location.ranking}</NumText>
+                  <NumtitleText>{location.location}</NumtitleText>
+                </SecondReportBox>
+              ))
+            ) : (
+              <></>
+            )}
 
             <MapContainer>
               <MapView
                 style={{ flex: 1 }}
                 initialRegion={{
-                  latitude: 37.5665,
-                  longitude: 126.978,
+                  latitude:
+                    data.locations && data.locations.data
+                      ? data.locations.data[0].latitude
+                      : 37.5665,
+                  longitude:
+                    data.locations && data.locations.data
+                      ? data.locations.data[0].longitude
+                      : 126.978,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}
               >
-                <Marker
-                  coordinate={{
-                    latitude: 37.5665,
-                    longitude: 126.978,
-                  }}
-                  title="서울특별시 동작구"
-                  description="보드타기"
-                />
+                {data.locations &&
+                  data.locations.data &&
+                  data.locations.data.map((location, index) => (
+                    <Marker
+                      key={index}
+                      coordinate={{
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                      }}
+                      title={location.location}
+                      description={location.happiestActivity}
+                    />
+                  ))}
               </MapView>
             </MapContainer>
           </FourthReportBox>
