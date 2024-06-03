@@ -47,13 +47,45 @@ import {
   CloseButtonText,
   UserText,
 } from "./report.style";
+import { ReportAll } from "./all";
+import { ReportMonth } from "./month";
+import { ReportYear } from "./year";
 
 function Report() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("a");
   const navigation = useNavigation();
 
   const handleDataBtnPress = () => {
     navigation.navigate("Data");
+  };
+
+  const renderContent = () => {
+    switch (selectedOption) {
+      case "a":
+        return (
+          <ReportAll
+            handleDataBtnPress={handleDataBtnPress}
+            setModalVisible={setModalVisible}
+          />
+        );
+      case "y":
+        return (
+          <ReportYear
+            handleDataBtnPress={handleDataBtnPress}
+            setModalVisible={setModalVisible}
+          />
+        );
+      case "m":
+        return (
+          <ReportMonth
+            handleDataBtnPress={handleDataBtnPress}
+            setModalVisible={setModalVisible}
+          />
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -63,7 +95,7 @@ function Report() {
         <SwitchSelector
           style={{ width: 320, marginTop: 20, marginBottom: 10 }}
           initial={0}
-          //onPress={value => this.setState({ gender: value })}
+          onPress={(value) => setSelectedOption(value)}
           textColor={"#4E515A"}
           selectedColor={"#0085FF"}
           buttonColor={"#E8F0FD"}
@@ -80,92 +112,7 @@ function Report() {
             { label: "월간", value: "m" },
           ]}
         />
-        <ScrollView>
-          <ReportBox>
-            <UserText>호박 님의</UserText>
-            <LeftText>평균 행복지수는</LeftText>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <FocusText>보통</FocusText>
-              <LeftText>이에요</LeftText>
-              <FocusText> 🙂</FocusText>
-            </View>
-            <CriteriaButton onPress={() => setModalVisible(true)}>
-              <CriteriaButtonText>기준이 궁금해요!</CriteriaButtonText>
-            </CriteriaButton>
-          </ReportBox>
-
-          <FirstReportBox>
-            <UserText>호박 님은</UserText>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <FocusText>점심</FocusText>
-              <LeftText>에</LeftText>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <FocusText>한강</FocusText>
-              <LeftText>에서</LeftText>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <FocusText>피크닉</FocusText>
-              <LeftText>을 할 때</LeftText>
-            </View>
-            <LeftText>가장 행복했어요</LeftText>
-            <DataeBtn onPress={handleDataBtnPress}>
-              <DataText>전체 데이터 보기</DataText>
-            </DataeBtn>
-          </FirstReportBox>
-
-          <ActivityReportBox>
-            <TitleText>행복한 활동 BEST 3</TitleText>
-            <SubTitleText>호박 님은 이런 활동을 할 때 행복하군요!</SubTitleText>
-
-            <SecondReportBox>
-              <NumText>1</NumText>
-              <NumtitleText>보드 타기</NumtitleText>
-              <ImojiText>🛹</ImojiText>
-            </SecondReportBox>
-
-            <SecondReportBox>
-              <NumText>2</NumText>
-              <NumtitleText>보드 타기</NumtitleText>
-              <ImojiText>🛹</ImojiText>
-            </SecondReportBox>
-
-            <SecondReportBox>
-              {/* <NumText>3</NumText>
-              <NumtitleText>보드 타기</NumtitleText>
-              <ImojiText>🛹</ImojiText> */}
-            </SecondReportBox>
-          </ActivityReportBox>
-
-          <GraphReportBox>
-            <TitleText>행복 그래프</TitleText>
-            <SubTitleText>
-              호박 님의 행복 지수 추이를 분석해봤어요!
-            </SubTitleText>
-            <ReportChart />
-          </GraphReportBox>
-
-          <MapReportBox>
-            <TitleText>행복했던 장소 BEST 3</TitleText>
-            <SubTitleText>호박 님은 이런 장소에서 행복했어요</SubTitleText>
-
-            <SecondReportBox>
-              <NumText>1</NumText>
-              <NumtitleText>서울 동작구 상도동</NumtitleText>
-            </SecondReportBox>
-
-            <SecondReportBox>
-              <NumText>2</NumText>
-              <NumtitleText>서울 동작구 상도동</NumtitleText>
-            </SecondReportBox>
-
-            <SecondReportBox>
-              <NumText>3</NumText>
-              <NumtitleText>잠실나루역</NumtitleText>
-            </SecondReportBox>
-          </MapReportBox>
-          <View style={{ height: 200 }} />
-        </ScrollView>
+        {renderContent()}
       </RecordTextView>
 
       <Modal

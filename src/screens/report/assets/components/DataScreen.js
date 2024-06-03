@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import {
   RecordTextView,
@@ -21,9 +21,26 @@ import {
 import SwitchSelector from "react-native-switch-selector";
 import { useNavigation } from "@react-navigation/native";
 import back from "../../../home/assets/images/back.png";
+import { Activity } from "./Activity";
+import { Location } from "./Location";
+import { Time } from "./Time";
 
 function DataScreen() {
   const navigation = useNavigation();
+  const [selectedOption, setSelectedOption] = useState("a");
+
+  const renderContent = () => {
+    switch (selectedOption) {
+      case "a":
+        return <Activity />;
+      case "y":
+        return <Location />;
+      case "m":
+        return <Time />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <RecordTextView>
@@ -37,7 +54,7 @@ function DataScreen() {
       <SwitchSelector
         style={{ width: 320, marginTop: 20, marginBottom: 10 }}
         initial={0}
-        //onPress={value => this.setState({ gender: value })}
+        onPress={(value) => setSelectedOption(value)}
         textColor={"#4E515A"}
         selectedColor={"#0085FF"}
         buttonColor={"#fff"}
@@ -54,25 +71,7 @@ function DataScreen() {
           { label: "시간", value: "m" },
         ]}
       />
-      <ScrollView>
-        <SecondReportBox>
-          <NumText>1</NumText>
-          <NumtitleText>보드 타기</NumtitleText>
-          <ImojiText>🛹</ImojiText>
-        </SecondReportBox>
-
-        <SecondReportBox>
-          <NumText>2</NumText>
-          <NumtitleText>보드 타기</NumtitleText>
-          <ImojiText>🛹</ImojiText>
-        </SecondReportBox>
-
-        <SecondReportBox>
-          <NumText>3</NumText>
-          <NumtitleText>보드 타기</NumtitleText>
-          <ImojiText>🛹</ImojiText>
-        </SecondReportBox>
-      </ScrollView>
+      {renderContent()}
     </RecordTextView>
   );
 }
