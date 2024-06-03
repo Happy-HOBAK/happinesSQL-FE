@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import {
   SecondReportBox,
   NumText,
@@ -7,26 +7,19 @@ import {
   ImojiText,
 } from "./DataScreen.style";
 
-export const Time = () => {
+export const Time = ({ data }) => {
   return (
     <ScrollView>
-      <SecondReportBox>
-        <NumText>1</NumText>
-        <NumtitleText>시간</NumtitleText>
-        <ImojiText>🛹</ImojiText>
-      </SecondReportBox>
-
-      <SecondReportBox>
-        <NumText>2</NumText>
-        <NumtitleText>보드 타기</NumtitleText>
-        <ImojiText>🛹</ImojiText>
-      </SecondReportBox>
-
-      <SecondReportBox>
-        <NumText>3</NumText>
-        <NumtitleText>보드 타기</NumtitleText>
-        <ImojiText>🛹</ImojiText>
-      </SecondReportBox>
+      {data && data.data ? (
+        data.data.map((time, index) => (
+          <SecondReportBox key={index}>
+            <NumText>{time.ranking}</NumText>
+            <NumtitleText>{time.time_of_day}</NumtitleText>
+          </SecondReportBox>
+        ))
+      ) : (
+        <Text>데이터가 없습니다.</Text>
+      )}
     </ScrollView>
   );
 };

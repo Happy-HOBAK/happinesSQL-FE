@@ -23,28 +23,21 @@ import {
   GraphReportBox,
   MapReportBox,
 } from "../../styles/styles";
-import { ReportChart } from "./assets/components/reportGraph";
 import SwitchSelector from "react-native-switch-selector";
 import {
   FocusText,
   ImojiText,
   LeftText,
-  NotiText,
   NumText,
-  NumnumText,
   NumtitleText,
   SubTitleText,
   TitleText,
-  Container,
-  InnerContainer,
   CriteriaButton,
   CriteriaButtonText,
   ModalBackground,
   ModalContainer,
   ModalTitle,
   ModalText,
-  CloseButton,
-  CloseButtonText,
   UserText,
 } from "./report.style";
 import { ReportAll } from "./all";
@@ -56,8 +49,8 @@ function Report() {
   const [selectedOption, setSelectedOption] = useState("a");
   const navigation = useNavigation();
 
-  const handleDataBtnPress = () => {
-    navigation.navigate("Data");
+  const handleDataBtnPress = (type) => {
+    navigation.navigate("Data", { type });
   };
 
   const renderContent = () => {
@@ -65,21 +58,21 @@ function Report() {
       case "a":
         return (
           <ReportAll
-            handleDataBtnPress={handleDataBtnPress}
+            handleDataBtnPress={() => handleDataBtnPress("all")}
             setModalVisible={setModalVisible}
           />
         );
       case "y":
         return (
           <ReportYear
-            handleDataBtnPress={handleDataBtnPress}
+            handleDataBtnPress={() => handleDataBtnPress("year")}
             setModalVisible={setModalVisible}
           />
         );
       case "m":
         return (
           <ReportMonth
-            handleDataBtnPress={handleDataBtnPress}
+            handleDataBtnPress={() => handleDataBtnPress("month")}
             setModalVisible={setModalVisible}
           />
         );

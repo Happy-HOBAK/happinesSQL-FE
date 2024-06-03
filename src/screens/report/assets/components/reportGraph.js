@@ -15,8 +15,8 @@ export const ReportChart = ({ data, barPercentage, verticalLabelRotation }) => {
     barRadius: 2,
     useShadowColorFromDataset: false,
     propsForLabels: {
-      // rotation: 45, // Rotate labels
-      translateX: -10, // Adjust label position to prevent clipping
+      // rotation: 45,
+      translateX: -10,
     },
   };
 

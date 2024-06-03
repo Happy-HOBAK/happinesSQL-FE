@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, ScrollView, ActivityIndicator, Image } from "react-native";
 import {
   RecordTextView,
   ReportText,
@@ -19,24 +19,84 @@ import {
   Placeholder,
 } from "./DataScreen.style";
 import SwitchSelector from "react-native-switch-selector";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import back from "../../../home/assets/images/back.png";
 import { Activity } from "./Activity";
 import { Location } from "./Location";
 import { Time } from "./Time";
+import {
+  getAllRankingActivity,
+  getAllRankingLocation,
+  getAllRankingTime,
+  getMonthRankingActivity,
+  getMonthRankingLocation,
+  getMonthRankingTime,
+  getYearRankingActivity,
+  getYearRankingLocation,
+  getYearRankingTime,
+} from "../apis/getRankings";
 
 function DataScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
   const [selectedOption, setSelectedOption] = useState("a");
+  const [loading, setLoading] = useState(true);
+  const [activities, setActivities] = useState(null);
+  const [locations, setLocations] = useState(null);
+  const [times, setTimes] = useState(null);
+
+  const { type } = route.params;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let activityData, locationData, timeData;
+
+        switch (type) {
+          case "all":
+            activityData = await getAllRankingActivity();
+            locationData = await getAllRankingLocation();
+            timeData = await getAllRankingTime();
+            break;
+          case "month":
+            activityData = await getMonthRankingActivity();
+            locationData = await getMonthRankingLocation();
+            timeData = await getMonthRankingTime();
+            break;
+          case "year":
+            activityData = await getYearRankingActivity();
+            locationData = await getYearRankingLocation();
+            timeData = await getYearRankingTime();
+            break;
+          default:
+            break;
+        }
+
+        setActivities(activityData);
+        setLocations(locationData);
+        setTimes(timeData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [type]);
 
   const renderContent = () => {
+    if (loading) {
+      return <ActivityIndicator size="large" color="#0000ff" />;
+    }
+
     switch (selectedOption) {
       case "a":
-        return <Activity />;
+        return <Activity data={activities} />;
       case "y":
-        return <Location />;
+        return <Location data={locations} />;
       case "m":
-        return <Time />;
+        return <Time data={times} />;
       default:
         return null;
     }
