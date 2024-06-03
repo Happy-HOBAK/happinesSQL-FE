@@ -84,6 +84,7 @@ function Calender() {
           date: dayData.date,
           happiness: dayData.happiness,
           memo: dayData.memo,
+          img_url: dayData.img_url,
         });
         setModalVisible(true);
       }
@@ -128,6 +129,7 @@ function Calender() {
         date={modalContent.date}
         happiness={modalContent.happiness}
         memo={modalContent.memo}
+        img_url={modalContent.img_url}
       />
     </CalenderView>
   );

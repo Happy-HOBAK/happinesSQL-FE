@@ -1,6 +1,18 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback,
+} from "react-native";
 import styled from "styled-components/native";
+import {
+  StyledImage,
+  StyledRecordBox,
+  StyledRecordContent,
+  StyledRecordDate,
+} from "../../../records/assets/components/record.style";
 
 const ModalBackground = styled.View`
   flex: 1;
@@ -9,20 +21,24 @@ const ModalBackground = styled.View`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const ModalContainer = styled.View`
-  width: 300px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
+const StyledModalRecordBox = styled(StyledRecordBox)`
+  flex-direction: row;
+  align-items: center;
 `;
 
-const CloseButton = styled.Text`
-  color: blue;
-  margin-top: 20px;
-  text-align: center;
-`;
+const getEmoji = (happiness) => {
+  const emojis = ["😔", "😞", "😐", "😊", "😁", "😃"];
+  return emojis[happiness] || "😐";
+};
 
-const ModalComponent = ({ isVisible, onClose, date, happiness, memo }) => {
+const ModalComponent = ({
+  isVisible,
+  onClose,
+  date,
+  happiness,
+  memo,
+  img_url,
+}) => {
   return (
     <Modal
       visible={isVisible}
@@ -30,16 +46,29 @@ const ModalComponent = ({ isVisible, onClose, date, happiness, memo }) => {
       animationType="slide"
       onRequestClose={onClose}
     >
-      <ModalBackground>
-        <ModalContainer>
-          <Text>Date: {date}</Text>
-          <Text>Happiness: {happiness}</Text>
-          <Text>Memo: {memo}</Text>
-          <TouchableOpacity onPress={onClose}>
-            <CloseButton>Close</CloseButton>
-          </TouchableOpacity>
-        </ModalContainer>
-      </ModalBackground>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <ModalBackground>
+          <View>
+            <StyledModalRecordBox>
+              <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <StyledRecordDate>
+                    {date}
+                    {getEmoji(happiness)}
+                  </StyledRecordDate>
+                </View>
+                <StyledRecordContent>{memo}</StyledRecordContent>
+              </View>
+
+              {img_url && <StyledImage source={{ uri: img_url }} />}
+
+              <TouchableOpacity onPress={onClose}>
+                {/* <CloseButton>닫기</CloseButton> */}
+              </TouchableOpacity>
+            </StyledModalRecordBox>
+          </View>
+        </ModalBackground>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
