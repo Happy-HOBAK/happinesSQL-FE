@@ -43,6 +43,7 @@ export const Login = () => {
           setError({ message: "비밀번호가 틀렸습니다.", visible: true });
         } else {
           await AsyncStorage.setItem("accessToken", response.data.accessToken);
+          await AsyncStorage.setItem("name", response.data.name);
           navigation.reset({
             index: 0,
             routes: [{ name: "Tabs" }],

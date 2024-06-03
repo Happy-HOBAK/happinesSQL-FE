@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ReportBox,
   DataeBtn,
@@ -40,6 +41,7 @@ export const ReportYear = ({ handleDataBtnPress, setModalVisible }) => {
     locations: null,
     graph: null,
   });
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,13 +74,25 @@ export const ReportYear = ({ handleDataBtnPress, setModalVisible }) => {
       }
     };
 
+    const fetchUserName = async () => {
+      try {
+        const name = await AsyncStorage.getItem("name");
+        if (name) {
+          setUserName(name);
+        }
+      } catch (error) {
+        console.error("Error fetching user name:", error);
+      }
+    };
+
     fetchData();
+    fetchUserName();
   }, []);
 
   return (
     <ScrollView>
       <ReportBox>
-        <UserText>3님의</UserText>
+        <UserText>{userName} 님의</UserText>
         <LeftText>평균 행복지수는</LeftText>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           {data.happiness ? (
@@ -99,7 +113,7 @@ export const ReportYear = ({ handleDataBtnPress, setModalVisible }) => {
       </ReportBox>
 
       <FirstReportBox>
-        <UserText>호박 님은</UserText>
+        <UserText>{userName} 님은</UserText>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           {data.summary ? (
             <FocusText>{data.summary.data.time_of_day}</FocusText>
@@ -132,7 +146,9 @@ export const ReportYear = ({ handleDataBtnPress, setModalVisible }) => {
 
       <ActivityReportBox>
         <TitleText>행복한 활동 BEST 3</TitleText>
-        <SubTitleText>호박 님은 이런 활동을 할 때 행복하군요!</SubTitleText>
+        <SubTitleText>
+          {userName} 님은 이런 활동을 할 때 행복하군요!
+        </SubTitleText>
         {data.activities && data.activities.data ? (
           data.activities.data.map((activity, index) => (
             <SecondReportBox key={index}>
@@ -148,7 +164,9 @@ export const ReportYear = ({ handleDataBtnPress, setModalVisible }) => {
 
       <GraphReportBox>
         <TitleText>행복 그래프</TitleText>
-        <SubTitleText>호박 님의 행복 지수 추이를 분석해봤어요!</SubTitleText>
+        <SubTitleText>
+          {userName} 님의 행복 지수 추이를 분석해봤어요!
+        </SubTitleText>
         {data.graph && data.graph.data ? (
           <ReportChart
             data={{
@@ -169,7 +187,7 @@ export const ReportYear = ({ handleDataBtnPress, setModalVisible }) => {
 
       <MapReportBox>
         <TitleText>행복했던 장소 BEST 3</TitleText>
-        <SubTitleText>호박 님은 이런 장소에서 행복했어요</SubTitleText>
+        <SubTitleText>{userName} 님은 이런 장소에서 행복했어요</SubTitleText>
         {data.locations && data.locations.data ? (
           data.locations.data.map((location, index) => (
             <SecondReportBox key={index}>
