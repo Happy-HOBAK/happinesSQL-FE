@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-  Image,
-  ActivityIndicator,
-  StyleSheet,
-} from "react-native";
+import { ScrollView, View, Text, Image, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getRecord } from "../../../home/assets/apis/getRecord";
 import {
@@ -21,16 +14,6 @@ import {
   StyledRecordDate,
 } from "./record.style";
 import { emotion } from "../../../../common/data/emotion";
-
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-});
 
 function RecordData() {
   const navigation = useNavigation();
@@ -86,30 +69,34 @@ function RecordData() {
     <ScrollView
       onScroll={handleScroll}
       scrollEventThrottle={400}
-      style={{ marginLeft: 10, marginRight: 50 }}
+      style={{ marginLeft: 10, marginRight: 10 }}
+      contentContainerStyle={{ alignItems: "center", alignContent: "center" }}
     >
       {records.map((record, index) => (
-        <StyledRecordBox style={styles.shadow} key={index}>
-          <View style={{ flexDirection: "row" }}>
-            <View>
-              <View style={{ flexDirection: "row" }}>
-                <StyledRecordDate>{record.date}</StyledRecordDate>
-                <Image
-                  source={getEmoji(record.happiness)}
-                  style={{
-                    width: 20,
-                    height: 20,
-                    marginTop: 23,
-                    marginLeft: -7,
-                  }}
-                />
+        <StyledRecordBox key={index}>
+          <View>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <StyledRecordDate style={{ marginTop: -50 }}>
+                    {record.date}
+                  </StyledRecordDate>
+                  <Image
+                    source={getEmoji(record.happiness)}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      marginTop: -50,
+                    }}
+                  />
+                </View>
+                <StyledRecordContent>{record.memo}</StyledRecordContent>
               </View>
-              <StyledRecordContent>{record.memo}</StyledRecordContent>
+              <StyledImage
+                source={{ uri: record.img_url }}
+                onError={handleImageError}
+              />
             </View>
-            <StyledImage
-              source={{ uri: record.img_url }}
-              onError={handleImageError}
-            />
           </View>
         </StyledRecordBox>
       ))}

@@ -9,4 +9,5 @@ export const StyledRecordText = styled.Text`
 export const RecordTextView = styled.View`
   margin-top: 80px;
   align-items: center;
+  justify-content: center;
 `;
