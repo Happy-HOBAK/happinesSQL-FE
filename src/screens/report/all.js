@@ -10,7 +10,6 @@ import {
   GraphReportBox,
   MapReportBox,
 } from "../../styles/styles";
-import { ReportChart } from "./assets/components/reportGraph";
 import {
   FocusText,
   ImojiText,
@@ -23,17 +22,67 @@ import {
   CriteriaButtonText,
   UserText,
 } from "./report.style";
+import { useEffect, useState } from "react";
+import {
+  getAllHappiness,
+  getAllSummary,
+  getAllTopActivities,
+  getAllTopLocations,
+} from "./assets/apis/getReports";
 
 export const ReportAll = ({ handleDataBtnPress, setModalVisible }) => {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({
+    happiness: null,
+    summary: null,
+    activities: null,
+    locations: null,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [happinessData, summaryData, activityData, locationData] =
+          await Promise.all([
+            getAllHappiness(),
+            getAllSummary(),
+            getAllTopActivities(),
+            getAllTopLocations(),
+          ]);
+
+        setData({
+          happiness: happinessData,
+          summary: summaryData,
+          activities: activityData,
+          locations: locationData,
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <ScrollView>
       <ReportBox>
         <UserText>1 님의</UserText>
         <LeftText>평균 행복지수는</LeftText>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <FocusText>보통</FocusText>
+          {data.happiness ? (
+            <FocusText>{data.happiness.data.level}</FocusText>
+          ) : (
+            <></>
+          )}
           <LeftText>이에요</LeftText>
-          <FocusText> 🙂</FocusText>
+          {data.happiness ? (
+            <FocusText>{data.happiness.data.emoji}</FocusText>
+          ) : (
+            <></>
+          )}
         </View>
         <CriteriaButton onPress={() => setModalVisible(true)}>
           <CriteriaButtonText>기준이 궁금해요!</CriteriaButtonText>
@@ -43,15 +92,27 @@ export const ReportAll = ({ handleDataBtnPress, setModalVisible }) => {
       <FirstReportBox>
         <UserText>호박 님은</UserText>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <FocusText>점심</FocusText>
+          {data.summary ? (
+            <FocusText>{data.summary.data.time_of_day}</FocusText>
+          ) : (
+            <></>
+          )}
           <LeftText>에</LeftText>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <FocusText>한강</FocusText>
+          {data.summary ? (
+            <FocusText>{data.summary.data.location}</FocusText>
+          ) : (
+            <></>
+          )}
           <LeftText>에서</LeftText>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <FocusText>피크닉</FocusText>
+          {data.summary ? (
+            <FocusText>{data.summary.data.activity}</FocusText>
+          ) : (
+            <></>
+          )}
           <LeftText>을 할 때</LeftText>
         </View>
         <LeftText>가장 행복했어요</LeftText>
@@ -63,50 +124,32 @@ export const ReportAll = ({ handleDataBtnPress, setModalVisible }) => {
       <ActivityReportBox>
         <TitleText>행복한 활동 BEST 3</TitleText>
         <SubTitleText>호박 님은 이런 활동을 할 때 행복하군요!</SubTitleText>
-
-        <SecondReportBox>
-          <NumText>1</NumText>
-          <NumtitleText>보드 타기</NumtitleText>
-          <ImojiText>🛹</ImojiText>
-        </SecondReportBox>
-
-        <SecondReportBox>
-          <NumText>2</NumText>
-          <NumtitleText>보드 타기</NumtitleText>
-          <ImojiText>🛹</ImojiText>
-        </SecondReportBox>
-
-        <SecondReportBox>
-          <NumText>3</NumText>
-          <NumtitleText>보드 타기</NumtitleText>
-          <ImojiText>🛹</ImojiText>
-        </SecondReportBox>
+        {data.activities && data.activities.data ? (
+          data.activities.data.map((activity, index) => (
+            <SecondReportBox key={index}>
+              <NumText>{activity.ranking}</NumText>
+              <NumtitleText>{activity.activity}</NumtitleText>
+              <ImojiText>{activity.emoji}</ImojiText>
+            </SecondReportBox>
+          ))
+        ) : (
+          <></>
+        )}
       </ActivityReportBox>
-
-      <GraphReportBox>
-        <TitleText>행복 그래프</TitleText>
-        <SubTitleText>호박 님의 행복 지수 추이를 분석해봤어요!</SubTitleText>
-        <ReportChart />
-      </GraphReportBox>
 
       <MapReportBox>
         <TitleText>행복했던 장소 BEST 3</TitleText>
         <SubTitleText>호박 님은 이런 장소에서 행복했어요</SubTitleText>
-
-        <SecondReportBox>
-          <NumText>1</NumText>
-          <NumtitleText>서울 동작구 상도동</NumtitleText>
-        </SecondReportBox>
-
-        <SecondReportBox>
-          <NumText>2</NumText>
-          <NumtitleText>서울 동작구 상도동</NumtitleText>
-        </SecondReportBox>
-
-        <SecondReportBox>
-          <NumText>3</NumText>
-          <NumtitleText>잠실나루역</NumtitleText>
-        </SecondReportBox>
+        {data.locations && data.locations.data ? (
+          data.locations.data.map((location, index) => (
+            <SecondReportBox key={index}>
+              <NumText>{location.ranking}</NumText>
+              <NumtitleText>{location.location}</NumtitleText>
+            </SecondReportBox>
+          ))
+        ) : (
+          <></>
+        )}
       </MapReportBox>
       <View style={{ height: 200 }} />
     </ScrollView>
