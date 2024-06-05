@@ -166,7 +166,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
 
                           <ActivityText>{activity.name}</ActivityText>
                           <DescriptionText>
-                            {activity.description.join(", ")}
+                            {activity.description.join(" ")}
                           </DescriptionText>
                         </ActivityBtn>
                       ))}
@@ -219,6 +219,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
                       >
                         {activityGroup.map((activity, activityIndex) => (
                           <ActivityBtn
+                            style={styles.shadow}
                             key={activityIndex}
                             onPress={() => press(activity.id)}
                           >
@@ -230,7 +231,7 @@ const SecondHome = ({ SecondonActivitySave }) => {
                             </Text>
                             <Text style={{ textAlign: "center", fontSize: 12 }}>
                               {Array.isArray(activity.description)
-                                ? activity.description.join(", ")
+                                ? activity.description.join("")
                                 : activity.description || ""}
                             </Text>
                           </ActivityBtn>

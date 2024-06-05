@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { theme } from "../../../../styles/theme";
 
 export const EmojiText = styled.Text`
-  font-size: 35px;
+  font-size: 28px;
   font-weight: bold;
   text-align: left;
-  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin-top: 5px;
 `;
 
@@ -13,7 +14,8 @@ export const ActivityText = styled.Text`
   font-size: 15px;
   font-weight: bold;
   text-align: left;
-  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 export const DescriptionText = styled.Text`
@@ -21,7 +23,8 @@ export const DescriptionText = styled.Text`
   font-weight: bold;
   text-align: left;
   color: #909090;
-  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 export const ActivityBtn = styled.TouchableOpacity`
