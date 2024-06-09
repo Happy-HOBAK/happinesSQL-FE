@@ -8,43 +8,37 @@ import Seven from "./../../../assets/emoji/1.png";
 
 export const emotion = [
   {
-    id: 1,
+    id: 7,
     emotion: "😄",
     emoji: First,
   },
-
   {
-    id: 2,
+    id: 6,
     emotion: "😊",
     emoji: Second,
   },
-
   {
-    id: 3,
+    id: 5,
     emotion: "🙂",
     emoji: Third,
   },
-
   {
     id: 4,
     emotion: "😐",
     emoji: Fourth,
   },
-
   {
-    id: 5,
+    id: 3,
     emotion: "🙁",
     emoji: Fifth,
   },
-
   {
-    id: 6,
+    id: 2,
     emotion: "😰",
     emoji: Sixth,
   },
-
   {
-    id: 7,
+    id: 1,
     emotion: "😱",
     emoji: Seven,
   },
