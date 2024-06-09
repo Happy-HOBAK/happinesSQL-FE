@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ScrollView, View, Text, Image, ActivityIndicator } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { getRecord } from "../../../home/assets/apis/getRecord";
@@ -18,6 +18,7 @@ import { emotion } from "../../../../common/data/emotion";
 function RecordData() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const scrollViewRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [lastRecordId, setLastRecordId] = useState(null);
   const [records, setRecords] = useState([]);
@@ -26,6 +27,9 @@ function RecordData() {
   useEffect(() => {
     if (isFocused) {
       fetchData(true);
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ y: 0, animated: false });
+      }
     }
   }, [isFocused]);
 
@@ -53,7 +57,7 @@ function RecordData() {
   const handleScroll = ({ nativeEvent }) => {
     const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
     if (
-      layoutMeasurement.height + contentOffset.y >= contentSize.height &&
+      layoutMeasurement.height + contentOffset.y >= contentSize.height - 20 &&
       !loading &&
       hasMore
     ) {
@@ -72,8 +76,9 @@ function RecordData() {
 
   return (
     <ScrollView
+      ref={scrollViewRef}
       onScroll={handleScroll}
-      scrollEventThrottle={400}
+      scrollEventThrottle={16} // 빈도 수정
       style={{ marginLeft: 10, marginRight: 10 }}
       contentContainerStyle={{ alignItems: "center", alignContent: "center" }}
     >
