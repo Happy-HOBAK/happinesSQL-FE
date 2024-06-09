@@ -60,7 +60,6 @@ function Trends() {
   const [selectedGender, setSelectedGender] = useState("전체");
   const [recommendLoading, setRecommendLoading] = useState(false);
   const [summaryLoading, setSummaryLoading] = useState(false);
-  //const [happinessData, setHappinessData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
     happiness: null,
@@ -69,6 +68,7 @@ function Trends() {
     locations: null,
     summary: null,
   });
+
   const ageItems = [
     { label: "10대", value: "10대" },
     { label: "20대", value: "20대" },
@@ -125,21 +125,6 @@ function Trends() {
       setRecommendLoading(false);
     }
   };
-
-  // const fetchSummary = async () => {
-  //   setSummaryLoading(true);
-  //   try {
-  //     const summaryData = await getSummary(selectedAge, selectedGender);
-  //     setData((prevState) => ({
-  //       ...prevState,
-  //       summary: summaryData,
-  //     }));
-  //   } catch (error) {
-  //     console.error("Error fetching summary:", error);
-  //   } finally {
-  //     setSummaryLoading(false);
-  //   }
-  // };
 
   const fetchSummary = async () => {
     setSummaryLoading(true);
@@ -307,11 +292,15 @@ function Trends() {
                 style={{ flex: 1 }}
                 initialRegion={{
                   latitude:
-                    data.locations && data.locations.data
+                    data.locations &&
+                    data.locations.data &&
+                    data.locations.data.length > 0
                       ? data.locations.data[0].latitude
                       : 37.5665,
                   longitude:
-                    data.locations && data.locations.data
+                    data.locations &&
+                    data.locations.data &&
+                    data.locations.data.length > 0
                       ? data.locations.data[0].longitude
                       : 126.978,
                   latitudeDelta: 0.0922,
@@ -320,17 +309,22 @@ function Trends() {
               >
                 {data.locations &&
                   data.locations.data &&
-                  data.locations.data.map((location, index) => (
-                    <Marker
-                      key={index}
-                      coordinate={{
-                        latitude: location.latitude,
-                        longitude: location.longitude,
-                      }}
-                      title={location.location}
-                      description={location.happiestActivity}
-                    />
-                  ))}
+                  data.locations.data.length > 0 &&
+                  data.locations.data.map(
+                    (location, index) =>
+                      location.latitude &&
+                      location.longitude && (
+                        <Marker
+                          key={index}
+                          coordinate={{
+                            latitude: location.latitude,
+                            longitude: location.longitude,
+                          }}
+                          title={location.location}
+                          description={location.happiestActivity}
+                        />
+                      )
+                  )}
               </MapView>
             </MapContainer>
           </FourthReportBox>
