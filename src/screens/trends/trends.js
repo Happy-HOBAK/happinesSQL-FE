@@ -204,7 +204,9 @@ function Trends() {
           <ActivityReportBox>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <SubText>오늘은 </SubText>
-              {data.popular ? (
+              {data.popular &&
+              data.popular.data &&
+              data.popular.data.length > 0 ? (
                 <SubFocusText>{data.popular.data[0].name}</SubFocusText>
               ) : (
                 <></>
@@ -213,7 +215,9 @@ function Trends() {
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <SubText>한 사람이 많았어요! </SubText>
-              {data.popular ? (
+              {data.popular &&
+              data.popular.data &&
+              data.popular.data.length > 0 ? (
                 <SubText>{data.popular.data[0].emoji}</SubText>
               ) : (
                 <></>
