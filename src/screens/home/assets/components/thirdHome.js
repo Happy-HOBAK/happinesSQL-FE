@@ -45,7 +45,7 @@ const ThirdHome = ({ onActivitySave }) => {
   const [memo, setMemo] = useRecoilState(MemoState);
   const [location, setLocation] = useRecoilState(LocationState);
   const [image, setImage] = useRecoilState(ImageState);
-  const [city, setCity] = useState("📌 위치 가져오는중 ...");
+  const [city, setCity] = useState("위치 가져오는중 ...");
   const [errorMsg, setErrorMsg] = useState(null);
   const [userCity, setUserCity] = useState("");
   const [locationEnabled, setLocationEnabled] = useState(true);
@@ -56,7 +56,15 @@ const ThirdHome = ({ onActivitySave }) => {
 
   useEffect(() => {
     getLocation();
+    resetFields();
   }, []);
+
+  const resetFields = () => {
+    setMemo("");
+    setUserCity("");
+    setSelectedImage(null);
+    setImage(null);
+  };
 
   const getLocation = async () => {
     try {
@@ -149,9 +157,7 @@ const ThirdHome = ({ onActivitySave }) => {
 
   return (
     <View>
-      <BackBtn onPress={() => navigation.goBack()}>
-        <BackImage source={backicon} />
-      </BackBtn>
+      <BackBtn />
 
       <SecondHomeTextView>
         <HomeText>메모할 내용이 있나요?</HomeText>
@@ -161,6 +167,7 @@ const ThirdHome = ({ onActivitySave }) => {
             placeholder="  📌 장소 추가하기"
             style={{ marginTop: 30 }}
             value={userCity ? `📌 ${userCity}` : `📌 ${city}`}
+            onChangeText={(text) => setUserCity(text)}
           />
         ) : (
           <View>
