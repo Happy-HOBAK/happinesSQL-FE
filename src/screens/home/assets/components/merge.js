@@ -94,7 +94,7 @@ const Merge = ({ onActivitySave }) => {
       </View>
       <View style={{ alignItems: "center" }}>
         <StoreBtn onPress={saveActivity}>
-          <StoreText>활동 입력하기</StoreText>
+          <StoreText>다음으로</StoreText>
         </StoreBtn>
       </View>
     </View>
