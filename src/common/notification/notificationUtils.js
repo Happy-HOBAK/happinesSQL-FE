@@ -2,7 +2,7 @@ import * as Notifications from "expo-notifications";
 
 export async function scheduleNotifications() {
   // 기존 모든 알림 취소
-  //await Notifications.cancelAllScheduledNotificationsAsync();
+  await Notifications.cancelAllScheduledNotificationsAsync();
 
   const hours = [9, 13, 19, 23];
 

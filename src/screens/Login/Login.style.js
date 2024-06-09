@@ -62,3 +62,26 @@ export const ErrorMessage = styled.Text`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   height: 20px;
 `;
+
+export const CheckBoxContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  margin-left: 16%;
+  margin-bottom: 20px;
+`;
+
+export const CheckBox = styled.View`
+  width: 20px;
+  height: 20px;
+  border-color: ${theme.grey_3};
+  border-width: 1px;
+  border-radius: 4px;
+  background-color: ${(props) => (props.checked ? theme.main : "#fff")};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CheckBoxLabel = styled.Text`
+  margin-left: 10px;
+`;

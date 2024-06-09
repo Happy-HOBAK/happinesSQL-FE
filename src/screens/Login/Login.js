@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   KeyboardAvoidingView,
@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styled from "styled-components";
 import {
   StyledButton,
   StyledSubTitleText,
@@ -18,6 +17,9 @@ import {
   StyledSignupView,
   StyledTextInput,
   InputContainer,
+  CheckBoxContainer,
+  CheckBox,
+  CheckBoxLabel,
 } from "./Login.style";
 import { postLogin } from "./apis/postLogin";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,17 +28,38 @@ export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({ message: "", visible: false });
+  const [autoLogin, setAutoLogin] = useState(false);
 
   const navigation = useNavigation();
 
-  const handleLogin = async () => {
-    if (!username || !password) {
+  useEffect(() => {
+    const checkAutoLogin = async () => {
+      const savedUsername = await AsyncStorage.getItem("username");
+      const savedPassword = await AsyncStorage.getItem("password");
+      const autoLoginEnabled = await AsyncStorage.getItem("autoLogin");
+
+      if (autoLoginEnabled === "true" && savedUsername && savedPassword) {
+        setUsername(savedUsername);
+        setPassword(savedPassword);
+        handleLogin(savedUsername, savedPassword, true);
+      }
+    };
+
+    checkAutoLogin();
+  }, []);
+
+  const handleLogin = async (
+    usernameParam = username,
+    passwordParam = password,
+    autoLoginParam = autoLogin
+  ) => {
+    if (!usernameParam || !passwordParam) {
       setError({ message: "모든 정보를 입력해주세요!", visible: true });
       return;
     }
     setError({ message: "", visible: false });
     try {
-      const response = await postLogin(username, password);
+      const response = await postLogin(usernameParam, passwordParam);
       console.log(response);
       if (response.success) {
         if (response.message === "비밀번호가 틀렸습니다.") {
@@ -44,6 +67,17 @@ export const Login = () => {
         } else {
           await AsyncStorage.setItem("accessToken", response.data.accessToken);
           await AsyncStorage.setItem("name", response.data.name);
+
+          if (autoLoginParam) {
+            await AsyncStorage.setItem("username", usernameParam);
+            await AsyncStorage.setItem("password", passwordParam);
+            await AsyncStorage.setItem("autoLogin", "true");
+          } else {
+            await AsyncStorage.removeItem("username");
+            await AsyncStorage.removeItem("password");
+            await AsyncStorage.setItem("autoLogin", "false");
+          }
+
           navigation.reset({
             index: 0,
             routes: [{ name: "Tabs" }],
@@ -87,9 +121,18 @@ export const Login = () => {
           secureTextEntry
         />
 
+        <CheckBoxContainer onPress={() => setAutoLogin(!autoLogin)}>
+          <CheckBox checked={autoLogin}>
+            {autoLogin && <Text style={{ color: "#fff" }}>✓</Text>}
+          </CheckBox>
+          <CheckBoxLabel>자동 로그인</CheckBoxLabel>
+        </CheckBoxContainer>
+
         <ErrorMessage visible={error.visible}>{error.message}</ErrorMessage>
 
-        <StyledButton onPress={handleLogin}>
+        <StyledButton
+          onPress={() => handleLogin(username, password, autoLogin)}
+        >
           <StyledText>로그인 하기</StyledText>
         </StyledButton>
       </StyledSignupView>
