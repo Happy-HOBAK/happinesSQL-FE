@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, Image, ActivityIndicator } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { getRecord } from "../../../home/assets/apis/getRecord";
 import {
   RecordBox,
@@ -17,22 +17,27 @@ import { emotion } from "../../../../common/data/emotion";
 
 function RecordData() {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(false);
   const [lastRecordId, setLastRecordId] = useState(null);
   const [records, setRecords] = useState([]);
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isFocused) {
+      fetchData(true);
+    }
+  }, [isFocused]);
 
-  const fetchData = async () => {
-    if (!hasMore) return;
+  const fetchData = async (reset = false) => {
+    if (!hasMore && !reset) return;
     setLoading(true);
     try {
-      const response = await getRecord(lastRecordId);
+      const response = await getRecord(reset ? null : lastRecordId);
       if (response.success && response.data.length > 0) {
-        setRecords((prevRecords) => [...prevRecords, ...response.data]);
+        setRecords((prevRecords) =>
+          reset ? response.data : [...prevRecords, ...response.data]
+        );
         setLastRecordId(response.data[response.data.length - 1]?.record_id);
       } else {
         setHasMore(false);

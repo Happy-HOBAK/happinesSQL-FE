@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { CalenderView } from "../../styles/styles";
 import { Calendar } from "react-native-calendars";
@@ -47,6 +47,7 @@ const Calendertheme = {
 };
 
 function Calender() {
+  const isFocused = useIsFocused();
   const [markedDates, setMarkedDates] = useState({});
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({ date: "", happiness: 0 });
@@ -94,10 +95,12 @@ function Calender() {
   };
 
   useEffect(() => {
-    const today = new Date();
-    const dateString = today.toISOString().split("T")[0];
-    fetchMonthData(dateString);
-  }, []);
+    if (isFocused) {
+      const today = new Date();
+      const dateString = today.toISOString().split("T")[0];
+      fetchMonthData(dateString);
+    }
+  }, [isFocused]);
 
   const handleMonthChange = (date) => {
     const { year, month } = date;

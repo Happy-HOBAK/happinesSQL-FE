@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 import {
   ReportBox,
   DataeBtn,
@@ -33,9 +34,10 @@ import {
 } from "./assets/apis/getReports";
 
 export const ReportMonth = ({ handleDataBtnPress, setModalVisible }) => {
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
-    // happiness: null,
+    happiness: null,
     summary: null,
     activities: null,
     locations: null,
@@ -43,50 +45,53 @@ export const ReportMonth = ({ handleDataBtnPress, setModalVisible }) => {
   });
   const [userName, setUserName] = useState("");
 
+  const fetchData = async () => {
+    try {
+      const [
+        happinessData,
+        summaryData,
+        activityData,
+        locationData,
+        graphData,
+      ] = await Promise.all([
+        getMonthHappiness(),
+        getMonthSummary(),
+        getMonthActivities(),
+        getMonthLocations(),
+        getMonthGraph(),
+      ]);
+
+      setData({
+        happiness: happinessData,
+        summary: summaryData,
+        activities: activityData,
+        locations: locationData,
+        graph: graphData,
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUserName = async () => {
+    try {
+      const name = await AsyncStorage.getItem("name");
+      if (name) {
+        setUserName(name);
+      }
+    } catch (error) {
+      console.error("Error fetching user name:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [
-          //   happinessData,
-          summaryData,
-          activityData,
-          locationData,
-          graphData,
-        ] = await Promise.all([
-          //   getMonthHappiness(),
-          getMonthSummary(),
-          getMonthActivities(),
-          getMonthLocations(),
-          getMonthGraph(),
-        ]);
-
-        setData({
-          summary: summaryData,
-          activities: activityData,
-          locations: locationData,
-          graph: graphData,
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchUserName = async () => {
-      try {
-        const name = await AsyncStorage.getItem("name");
-        if (name) {
-          setUserName(name);
-        }
-      } catch (error) {
-        console.error("Error fetching user name:", error);
-      }
-    };
-
-    fetchData();
-    fetchUserName();
-  }, []);
+    if (isFocused) {
+      fetchData();
+      fetchUserName();
+    }
+  }, [isFocused]);
 
   return (
     <ScrollView>
@@ -94,9 +99,17 @@ export const ReportMonth = ({ handleDataBtnPress, setModalVisible }) => {
         <UserText>{userName} 님의</UserText>
         <LeftText>평균 행복지수는</LeftText>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <FocusText>보통</FocusText>
+          {data.happiness ? (
+            <FocusText>{data.happiness.data.level}</FocusText>
+          ) : (
+            <></>
+          )}
           <LeftText>이에요</LeftText>
-          <FocusText> 🙂</FocusText>
+          {data.happiness ? (
+            <FocusText>{data.happiness.data.emoji}</FocusText>
+          ) : (
+            <></>
+          )}
         </View>
         <CriteriaButton onPress={() => setModalVisible(true)}>
           <CriteriaButtonText>기준이 궁금해요!</CriteriaButtonText>

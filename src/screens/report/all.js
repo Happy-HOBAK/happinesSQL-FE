@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import {
   ReportBox,
   DataeBtn,
@@ -8,7 +9,6 @@ import {
   SecondReportBox,
   FirstReportBox,
   ActivityReportBox,
-  GraphReportBox,
   MapReportBox,
 } from "../../styles/styles";
 import {
@@ -31,6 +31,7 @@ import {
 } from "./assets/apis/getReports";
 
 export const ReportAll = ({ handleDataBtnPress, setModalVisible }) => {
+  const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({
     happiness: null,
@@ -40,44 +41,46 @@ export const ReportAll = ({ handleDataBtnPress, setModalVisible }) => {
   });
   const [userName, setUserName] = useState("");
 
+  const fetchData = async () => {
+    try {
+      const [happinessData, summaryData, activityData, locationData] =
+        await Promise.all([
+          getAllHappiness(),
+          getAllSummary(),
+          getAllTopActivities(),
+          getAllTopLocations(),
+        ]);
+
+      setData({
+        happiness: happinessData,
+        summary: summaryData,
+        activities: activityData,
+        locations: locationData,
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUserName = async () => {
+    try {
+      const name = await AsyncStorage.getItem("name");
+      if (name) {
+        setUserName(name);
+      }
+    } catch (error) {
+      console.error("Error fetching user name:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [happinessData, summaryData, activityData, locationData] =
-          await Promise.all([
-            getAllHappiness(),
-            getAllSummary(),
-            getAllTopActivities(),
-            getAllTopLocations(),
-          ]);
-
-        setData({
-          happiness: happinessData,
-          summary: summaryData,
-          activities: activityData,
-          locations: locationData,
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchUserName = async () => {
-      try {
-        const name = await AsyncStorage.getItem("name");
-        if (name) {
-          setUserName(name);
-        }
-      } catch (error) {
-        console.error("Error fetching user name:", error);
-      }
-    };
-
-    fetchData();
-    fetchUserName();
-  }, []);
+    if (isFocused) {
+      fetchData();
+      fetchUserName();
+    }
+  }, [isFocused]);
 
   return (
     <ScrollView>

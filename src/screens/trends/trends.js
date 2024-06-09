@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { HomeText, RecordTextView, MapReportBox } from "../../styles/styles";
 import { getActivities } from "../home/assets/apis/getActivity";
 import {
@@ -55,6 +55,7 @@ import {
 } from "./assets/apis/getTrends";
 
 function Trends() {
+  const isFocused = useIsFocused();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAge, setSelectedAge] = useState("전체");
   const [selectedGender, setSelectedGender] = useState("전체");
@@ -85,31 +86,34 @@ function Trends() {
   ];
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [happinessData, popularData, recommendData, locationsData] =
-          await Promise.all([
-            getHappiness(),
-            getPopular(),
-            getRecommend(),
-            getLocation(),
-          ]);
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
 
-        setData({
-          happiness: happinessData,
-          popular: popularData,
-          recommend: recommendData,
-          locations: locationsData,
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [happinessData, popularData, recommendData, locationsData] =
+        await Promise.all([
+          getHappiness(),
+          getPopular(),
+          getRecommend(),
+          getLocation(),
+        ]);
 
-    fetchData();
-  }, []);
+      setData({
+        happiness: happinessData,
+        popular: popularData,
+        recommend: recommendData,
+        locations: locationsData,
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const reloadRecommendations = async () => {
     setRecommendLoading(true);
@@ -143,8 +147,6 @@ function Trends() {
       setSummaryLoading(false);
     }
   };
-
-  console.log(data.recommend);
 
   return (
     <SafeAreaView style={{ backgroundColor: "#F3F4F6" }}>
