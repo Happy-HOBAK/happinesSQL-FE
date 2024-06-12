@@ -7,11 +7,13 @@ export const sendToServer = async (
   emotion,
   activityId,
   memo,
-  location,
+  newdistrict,
   imageUri,
   latitude,
   longitude,
-  country
+  newCity,
+  country,
+  location
 ) => {
   try {
     const formData = new FormData();
@@ -20,8 +22,8 @@ export const sendToServer = async (
       happiness: emotion,
       memo: memo,
       country: country,
-      city: location.split(" ")[0],
-      district: location.split(" ")[1],
+      city: newCity,
+      district: newdistrict,
       activity_id: activityId,
       full_name: location,
       latitude: latitude,

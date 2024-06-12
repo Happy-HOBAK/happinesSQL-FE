@@ -62,6 +62,14 @@ function Trends() {
   const [recommendLoading, setRecommendLoading] = useState(false);
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [selectedLocation, setSelectedLocation] = useState({
+    latitude: 37.5665,
+    longitude: 126.978,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
   const [data, setData] = useState({
     happiness: null,
     popular: null,
@@ -101,6 +109,7 @@ function Trends() {
           getRecommend(),
           getLocation(),
         ]);
+      console.log(locationsData);
 
       setData({
         happiness: happinessData,
@@ -108,6 +117,19 @@ function Trends() {
         recommend: recommendData,
         locations: locationsData,
       });
+      if (
+        locationsData &&
+        locationsData.data &&
+        locationsData.data.length > 0
+      ) {
+        const topLocation = locationsData.data[0];
+        setSelectedLocation({
+          latitude: topLocation.latitude || 37.5665,
+          longitude: topLocation.longitude || 126.978,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -145,6 +167,17 @@ function Trends() {
       console.error("Error fetching summary:", error);
     } finally {
       setSummaryLoading(false);
+    }
+  };
+
+  const handleLocationSelect = (location) => {
+    if (location.latitude && location.longitude) {
+      setSelectedLocation({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
     }
   };
 
@@ -284,35 +317,24 @@ function Trends() {
 
             {data.locations && data.locations.data ? (
               data.locations.data.map((location, index) => (
-                <SecondReportBox key={index}>
-                  <NumText>{location.ranking}</NumText>
-                  <NumtitleText>{location.location}</NumtitleText>
-                </SecondReportBox>
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => handleLocationSelect(location)}
+                >
+                  <SecondReportBox>
+                    <NumText>{location.ranking}</NumText>
+                    <NumtitleText>
+                      {location.location || "정보 없음"}
+                    </NumtitleText>
+                  </SecondReportBox>
+                </TouchableOpacity>
               ))
             ) : (
               <></>
             )}
 
             <MapContainer>
-              <MapView
-                style={{ flex: 1 }}
-                initialRegion={{
-                  latitude:
-                    data.locations &&
-                    data.locations.data &&
-                    data.locations.data.length > 0
-                      ? data.locations.data[0].latitude
-                      : 37.5665,
-                  longitude:
-                    data.locations &&
-                    data.locations.data &&
-                    data.locations.data.length > 0
-                      ? data.locations.data[0].longitude
-                      : 126.978,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
-                }}
-              >
+              <MapView style={{ flex: 1 }} region={selectedLocation}>
                 {data.locations &&
                   data.locations.data &&
                   data.locations.data.length > 0 &&
@@ -334,7 +356,7 @@ function Trends() {
               </MapView>
             </MapContainer>
           </FourthReportBox>
-          <View style={{ height: 200 }} />
+          <View style={{ height: 100 }} />
         </ScrollView>
       </RecordTextView>
       <Modal

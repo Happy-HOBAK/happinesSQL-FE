@@ -23,10 +23,35 @@
         "foregroundImage": "./assets/mainicon_final.png",
         "backgroundColor": "#ffffff"
       },
-      "usesCleartextTraffic": true
+      "package": "com.hobak.happinessql",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDjIM_tUuKmZfNSnv6aFfv18K6OClnpnCY"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/MainLogo.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2ffc2f6c-cf2a-4201-a430-9a5e9acb7124"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "13.4"
+          }
+        }
+      ]
+    ]
   }
 }

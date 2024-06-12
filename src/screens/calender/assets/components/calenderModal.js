@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Modal,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import styled from "styled-components/native";
 import {
@@ -24,6 +25,7 @@ const ModalBackground = styled.View`
 const StyledModalRecordBox = styled(StyledRecordBox)`
   flex-direction: row;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 const getEmoji = (happiness) => {

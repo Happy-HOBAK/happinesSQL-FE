@@ -142,9 +142,9 @@ const SecondHome = ({ SecondonActivitySave }) => {
           {categories.map((category, index) => (
             <View key={index} style={{ width: windowWidth }}>
               <CategoryText>{category.name}</CategoryText>
-              <View style={{ flex: 1, alignItems: "center" }}>
+              <View style={{ flex: 1, marginLeft: -3 }}>
                 <ScrollView
-                  contentContainerStyle={{ marginVertical: 10 }}
+                  // contentContainerStyle={{ marginVertical: 10 }}
                   style={{
                     maxWidth: windowWidth,
                     maxHeight: windowHeight * 0.6,
@@ -155,10 +155,15 @@ const SecondHome = ({ SecondonActivitySave }) => {
                   }}
                 >
                   {category.activities.map((activityGroup, groupIndex) => (
-                    <View key={groupIndex} style={{ flexDirection: "row" }}>
+                    <View
+                      key={groupIndex}
+                      style={{
+                        justifyContent: "flex-start",
+                        flexDirection: "row",
+                      }}
+                    >
                       {activityGroup.map((activity, activityIndex) => (
                         <ActivityBtn
-                          style={styles.shadow}
                           key={activityIndex}
                           onPress={() => press(activity.id)}
                         >
@@ -196,11 +201,11 @@ const SecondHome = ({ SecondonActivitySave }) => {
           {searchResults.categories.map((category, index) => (
             <View key={index} style={{ width: windowWidth }}>
               <CategoryText>{category.name}</CategoryText>
-              <View style={{ flex: 1, alignItems: "center" }}>
+              <View style={{ flex: 1, padding: 10 }}>
                 <ScrollView
                   contentContainerStyle={{ marginVertical: 10 }}
                   style={{
-                    maxWidth: windowWidth,
+                    maxWidth: windowWidth - 20,
                     maxHeight: windowHeight * 0.6,
                     flex: 1,
                     flexDirection: "row",
@@ -213,27 +218,23 @@ const SecondHome = ({ SecondonActivitySave }) => {
                       <View
                         key={groupIndex}
                         style={{
+                          justifyContent: "flex-start",
                           flexDirection: "row",
-                          justifyContent: "space-around",
+                          // justifyContent: "space-around",
                         }}
                       >
                         {activityGroup.map((activity, activityIndex) => (
                           <ActivityBtn
-                            style={styles.shadow}
                             key={activityIndex}
                             onPress={() => press(activity.id)}
                           >
-                            <Text style={{ textAlign: "center", fontSize: 16 }}>
-                              {activity.emoji}
-                            </Text>
-                            <Text style={{ textAlign: "center", fontSize: 14 }}>
-                              {activity.name}
-                            </Text>
-                            <Text style={{ textAlign: "center", fontSize: 12 }}>
+                            <EmojiText>{activity.emoji}</EmojiText>
+                            <ActivityText>{activity.name}</ActivityText>
+                            <DescriptionText>
                               {Array.isArray(activity.description)
                                 ? activity.description.join("")
                                 : activity.description || ""}
-                            </Text>
+                            </DescriptionText>
                           </ActivityBtn>
                         ))}
                       </View>

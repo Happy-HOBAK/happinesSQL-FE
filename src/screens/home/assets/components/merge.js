@@ -70,11 +70,11 @@ const Merge = ({ onActivitySave }) => {
           <CircleSlider
             textSize={0.1}
             btnRadius={20}
-            dialWidth={20}
+            dialWidth={23}
             meterColor={theme.grey_2}
             strokeColor={theme.main}
             textColor={theme.main}
-            strokeWidth={20}
+            strokeWidth={23}
             value={selectedEmotionIndex * (360 / (emotion.length - 1))}
             onValueChange={handleSliderChange}
           />
@@ -84,9 +84,9 @@ const Merge = ({ onActivitySave }) => {
               position: "absolute",
               top: "50%",
               left: "50%",
-              transform: [{ translateX: -50 }, { translateY: -50 }],
-              width: 100,
-              height: 100,
+              transform: [{ translateX: -65 }, { translateY: -65 }],
+              width: 130,
+              height: 130,
             }}
             resizeMode="contain"
           />

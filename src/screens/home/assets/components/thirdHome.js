@@ -53,6 +53,9 @@ const ThirdHome = ({ onActivitySave }) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [country, setCountry] = useState(null);
+  const [newcountry, setNewCountry] = useState(null);
+  const [newdistrict, setNewDistrict] = useState(null);
+  const [newCity, setNewCity] = useState(null);
 
   useEffect(() => {
     getLocation();
@@ -75,14 +78,35 @@ const ThirdHome = ({ onActivitySave }) => {
         return;
       }
 
-      const location = await Location.getCurrentPositionAsync({});
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: 5,
+      });
+      console.log(location);
       const { latitude, longitude } = location.coords;
       const reverseGeocode = await Location.reverseGeocodeAsync({
         latitude,
         longitude,
       });
+      console.log(reverseGeocode);
       const currentCountry = `${reverseGeocode[0].country}`;
-      const currentCity = `${reverseGeocode[0].city} ${reverseGeocode[0].district}`;
+      const currentCity = `${reverseGeocode[0].region} ${
+        reverseGeocode[0].street || reverseGeocode[0].district || "상도동"
+      }`;
+
+      const city = `${reverseGeocode[0].region}`;
+      const country = `${reverseGeocode[0].country}`;
+      const district = `${
+        reverseGeocode[0].street || reverseGeocode[0].district || "상도동"
+      }`;
+      const neww = `${reverseGeocode[0].formattedAddress}`;
+      console.log(city);
+      console.log(currentCountry);
+      console.log(currentCity);
+      console.log(neww);
+
+      setNewCity(city);
+      setNewCountry(country);
+      setNewDistrict(district);
       setCity(currentCity);
       setLocation(currentCity);
       setUserCity(currentCity);
@@ -131,22 +155,36 @@ const ThirdHome = ({ onActivitySave }) => {
       console.log(
         "emotion:",
         emotion,
+        "activityId:",
+        activityId,
         "memo:",
         memo,
         "location:",
         location,
+        "newdistrict:",
+        userCity || city,
         "image:",
-        image
+        image,
+        "latitude:",
+        latitude,
+        "longitude:",
+        longitude,
+        "newcountry:",
+        country,
+        "country:",
+        country
       );
       await sendToServer(
         emotion,
         activityId,
         memo,
-        location,
+        newdistrict,
         image,
         latitude,
         longitude,
-        country
+        newCity,
+        country,
+        location
       );
       onActivitySave();
       console.log("데이터가 서버에 저장되었습니다.");

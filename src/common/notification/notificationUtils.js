@@ -4,7 +4,7 @@ export async function scheduleNotifications() {
   // 기존 모든 알림 취소
   await Notifications.cancelAllScheduledNotificationsAsync();
 
-  const hours = [9, 13, 19, 23];
+  const hours = [9, 13, 14, 15, 19, 23];
 
   const morningMessages = [
     {
@@ -84,7 +84,14 @@ export async function scheduleNotifications() {
     if (hour === 9) {
       notificationContent =
         morningMessages[Math.floor(Math.random() * morningMessages.length)];
+    }
+    if (hour === 14) {
+      notificationContent =
+        morningMessages[Math.floor(Math.random() * morningMessages.length)];
     } else if (hour === 13) {
+      notificationContent =
+        noonMessages[Math.floor(Math.random() * noonMessages.length)];
+    } else if (hour === 15) {
       notificationContent =
         noonMessages[Math.floor(Math.random() * noonMessages.length)];
     } else if (hour === 19) {

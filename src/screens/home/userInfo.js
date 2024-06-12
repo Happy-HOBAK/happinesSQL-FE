@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { InitialRouteContext } from "../../common/context/context";
+import { getUserInfo } from "./assets/apis/getUserInfo";
+import { theme } from "../../styles/theme";
+import { ImageBtn, ImageBtnText } from "./userInfo.style";
 
 function UserInfo() {
   const navigation = useNavigation();
@@ -47,6 +50,21 @@ function UserInfo() {
       routes: [{ name: "Landing" }],
     });
   };
+
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      try {
+        const userInfo = await getUserInfo();
+        setName(userInfo.data.name);
+        setGender(userInfo.data.gender);
+        setAge(userInfo.data.age.toString());
+      } catch (error) {
+        console.error("Failed to load user info", error);
+      }
+    };
+
+    loadUserInfo();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -118,12 +136,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     marginBottom: 20,
   },
   imageBtn: {
-    backgroundColor: "#007bff",
+    backgroundColor: theme.main,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -131,23 +149,23 @@ const styles = StyleSheet.create({
   },
   imageBtnText: {
     color: "#fff",
-    fontWeight: "500",
+    fontWeight: "700",
   },
   deleteBtn: {
     marginTop: 20,
   },
   deleteBtnText: {
     color: "#dc3545",
-    fontWeight: "500",
+    fontWeight: "700",
   },
   label: {
     alignSelf: "flex-start",
-    marginLeft: 40,
+    marginLeft: 60,
     marginTop: 20,
-    fontWeight: "500",
+    fontWeight: "900",
   },
   input: {
-    width: "80%",
+    width: "70%",
     height: 40,
     borderColor: "#ced4da",
     borderWidth: 1,
@@ -157,7 +175,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   saveBtn: {
-    backgroundColor: "#28a745",
+    backgroundColor: theme.main,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -165,7 +183,7 @@ const styles = StyleSheet.create({
   },
   saveBtnText: {
     color: "#fff",
-    fontWeight: "500",
+    fontWeight: "900",
   },
   backBtn: {
     backgroundColor: "#6c757d",
@@ -176,7 +194,7 @@ const styles = StyleSheet.create({
   },
   backBtnText: {
     color: "#fff",
-    fontWeight: "500",
+    fontWeight: "900",
   },
   logoutBtn: {
     backgroundColor: "#dc3545",
@@ -187,7 +205,7 @@ const styles = StyleSheet.create({
   },
   logoutBtnText: {
     color: "#fff",
-    fontWeight: "500",
+    fontWeight: "900",
   },
 });
 
