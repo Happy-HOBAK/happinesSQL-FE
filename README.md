@@ -127,7 +127,7 @@ User Research 결과 많은 사람들이 자신의 행복 요인을 잘 모르�
 - 행복 리포트 탭 / 행복 트렌드 탭 / 행복 달력 탭 / 행복 톺아보기 탭
 
 ## 🎞️ Demo
-[안드로이드에 설치 가능한 apk 파일](https://drive.google.com/drive/my-drive?hl=ko)
+[안드로이드에 설치 가능한 apk 파일](https://drive.google.com/file/d/1qk8o7RO0nFFE1vjircGnH1NgZ24yP71P/view?usp=sharing)
 
 ## 프로젝트에서 중요하게 생각한 점
 [RN에서 조건부 렌더링](https://5ffthewall.tistory.com/88)
