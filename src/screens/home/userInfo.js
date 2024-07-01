@@ -18,6 +18,8 @@ import {
 } from "./userInfo.style";
 import back from "./../home/assets/images/back.png";
 import userIcon from "../home/assets/images/Vector.png";
+import DropDownPicker from "react-native-dropdown-picker";
+import { putUserInfo } from "./assets/apis/putUserInfo";
 
 function UserInfo() {
   const navigation = useNavigation();
@@ -26,10 +28,20 @@ function UserInfo() {
   const [age, setAge] = useState("");
   const { setInitialRoute } = useContext(InitialRouteContext);
 
-  // 유저 정보 저장 함수
-  const saveUserInfo = () => {
-    // 유저 정보 저장
-    // 이것두 recoil~~~
+  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState([
+    { label: "여성", value: "여성" },
+    { label: "남성", value: "남성" },
+    { label: "선택 안함", value: "선택 안함" },
+  ]);
+
+  const saveUserInfo = async () => {
+    try {
+      await putUserInfo(gender, age);
+      console.log("유저 정보가 성공적으로 업데이트되었습니다!");
+    } catch (error) {
+      console.log("유저 정보 업데이트 중 오류가 발생했습니다.");
+    }
   };
 
   const handleLogout = async () => {
@@ -101,11 +113,33 @@ function UserInfo() {
       />
 
       <Label>성별</Label>
-      <Input
+      {/* <Input
         returnKeyType="done"
         placeholder="성별"
         value={gender}
         onChangeText={(text) => setGender(text)}
+      /> */}
+      <DropDownPicker
+        listMode="SCROLLVIEW"
+        open={open}
+        value={gender}
+        items={items}
+        setOpen={setOpen}
+        setValue={(callback) => setGender(callback)}
+        setItems={setItems}
+        onSelectItem={(item) => setGender(item.label)}
+        containerStyle={{ width: "70%", marginTop: 10 }}
+        style={{
+          borderColor: "#EFEFEF",
+          borderWidth: 2,
+        }}
+        dropDownContainerStyle={{
+          backgroundColor: "#fff",
+          borderColor: "#EFEFEF",
+        }}
+        placeholderStyle={{
+          color: "#EFEFEF",
+        }}
       />
 
       <Label>나이</Label>
