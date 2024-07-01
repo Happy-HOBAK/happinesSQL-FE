@@ -126,11 +126,11 @@ function Report() {
             >
               <ModalContainer>
                 <ModalTitle>행복지수 범위는 1부터 7까지예요</ModalTitle>
-                <ModalText>매우 낮음 : 0 이상 2 미만</ModalText>
-                <ModalText>낮음 : 3 이상 4 미만</ModalText>
-                <ModalText>보통 : 4 이상 5 미만</ModalText>
-                <ModalText>높음 : 5 이상 6 미만</ModalText>
-                <ModalText>매우 높음 : 6 이상 7 미만</ModalText>
+                <ModalText>매우 낮음 : 1 이상 2 미만</ModalText>
+                <ModalText>낮음 : 2 이상 3 미만</ModalText>
+                <ModalText>보통 : 3 이상 5 미만 </ModalText>
+                <ModalText>높음 : 5 이상 6 미만 </ModalText>
+                <ModalText>매우 높음 : 6 이상 7 미만 </ModalText>
               </ModalContainer>
             </TouchableOpacity>
           </ModalBackground>
