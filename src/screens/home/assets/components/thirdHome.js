@@ -90,13 +90,13 @@ const ThirdHome = ({ onActivitySave }) => {
       console.log(reverseGeocode);
       const currentCountry = `${reverseGeocode[0].country}`;
       const currentCity = `${reverseGeocode[0].region} ${
-        reverseGeocode[0].street || reverseGeocode[0].district || "상도동"
+        reverseGeocode[0].street || reverseGeocode[0].district
       }`;
 
       const city = `${reverseGeocode[0].region}`;
       const country = `${reverseGeocode[0].country}`;
       const district = `${
-        reverseGeocode[0].street || reverseGeocode[0].district || "상도동"
+        reverseGeocode[0].street || reverseGeocode[0].district
       }`;
       const neww = `${reverseGeocode[0].formattedAddress}`;
       console.log(city);
