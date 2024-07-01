@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Modal,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity, Modal, ScrollView, Text } from "react-native";
 import styled from "styled-components/native";
 import {
   StyledImage,
@@ -28,19 +21,25 @@ const StyledModalRecordBox = styled(StyledRecordBox)`
   margin-bottom: 10px;
 `;
 
+const CloseButton = styled(TouchableOpacity)`
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+`;
+
+const CloseButtonText = styled(Text)`
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
 const getEmoji = (happiness) => {
   const emojis = ["😔", "😞", "😐", "😊", "😁", "😃"];
   return emojis[happiness] || "😐";
 };
 
-const ModalComponent = ({
-  isVisible,
-  onClose,
-  date,
-  happiness,
-  memo,
-  img_url,
-}) => {
+const ModalComponent = ({ isVisible, onClose, data }) => {
   return (
     <Modal
       visible={isVisible}
@@ -48,29 +47,34 @@ const ModalComponent = ({
       animationType="slide"
       onRequestClose={onClose}
     >
-      <TouchableWithoutFeedback onPress={onClose}>
-        <ModalBackground>
-          <View>
-            <StyledModalRecordBox>
+      <ModalBackground>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: "center",
+            padding: 20,
+            justifyContent: "center",
+            flexGrow: 1,
+          }}
+        >
+          {data.map((item, index) => (
+            <StyledModalRecordBox key={index}>
               <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <StyledRecordDate>
-                    {date}
-                    {getEmoji(happiness)}
+                    {item.date}
+                    {getEmoji(item.happiness)}
                   </StyledRecordDate>
                 </View>
-                <StyledRecordContent>{memo}</StyledRecordContent>
+                <StyledRecordContent>{item.memo}</StyledRecordContent>
               </View>
-
-              {img_url && <StyledImage source={{ uri: img_url }} />}
-
-              <TouchableOpacity onPress={onClose}>
-                {/* <CloseButton>닫기</CloseButton> */}
-              </TouchableOpacity>
+              {item.img_url && <StyledImage source={{ uri: item.img_url }} />}
             </StyledModalRecordBox>
-          </View>
-        </ModalBackground>
-      </TouchableWithoutFeedback>
+          ))}
+          <CloseButton onPress={onClose}>
+            <CloseButtonText>닫기</CloseButtonText>
+          </CloseButton>
+        </ScrollView>
+      </ModalBackground>
     </Modal>
   );
 };

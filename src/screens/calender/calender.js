@@ -50,7 +50,7 @@ function Calender() {
   const isFocused = useIsFocused();
   const [markedDates, setMarkedDates] = useState({});
   const [isModalVisible, setModalVisible] = useState(false);
-  const [modalContent, setModalContent] = useState({ date: "", happiness: 0 });
+  const [modalContent, setModalContent] = useState([]);
   const navigation = useNavigation();
 
   const updateMarkedDates = (data) => {
@@ -80,13 +80,7 @@ function Calender() {
     try {
       const response = await getDayDetails(date);
       if (response.success) {
-        const dayData = response.data[0];
-        setModalContent({
-          date: dayData.date,
-          happiness: dayData.happiness,
-          memo: dayData.memo,
-          img_url: dayData.img_url,
-        });
+        setModalContent(response.data);
         setModalVisible(true);
       }
     } catch (error) {
@@ -129,10 +123,7 @@ function Calender() {
       <ModalComponent
         isVisible={isModalVisible}
         onClose={() => setModalVisible(false)}
-        date={modalContent.date}
-        happiness={modalContent.happiness}
-        memo={modalContent.memo}
-        img_url={modalContent.img_url}
+        data={modalContent}
       />
     </CalenderView>
   );
