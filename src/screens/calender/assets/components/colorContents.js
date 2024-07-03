@@ -21,23 +21,23 @@ export const ColorContents = () => {
       <View style={{ marginTop: 40 }}>
         <ColorView>
           <ColorImage source={first} />
-          <CText> 행복수치 평균 00 이상</CText>
+          <CText> 행복수치 1 이상 2 미만</CText>
         </ColorView>
         <ColorView>
           <ColorImage source={second} />
-          <CText> 행복수치 평균 00 이상</CText>
+          <CText> 행복수치 2 이상 3 미만</CText>
         </ColorView>
         <ColorView>
           <ColorImage source={third} />
-          <CText> 행복수치 평균 00 이상</CText>
+          <CText> 행복수치 3 이상 5 미만</CText>
         </ColorView>
         <ColorView>
           <ColorImage source={fourth} />
-          <CText> 행복수치 평균 00 이상</CText>
+          <CText> 행복수치 5 이상 6 미만</CText>
         </ColorView>
         <ColorView>
           <ColorImage source={fifth} />
-          <CText> 행복수치 평균 00 이상</CText>
+          <CText> 행복수치 6 이상 7 미만</CText>
         </ColorView>
       </View>
     </View>
