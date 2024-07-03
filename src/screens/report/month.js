@@ -77,7 +77,7 @@ export const ReportMonth = ({ handleDataBtnPress, setModalVisible }) => {
 
   const fetchUserName = async () => {
     try {
-      const name = await AsyncStorage.getItem("name");
+      const name = await AsyncStorage.getItem("username");
       if (name) {
         setUserName(name);
       }

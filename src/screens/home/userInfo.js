@@ -37,7 +37,10 @@ function UserInfo() {
 
   const saveUserInfo = async () => {
     try {
-      await putUserInfo(gender, age);
+      await putUserInfo(gender, age, name);
+      await AsyncStorage.removeItem("username");
+      await AsyncStorage.setItem("username", name);
+      console.log(name);
       console.log("유저 정보가 성공적으로 업데이트되었습니다!");
     } catch (error) {
       console.log("유저 정보 업데이트 중 오류가 발생했습니다.");
@@ -105,7 +108,7 @@ function UserInfo() {
 
       <Label>이름</Label>
       <Input
-        editable={false}
+        //editable={false}
         returnKeyType="done"
         placeholder="이름"
         value={name}

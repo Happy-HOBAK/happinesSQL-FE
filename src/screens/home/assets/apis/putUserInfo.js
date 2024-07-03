@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PUBLIC_DNS } from "@env";
 
-export const putUserInfo = async (gender, age) => {
+export const putUserInfo = async (gender, age, name) => {
   const url = `${PUBLIC_DNS}/api/users/profile`;
 
   try {
@@ -13,7 +13,7 @@ export const putUserInfo = async (gender, age) => {
 
     const response = await axios.put(
       url,
-      { gender, age },
+      { gender, age, name },
       {
         headers: {
           Authorization: `Bearer ${token}`,
